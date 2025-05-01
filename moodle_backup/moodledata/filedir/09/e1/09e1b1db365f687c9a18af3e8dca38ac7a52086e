@@ -1,0 +1,46 @@
+# Índice de Materiales - Aseguramiento de Calidad de Software
+
+## Resúmenes organizados
+
+- [Resumen General](./resumen_general.md) - Resumen completo preparado para el examen con conceptos clave, comparativas y preguntas de reflexión.
+
+## Clases
+
+- [Clase 1: Introducción a la Calidad del Software](./clase_1.md)
+  - Objetivos de la materia
+  - Definición de calidad
+  - Importancia de la calidad
+  - Diferencias entre Tester y QA
+  - Terminología básica
+
+- [Clase 2: Herramientas del Área de QA](./clase_2.md)
+  - Herramientas fundamentales
+  - Terminología relacionada
+  - Perspectivas de calidad según Garvin
+  - Definición de calidad del software
+  - Ejercicios prácticos
+
+- [Clase 3: Dimensiones y Factores de Calidad](./clase_3.md)
+  - Perfil de David A. Garvin
+  - Dimensiones de calidad según Garvin
+  - Modelo de McCall
+  - Factores de calidad
+  - Usabilidad e intuitividad
+
+## Material teórico
+
+- [Guía Teórica](./guia_teorica.md) - Contenido detallado del curso con definiciones y conceptos fundamentales.
+
+## Material de grabación
+
+- [Grabación de clase](./grabacion_clase.md) - Transcripción de la clase grabada con puntos clave para el examen.
+
+## Cómo usar estos materiales para estudiar
+
+1. Comienza con el [Resumen General](./resumen_general.md) para obtener una visión de los temas principales y conceptos clave.
+2. Revisa las notas de cada clase para profundizar en los temas específicos de cada sesión.
+3. Consulta la [Guía Teórica](./guia_teorica.md) para obtener definiciones precisas y explicaciones detalladas.
+4. Utiliza las preguntas de reflexión y ejercicios prácticos para evaluar tu comprensión.
+5. Antes del examen, repasa las preguntas de preparación en el resumen general.
+
+Recuerda que en los exámenes de esta materia, las respuestas no son simplemente "correctas" o "incorrectas". Lo importante es tu capacidad para argumentar y respaldar tus respuestas con conceptos teóricos adecuados. La calidad es un concepto multidimensional que puede interpretarse desde diferentes perspectivas.

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Cátedras Virtuales - UMVirtual - Cálculo II (0004)</title>
+    <link rel="stylesheet" type="text/css" href="..//shared/moodle.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+    <div class="d-flex flex-column h-100">
+        <nav class="navbar navbar-light bg-white border-bottom">
+            <div class="container-fluid p-0">
+                <a class="navbar-brand" href="https://virtual.um.edu.ar" title="Cátedras Virtuales - UMVirtual">
+                    Cátedras Virtuales - UMVirtual
+                </a>
+            </div>
+        </nav>
+        <main class="container-fluid mt-2 flex-grow-1 flex-shrink-1">
+            <div>
+                <h1><a href="../index.html">Cálculo II (0004)</a></h1>
+                <p>Cálculo II (0004)</p>
+                    <h2>
+        CAPÍTULO 3: DERIVADA DE UNA FUNCIÓN
+    </h2>
+
+    <div class="alert alert-info alert-block">
+        Este archivo descargado forma parte del contenido de <a href="https://virtual.um.edu.ar/mod/folder/view.php?id=126186">CAPÍTULO 3: DERIVADA DE UNA FUNCIÓN</a> el jueves, 24 de abril de 2025, 16:49. Tenga en cuenta que contenido o archivos con tamaño superior a  50 MB no serán descargados.    </div>
+
+
+    <div>
+        <h3>Archivos y subcarpetas</h3>
+        <div>
+
+            <ul>
+                <li><a href="content/1).DERIVADA - Parte A" title="Visualizar el archivo 1).DERIVADA - Parte A">1).DERIVADA - Parte A</a></li>
+                <li><a href="content/2).TP_3-Derivadas-Parte A.pdf" title="Visualizar el archivo 2).TP_3-Derivadas-Parte A.pdf">2).TP_3-Derivadas-Parte A.pdf</a></li>
+                <li><a href="content/3).DERIVADA-Parte B.pdf" title="Visualizar el archivo 3).DERIVADA-Parte B.pdf">3).DERIVADA-Parte B.pdf</a></li>
+                <li><a href="content/4).Derivada de la funcion compuesta.mp4" title="Visualizar el archivo 4).Derivada de la funcion compuesta.mp4">4).Derivada de la funcion compuesta.mp4</a></li>
+                <li><a href="content/5).DERIVADA -Parte C.pdf" title="Visualizar el archivo 5).DERIVADA -Parte C.pdf">5).DERIVADA -Parte C.pdf</a></li>
+                <li><a href="content/DERIVADA -PARTE D.pdf" title="Visualizar el archivo DERIVADA -PARTE D.pdf">DERIVADA -PARTE D.pdf</a></li>
+                <li><a href="content/Ejercicios rersuesltos de regla de la cadena.pdf" title="Visualizar el archivo Ejercicios rersuesltos de regla de la cadena.pdf">Ejercicios rersuesltos de regla de la cadena.pdf</a></li>
+                <li><a href="content/TP_3-Derivadas-PARTE B.pdf" title="Visualizar el archivo TP_3-Derivadas-PARTE B.pdf">TP_3-Derivadas-PARTE B.pdf</a></li>
+            </ul>
+        </div>
+    </div>
+    <hr>
+
+            </div>
+        </main>
+        <footer id="page-footer" class="py-3">
+            <div class="container">
+                <div>Este archivo es parte del contenido descargado de <a href="https://virtual.um.edu.ar/course/view.php?id=262">Cálculo II (0004)</a> por Lucas Garcia el jueves, 24 de abril de 2025, 16:49.</div>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

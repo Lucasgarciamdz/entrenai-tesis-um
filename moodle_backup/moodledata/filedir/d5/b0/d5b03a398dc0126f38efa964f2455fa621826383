@@ -1,0 +1,62 @@
+# Índice de Respuestas a Preguntas Críticas
+
+Este documento contiene respuestas detalladas a todas las preguntas críticas, reflexiones y dilemas planteados en el resumen general. Está dividido en cuatro partes para facilitar su lectura y comprensión.
+
+## [Parte 1](./respuestas_preguntas_criticas.md)
+
+### Conceptos Fundamentales de Calidad
+- **Reflexión**: ¿Es suficiente la definición ISO 8402 para el software? ¿Por qué la calidad del software podría requerir consideraciones especiales comparado con otros productos?
+- **Pregunta crítica**: ¿Puede un software cumplir perfectamente con sus especificaciones técnicas pero aún así considerarse de baja calidad? Argumenta ambas posiciones.
+- **Para reflexionar**: ¿Qué responsabilidad ética tienen los profesionales de QA en situaciones donde la seguridad está en juego? ¿Dónde acaba la responsabilidad técnica y comienza la ética profesional?
+
+### Roles en Calidad de Software
+- **Análisis crítico**: ¿Puede un buen tester convertirse automáticamente en un buen QA? ¿Qué habilidades adicionales necesitaría desarrollar?
+
+### Herramientas y Conceptos Clave
+- **Pregunta para profundizar**: Un caso de uso y un caso de prueba pueden parecer similares. ¿Cuáles son las diferencias fundamentales en su propósito, estructura y contenido?
+- **Decisión estratégica**: ¿Cuándo conviene automatizar pruebas y cuándo es preferible mantener el testing manual? Considera factores como costo, tiempo, frecuencia de cambios y criticidad de la funcionalidad.
+
+## [Parte 2](./respuestas_preguntas_criticas_parte_2.md)
+
+- **Dilema**: Antes de un despliegue urgente, ¿es mejor ejecutar un Smoke Testing rápido o un Regression Testing completo? Argumenta ambas posiciones.
+
+### Dimensiones de Calidad según Garvin
+- **Ejemplo para análisis**: La percepción de calidad de un producto de Apple vs. un producto con especificaciones técnicas similares pero de una marca menos reconocida. ¿Cómo influye la percepción en la evaluación de calidad?
+- **Pregunta de examen**: ¿Cuál dimensión de calidad consideras más importante para una aplicación bancaria? ¿Y para una aplicación de redes sociales? Justifica tu respuesta.
+
+### Modelo de Calidad de McCall
+- **Caso para debate**: Una aplicación tiene excelente portabilidad y reusabilidad, pero su usabilidad es deficiente. ¿Se puede considerar de alta calidad? Argumenta tu posición.
+- **Pregunta crítica**: ¿El modelo de McCall sigue siendo relevante en la era de metodologías ágiles y desarrollo continuo? ¿Qué factores adicionales deberían considerarse en el contexto actual?
+
+## [Parte 3](./respuestas_preguntas_criticas_parte_3.md)
+
+### Intuitividad y Usabilidad
+- **Reflexión**: ¿Es posible diseñar una interfaz intuitiva para todos los públicos? ¿O siempre habrá un compromiso entre especialización para un público específico y accesibilidad general?
+
+### Metodologías de Calidad
+- **Pregunta de análisis**: ¿Puede una funcionalidad cumplir con todos los Acceptance Criteria pero aún así no cumplir con la Definition of Done? Explica con un ejemplo.
+
+### Preguntas para preparación del examen (primera parte)
+- **Verdadero o Falso**: "El testing automatizado siempre es mejor que el testing manual."
+  - Argumenta por qué podría ser verdadero
+  - Argumenta por qué podría ser falso
+- **Análisis de caso**: Una aplicación crítica para un hospital necesita ser actualizada urgentemente por un fallo de seguridad. ¿Qué estrategia de pruebas recomendarías y por qué?
+- **Pregunta conceptual**: Explica cómo se relacionan y difieren los conceptos de "Calidad Estructural" y "Calidad Funcional". ¿Puede un software tener alta calidad en una dimensión pero baja en otra?
+
+## [Parte 4](./respuestas_preguntas_criticas_parte_4.md)
+
+### Preguntas para preparación del examen (segunda parte)
+- **Escenario práctico**: Como QA en un equipo ágil, encuentras un error crítico el día antes de una entrega importante. ¿Cómo abordarías esta situación? Considera factores como la comunicación, análisis de impacto y posibles soluciones.
+- **Pregunta integrada**: ¿Cómo se complementan los modelos de Garvin y McCall para ofrecer una visión holística de la calidad del software? ¿Qué aspectos no cubren adecuadamente?
+
+## Cómo utilizar estas respuestas
+
+Estas respuestas detalladas complementan el resumen general de las clases. Te recomendamos:
+
+1. Primero leer el [resumen general](./resumen_general.md) completo
+2. Reflexionar sobre las preguntas planteadas y formular tus propias respuestas
+3. Contrastar tus respuestas con las proporcionadas en estos documentos
+4. Identificar perspectivas alternativas o complementarias 
+5. Utilizar estas respuestas como base para profundizar en los temas que consideres más relevantes
+
+Recuerda que en el ámbito de la calidad de software, muchas preguntas no tienen una única respuesta correcta. Lo importante es desarrollar un marco conceptual sólido y la capacidad de argumentar tus posiciones con fundamentos teóricos y prácticos.

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Cátedras Virtuales - UMVirtual - Cálculo II (0004)</title>
+    <link rel="stylesheet" type="text/css" href=".//shared/moodle.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+    <div class="d-flex flex-column h-100">
+        <nav class="navbar navbar-light bg-white border-bottom">
+            <div class="container-fluid p-0">
+                <a class="navbar-brand" href="https://virtual.um.edu.ar" title="Cátedras Virtuales - UMVirtual">
+                    Cátedras Virtuales - UMVirtual
+                </a>
+            </div>
+        </nav>
+        <main class="container-fluid mt-2 flex-grow-1 flex-shrink-1">
+            <div>
+                <h1><a href="./index.html">Cálculo II (0004)</a></h1>
+                <p>Cálculo II (0004)</p>
+                    <div class="alert alert-info alert-block">
+        Este archivo es parte del contenido descargado de <a href="https://virtual.um.edu.ar/course/view.php?id=262">Cálculo II (0004)</a>.
+    </div>
+    <h2>Resumen</h2>
+    <div>
+        <div class="text_to_html">Es una materia correspondiente al segundo trimestre<br />
+Es correlativa de Cálculo I.<br />
+<br />
+Los profesores integrantes de la cátedra son:<br />
+<br />
+Titular:Esp. Prof. Viviana Villar<br />
+Titular asociado: Esp. Ing. Patricia Weidmann<br />
+Prof, Adjunto: Esp. Ana Berliansky <br />
+Ing. Graciela Brandi<br />
+<br />
+Taller para Recursantes:<br />
+Prof, Julieta Herrero</div>
+    </div>
+    <hr>
+
+
+            </div>
+        </main>
+        <footer id="page-footer" class="py-3">
+            <div class="container">
+                <div>Este archivo es parte del contenido descargado de <a href="https://virtual.um.edu.ar/course/view.php?id=262">Cálculo II (0004)</a> por Lucas Garcia el jueves, 24 de abril de 2025, 16:50.</div>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

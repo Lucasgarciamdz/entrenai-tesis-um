@@ -1,0 +1,163 @@
+# Resumen Aseguramiento de Calidad de Software - Clases 1, 2 y 3
+
+## Conceptos Fundamentales de Calidad
+
+### ¿Qué es la Calidad?
+
+La ISO 8402 define calidad como: "Totalidad de características de una entidad que determinan su capacidad para satisfacer necesidades explícitas e implícitas".
+
+**Reflexión**: ¿Es suficiente esta definición para el software? ¿Por qué la calidad del software podría requerir consideraciones especiales comparado con otros productos?
+
+La calidad del software es un concepto multidimensional que puede interpretarse desde diferentes perspectivas:
+
+- **Punto de vista trascendental**: Satisfacción de las metas específicas del usuario final
+- **Punto de vista del fabricante**: Cumplimiento de las especificaciones originales
+- **Punto de vista del producto**: Características inherentes del producto
+- **Punto de vista basado en el valor**: Relación entre lo que el cliente paga y lo que recibe
+
+**Pregunta crítica**: ¿Puede un software cumplir perfectamente con sus especificaciones técnicas pero aún así considerarse de baja calidad? Argumenta ambas posiciones.
+
+### Importancia de la Calidad de Software
+
+> "Dejemos de desperdiciar $78 mil millones de dólares al año" - CIO Magazine [LEVO1]
+
+Las fallas en la calidad de software pueden tener consecuencias graves:
+- Pérdidas económicas masivas
+- Daños a la reputación de las empresas
+- En casos extremos, pueden provocar daños físicos o incluso pérdidas humanas (caso del hospital de Panamá con el software de radiación)
+
+**Para reflexionar**: ¿Qué responsabilidad ética tienen los profesionales de QA en situaciones donde la seguridad está en juego? ¿Dónde acaba la responsabilidad técnica y comienza la ética profesional?
+
+## Roles en Calidad de Software
+
+### Tester vs QA
+
+| **Tester** | **QA (Quality Assurance)** |
+|------------|----------------------------|
+| Enfoque reactivo | Enfoque preventivo |
+| Encuentra y reporta errores | Asegura la calidad del proceso completo |
+| Ejecuta pruebas manuales/automatizadas | Diseña y supervisa procesos de calidad |
+| Limitado a la fase de pruebas | Cubre todo el ciclo de desarrollo |
+
+**Análisis crítico**: ¿Puede un buen tester convertirse automáticamente en un buen QA? ¿Qué habilidades adicionales necesitaría desarrollar?
+
+## Herramientas y Conceptos Clave
+
+### Herramientas del área de QA
+
+- **Casos de Uso**: Describen cómo un usuario interactúa con el software para lograr un objetivo
+- **Casos de Prueba (Test Case)**: Instrucciones para probar una funcionalidad específica
+- **Diagramas**: Clase, ER, Secuencia
+- **Wireframes**: Representación visual de la interfaz de usuario
+- **Issue Tracker**: Sistemas para registrar y gestionar bugs encontrados
+
+**Pregunta para profundizar**: Un caso de uso y un caso de prueba pueden parecer similares. ¿Cuáles son las diferencias fundamentales en su propósito, estructura y contenido?
+
+### Tipos de Testing
+
+- **Manual Testing**: Ejecución de pruebas siguiendo un plan predefinido
+- **Automation Testing**: Uso de herramientas para automatizar pruebas repetitivas
+- **Exploratory Testing**: Exploración creativa del software para encontrar errores inesperados
+- **Performance Testing**: Evaluación del rendimiento bajo carga
+
+**Decisión estratégica**: ¿Cuándo conviene automatizar pruebas y cuándo es preferible mantener el testing manual? Considera factores como costo, tiempo, frecuencia de cambios y criticidad de la funcionalidad.
+
+#### Comparativa: Smoke Testing vs Regression Testing
+
+| **Smoke Testing** | **Regression Testing** |
+|-------------------|------------------------|
+| Pruebas básicas y rápidas | Pruebas completas y detalladas |
+| Verifica funcionalidades críticas | Verifica que los cambios no afecten funcionalidades existentes |
+| Se ejecuta primero | Se ejecuta después del Smoke Testing |
+| Determina si continuar con más pruebas | Asegura estabilidad a largo plazo |
+
+**Dilema**: Antes de un despliegue urgente, ¿es mejor ejecutar un Smoke Testing rápido o un Regression Testing completo? Argumenta ambas posiciones.
+
+## Dimensiones de Calidad según Garvin
+
+David A. Garvin (Profesor de Harvard) propone un enfoque multidimensional que va desde la conformidad hasta la visión trascendental (estética):
+
+1. **Calidad del desempeño**: ¿El software entrega el contenido y funciones especificadas dando valor al usuario?
+2. **Calidad de las características**: ¿Tiene características que sorprenden y agradan?
+3. **Confiabilidad**: ¿Proporciona funcionalidad sin fallar y está disponible cuando se necesita?
+4. **Conformidad**: ¿Concuerda con estándares relevantes y convenciones de diseño?
+5. **Durabilidad**: ¿Puede recibir mantenimiento sin efectos colaterales?
+6. **Servicio**: ¿Se puede mantener o corregir a corto plazo?
+7. **Estética**: Elegancia, flujo único y presencia obvia pero difícil de cuantificar
+8. **Percepción**: Influencia de prejuicios y reputación en la percepción del usuario
+
+**Ejemplo para análisis**: La percepción de calidad de un producto de Apple vs. un producto con especificaciones técnicas similares pero de una marca menos reconocida. ¿Cómo influye la percepción en la evaluación de calidad?
+
+**Pregunta de examen**: ¿Cuál dimensión de calidad consideras más importante para una aplicación bancaria? ¿Y para una aplicación de redes sociales? Justifica tu respuesta.
+
+## Modelo de Calidad de McCall
+
+Creado en 1977, organiza los factores de calidad en tres categorías:
+
+### 1. Revisión del Producto
+- **Facilidad de mantenimiento**: ¿Qué tan fácil es corregir errores?
+- **Flexibilidad**: ¿Qué tan fácil es realizar cambios?
+- **Facilidad de prueba**: ¿Qué tan fácil es validar el software?
+
+### 2. Transición del Producto
+- **Portabilidad**: Facilidad para transferir el software a diferentes entornos
+- **Reusabilidad**: Capacidad de utilizar componentes en otros sistemas
+- **Interoperabilidad**: Capacidad para interactuar con otros sistemas
+
+### 3. Operación del Producto
+- **Corrección**: ¿Hace lo que debe hacer?
+- **Fiabilidad**: ¿Lo hace de forma consistente y precisa?
+- **Usabilidad**: ¿Es fácil de usar?
+- **Integridad**: ¿Mantiene segura la información?
+- **Eficiencia**: ¿Utiliza los recursos de manera óptima?
+
+**Caso para debate**: Una aplicación tiene excelente portabilidad y reusabilidad, pero su usabilidad es deficiente. ¿Se puede considerar de alta calidad? Argumenta tu posición.
+
+**Pregunta crítica**: ¿El modelo de McCall sigue siendo relevante en la era de metodologías ágiles y desarrollo continuo? ¿Qué factores adicionales deberían considerarse en el contexto actual?
+
+## Intuitividad y Usabilidad
+
+Aspectos clave a evaluar:
+- ¿La interfaz facilita la comprensión?
+- ¿Las operaciones son fáciles de localizar e iniciar?
+- ¿Usa metáforas reconocibles?
+- ¿Economiza el uso del teclado o mouse?
+- ¿La estética ayuda a la comprensión?
+
+**Punto clave para examen**: La intuitividad depende del público objetivo. Lo que es intuitivo para un grupo puede no serlo para otro.
+
+**Reflexión**: ¿Es posible diseñar una interfaz intuitiva para todos los públicos? ¿O siempre habrá un compromiso entre especialización para un público específico y accesibilidad general?
+
+## Metodologías de Calidad
+
+### Acceptance Criteria vs Definition of Done
+
+- **Acceptance Criteria**: Condiciones que debe cumplir una funcionalidad para ser aceptada por el cliente
+- **Definition of Done (DoD)**: Estado en el que debe encontrarse una característica para considerarse completa
+
+**Pregunta de análisis**: ¿Puede una funcionalidad cumplir con todos los Acceptance Criteria pero aún así no cumplir con la Definition of Done? Explica con un ejemplo.
+
+## Preguntas para preparación del examen
+
+1. **Verdadero o Falso**: "El testing automatizado siempre es mejor que el testing manual."
+   - Argumenta por qué podría ser verdadero
+   - Argumenta por qué podría ser falso
+
+2. **Análisis de caso**: Una aplicación crítica para un hospital necesita ser actualizada urgentemente por un fallo de seguridad. ¿Qué estrategia de pruebas recomendarías y por qué?
+
+3. **Pregunta conceptual**: Explica cómo se relacionan y difieren los conceptos de "Calidad Estructural" y "Calidad Funcional". ¿Puede un software tener alta calidad en una dimensión pero baja en otra?
+
+4. **Escenario práctico**: Como QA en un equipo ágil, encuentras un error crítico el día antes de una entrega importante. ¿Cómo abordarías esta situación? Considera factores como la comunicación, análisis de impacto y posibles soluciones.
+
+5. **Pregunta integrada**: ¿Cómo se complementan los modelos de Garvin y McCall para ofrecer una visión holística de la calidad del software? ¿Qué aspectos no cubren adecuadamente?
+
+## Puntos clave a recordar
+
+- La calidad no es un atributo único sino multidimensional
+- El contexto determina qué dimensiones de calidad son prioritarias
+- La percepción de calidad puede ser tan importante como la calidad técnica
+- Los modelos de calidad (Garvin, McCall) ofrecen marcos para estructurar la evaluación
+- La calidad debe considerarse desde el inicio del proceso, no solo en la fase de pruebas
+- El objetivo final es la satisfacción del usuario, que combina producto funcional, buena calidad y entrega oportuna
+
+> "La calidad es importante, pero si el usuario no está satisfecho, nada de lo demás importa."

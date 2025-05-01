@@ -1,0 +1,127 @@
+# Clase N° 1: Aseguramiento de Calidad de Software
+
+## Introducción a la Materia
+
+### Objetivos de la materia
+**Nuestro objetivo es que los alumnos adquieran conocimientos básicos necesarios para convertirse en un profesional de QA indispensable en cualquier equipo de desarrollo de software.**
+
+### Metodología y formato de clases
+- **Modelo de capacitación vs. modelo clásico**: Se seguirá un modelo de capacitaciones similar a los entrenamientos de Desarrollo, QA, UX, etc.
+- **Discusión vs. dictado monótono**: Se dará espacio a los alumnos para compartir experiencias y facilitar la adopción de nuevos conceptos.
+- **Mejora continua**: Compromiso con la mejora año a año de la dinámica, contenido y dictado de clases.
+
+### Información general
+- **Cantidad de clases**: 10 a 12 dependiendo de los resultados de parciales y velocidad de validación de conocimientos.
+- **Temas**:
+  - Parte teórica necesaria para cubrir con los requisitos del plan de estudios
+  - Parte práctica relacionada con la actualidad
+- **TPs y exámenes**:
+  - Libro abierto con una duración de 1.5 horas
+  - El día del examen se dictará la clase de forma normal
+- **Recuperatorios**: 1 o 2 clases después del examen original
+
+## Unidad 1: Introducción a la Calidad del Software
+
+### Contenido de la unidad
+- Importancia de la calidad de software
+- Definiciones de calidad
+- Software de calidad
+- Historia y contexto
+- Tipos de calidad "high level"
+- Ejercicios prácticos
+- Qué es "calidad" desde diferentes puntos de vista
+
+### Definición de Calidad
+
+**ISO 8402:**
+> "Totalidad de características de una entidad que determinan su capacidad para satisfacer necesidades explícitas e implícitas."
+
+La norma ISO 8402 define los términos básicos y fundamentales relacionados con los conceptos de la calidad, aplicables a todos los campos.
+
+### ¿Importa la calidad de software?
+
+**Caso de estudio: Hospital de Panamá (Noviembre 2000)**
+
+En un hospital de Panamá, 28 pacientes recibieron dosis masivas de rayos gamma durante su tratamiento contra diversos tipos de cáncer. Como consecuencia:
+- 5 pacientes murieron por envenenamiento radiactivo 
+- 15 más sufrieron complicaciones serias
+
+**¿Qué ocasionó esta tragedia?**
+Un paquete de software desarrollado por una compañía estadounidense, modificado por técnicos del hospital para calcular las dosis de radiación para cada paciente.
+
+**Consecuencias legales:**
+- Los tres médicos que "customizaron" el software fueron acusados de asesinato en segundo grado
+- La empresa estadounidense enfrentó litigios serios en ambos países
+
+Este caso ilustra la importancia crítica de la calidad del software, especialmente en sistemas donde la vida humana está en juego.
+
+### ¿Qué es el software con calidad?
+
+**Preguntas básicas para evaluar la calidad:**
+- ¿Hace lo que se le pide?
+- ¿Lo hace de forma confiable todo el tiempo?
+- ¿Utiliza los recursos adecuados para la ejecución de sus funciones?
+- ¿Pueden prevenirse accesos no autorizados a la información que maneja?
+- ¿Es fácil y cómodo de manejar?
+
+### Tester vs QA: ¿Cuál es la diferencia?
+
+Ambos roles son clave para la calidad del software, pero tienen enfoques y responsabilidades diferentes.
+
+| **Tester** | **QA (Quality Assurance)** |
+|------------|----------------------------|
+| **Enfoque**: Reactivo | **Enfoque**: Preventivo |
+| **Objetivo**: Encontrar y reportar errores en el software | **Objetivo**: Asegurar la calidad del proceso de desarrollo |
+| **Actividades principales**: <br>- Ejecutar pruebas manuales o automatizadas <br>- Reportar bugs y validar correcciones | **Actividades principales**: <br>- Diseñar y supervisar procesos de calidad <br>- Establecer métricas y estándares <br>- Prevenir errores desde las primeras etapas |
+| **Alcance**: Limitado a la fase de pruebas | **Alcance**: Cubre todo el ciclo de desarrollo |
+
+### Terminología relacionada con el área
+
+- Software Engineering
+- Software Quality
+- Quality Assurance & Control
+- Software Process
+- Reviews & Inspections
+- Test Strategy
+- Test Planning
+- Test Estimation
+- Test Requirements
+- Test Design
+- Test Techniques
+- Static Test Techniques
+- Test Metrics
+- Test Execution
+- Test Environment
+- Test Reporting
+- Test Process
+- Testing Standards
+- Test Tools
+- Configuration Management
+- Test Team Management
+- Defect Prevention
+
+### Un poco de historia
+
+**Año 1990: El despertar de la industria del software**
+
+En la década de 1990, las principales corporaciones enfrentaron un problema crítico: miles de millones de dólares se desperdiciaban en software que no cumplía con las características ni la funcionalidad prometidas.
+
+**CIO Magazine [LEVO1] lanzó una alerta contundente:**
+> "Dejemos de desperdiciar $78 mil millones de dólares al año"
+
+Criticó el hecho de que las empresas estadounidenses gastaban enormes sumas en software que no hacía lo que se suponía que debía hacer.
+
+Este problema evidenció la necesidad de mejorar los procesos de desarrollo y garantizar la calidad del software, lo que llevó a la adopción de prácticas más rigurosas, como las metodologías de Quality Assurance (QA).
+
+### Validando conocimientos
+
+**1. Conceptos básicos**
+- A.1 - ¿Cuál es el significado en español de "QA"?
+- A.2 - ¿Existe diferencia entre los roles de un Tester y un QA? Si es así, explica cuáles son.
+
+**2. Objetivos del área de calidad**
+- A.3 - Según tu entendimiento, ¿cuáles dirías que son los objetivos principales del área de calidad o de los profesionales de calidad de software?
+
+**3. Reflexión y aplicación**
+- A.4 - ¿Por qué crees que es importante el rol de QA en el desarrollo de software?
+- A.5 - Imagina que estás en un proyecto de desarrollo de software y encuentras un error crítico justo antes del lanzamiento. ¿Cómo actuarías como QA para manejar esta situación?

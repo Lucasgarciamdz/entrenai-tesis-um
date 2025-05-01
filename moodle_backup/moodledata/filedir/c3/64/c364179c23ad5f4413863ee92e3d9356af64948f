@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Cátedras Virtuales - UMVirtual - Cálculo II (0004)</title>
+    <link rel="stylesheet" type="text/css" href="..//shared/moodle.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+    <div class="d-flex flex-column h-100">
+        <nav class="navbar navbar-light bg-white border-bottom">
+            <div class="container-fluid p-0">
+                <a class="navbar-brand" href="https://virtual.um.edu.ar" title="Cátedras Virtuales - UMVirtual">
+                    Cátedras Virtuales - UMVirtual
+                </a>
+            </div>
+        </nav>
+        <main class="container-fluid mt-2 flex-grow-1 flex-shrink-1">
+            <div>
+                <h1><a href="../index.html">Cálculo II (0004)</a></h1>
+                <p>Cálculo II (0004)</p>
+                    <h2>
+        SE LES RECUERDA A LOS ALUMNOS DE CALCULO I , TURNO...
+    </h2>
+
+    <div class="alert alert-info alert-block">
+        Este archivo descargado forma parte del contenido de <a href="">SE LES RECUERDA A LOS ALUMNOS DE CALCULO I , TURNO...</a> el jueves, 24 de abril de 2025, 16:49. Tenga en cuenta que contenido o archivos con tamaño superior a  50 MB no serán descargados.    </div>
+
+    <h3>Descripción</h3>
+    <div>
+        <p>SE LES RECUERDA A LOS ALUMNOS DE CALCULO I , TURNO MAÑANA Y TARDE, QUE A PARTIR DEL DÍA LUNES 11 DE MAYO, <b>LAS CLASES SERÁN PARA AMBOS TURNOS A LA VEZ,</b> EN LOS SIGUIENTES HORARIOS:</p><p>Lunes   de 9hs a 11hs</p><p>Lunes de 15hs a 17hs</p><p>miercoles de 15hs a 17hs</p><p>jueves de 9hs a 11hs</p><p><span style="font-size:0.9375rem;">Se solicita a los alumnos puntualidad y colaboración en las clases ya que van a ser muchos alumnos.</span><br /></p><p><span style="font-size:0.9375rem;">Esta decisión se debe, a que sólo queda un mes de clases, y de esta manera se duplica la cantidad de  clases para cada turno, y nos permitiría el mejor desarrollo de los temas que quedan.</span></p><p><span style="font-size:0.9375rem;">Muchas gracias</span></p>
+    </div>
+    <hr>
+
+
+            </div>
+        </main>
+        <footer id="page-footer" class="py-3">
+            <div class="container">
+                <div>Este archivo es parte del contenido descargado de <a href="https://virtual.um.edu.ar/course/view.php?id=262">Cálculo II (0004)</a> por Lucas Garcia el jueves, 24 de abril de 2025, 16:49.</div>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

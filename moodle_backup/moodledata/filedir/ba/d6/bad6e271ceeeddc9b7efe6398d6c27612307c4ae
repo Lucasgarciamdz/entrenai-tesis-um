@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Cátedras Virtuales - UMVirtual - Cálculo II (0004)</title>
+    <link rel="stylesheet" type="text/css" href=".//shared/moodle.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+    <div class="d-flex flex-column h-100">
+        <nav class="navbar navbar-light bg-white border-bottom">
+            <div class="container-fluid p-0">
+                <a class="navbar-brand" href="https://virtual.um.edu.ar" title="Cátedras Virtuales - UMVirtual">
+                    Cátedras Virtuales - UMVirtual
+                </a>
+            </div>
+        </nav>
+        <main class="container-fluid mt-2 flex-grow-1 flex-shrink-1">
+            <div>
+                <h1><a href="./index.html">Cálculo II (0004)</a></h1>
+                <p>Cálculo II (0004)</p>
+                    <div class="alert alert-info alert-block">
+        Este archivo es parte del contenido descargado de <a href="https://virtual.um.edu.ar/course/view.php?id=262">Cálculo II (0004)</a>.
+    </div>
+    <div>
+        <a href="./about.html">Resumen del curso</a>
+    </div>
+
+    <div>
+        <h3>GENERAL / AVISOS</h3>
+        <div>
+            <h3 style="text-align:center;"><b><i>Estimados alumnos </i></b></h3>
+<h3 style="text-align:center;"><i><strong>BIENVENIDOS A LA CÁTEDRA DE CÁLCULO II</strong></i></h3>
+<p><i><strong> </strong></i></p>
+<h4><span style="color:#333333;">Estaremos junto a Ustedes para ayudarlos en esta otra etapa universitaria. </span></h4>
+<h4><span style="color:#333333;"> </span></h4>
+<p><span style="color:#333333;">                                                  <img src="_course/section/image%20%284%29.png" alt="" class="img-fluid" /><br /></span></p>
+        </div>
+        <ul>
+            <li><a href="./rea_de_texto_y_medios_INTEGRA..._.226139/index.html">INTEGRANTES DE LA CÁTEDRA Prof. Titular:    ... (Área de texto y medios)</a></li>
+            <li><a href="./rea_de_texto_y_medios_Etiquet..._.345537/index.html">Etiqueta (copia) (Área de texto y medios)</a></li>
+            <li><a href="./rea_de_texto_y_medios_HORARIO..._.345516/index.html">
+HORARIOS DE CLASE
+
+
+Turno mañana:  Lunes y Ju... (Área de texto y medios)</a></li>
+            <li><a href="./rea_de_texto_y_medios_Etiquet..._.429407/index.html">Etiqueta (copia) (copia) (Área de texto y medios)</a></li>
+            <li><a href="./rea_de_texto_y_medios_TURNO_M..._.230175/index.html">
+TURNO MAÑANA Y TARDE
+No olvides, previo a la cl... (Área de texto y medios)</a></li>
+            <li><a href="./rea_de_texto_y_medios_Etiquet..._.345536/index.html">Etiqueta (copia) (Área de texto y medios)</a></li>
+            <li><a href="./Foro_AvisosHORARIO_DE_CONSULT..._.616910/index.html">AvisosHORARIO DE CONSULTA MESA FEBRERO 2025 (Foro)</a></li>
+            <li><a href="./rea_de_texto_y_medios_CURSADO..._.669761/index.html">CURSADO CÁLCULO I- SEGUNDO SEMESTRE (Área de texto y medios)</a></li>
+            <li><a href="./rea_de_texto_y_medios_consult..._.692822/index.html">consulta mesa diciembre 2024 (Área de texto y medios)</a></li>
+        </ul>
+        <hr>
+        <h3></h3>
+        <hr>
+        <h3>AVISO URGENTE A RECURSANTES DE CALCULO II 2025</h3>
+        <ul>
+            <li><a href="./rea_de_texto_y_medios_AVISO_.709965/index.html">AVISO (Área de texto y medios)</a></li>
+        </ul>
+        <hr>
+        <h3>PROGRAMA Y CRONOGRAMA</h3>
+        <ul>
+            <li><a href="./rea_de_texto_y_medios_CRONOGR..._.429378/index.html">CRONOGRAMAS por TURNO (Área de texto y medios)</a></li>
+            <li><a href="./Archivo_CRONOGRAMA_TM_.669830/index.html">CRONOGRAMA TM (Archivo)</a></li>
+            <li><a href="./Archivo_CRONOGRAMA_TT_.669832/index.html">CRONOGRAMA TT (Archivo)</a></li>
+            <li><a href="./rea_de_texto_y_medios_PROGRAMA_.690750/index.html">PROGRAMA (Área de texto y medios)</a></li>
+            <li><a href="./Archivo_PROGRAMA_DE_CALCULO_I..._.690751/index.html">PROGRAMA DE CALCULO II 2024 (Archivo)</a></li>
+        </ul>
+        <hr>
+        <h3>HORARIOS DE CONSULTA: Mesas y Clases</h3>
+        <div>
+            <p>El horario de consulta de Cálculo II serán los jueves 11:30 hs</p>
+<p>Link </p>
+<p><br />Enlace de la videollamada: https://meet.google.com/jdx-uwzh-aic<br /><br /></p>
+        </div>
+        <ul>
+            <li><a href="./rea_de_texto_y_medios_horario..._.688171/index.html">horario de consulta Ing Brandi (Área de texto y medios)</a></li>
+        </ul>
+        <hr>
+        <h3>Prof. Villar</h3>
+        <ul>
+            <li><a href="./rea_de_texto_y_medios_Prof_Vi..._.661971/index.html">Prof. Villar (Área de texto y medios)</a></li>
+        </ul>
+        <hr>
+        <h3>Ing. WEIDMANN</h3>
+        <ul>
+            <li><a href="./rea_de_texto_y_medios_Consult..._.664272/index.html">Consulta mesa de examen (Área de texto y medios)</a></li>
+        </ul>
+        <hr>
+        <h3>Ing. BRANDI</h3>
+        <ul>
+            <li><a href="./rea_de_texto_y_medios_CONSULT..._.669872/index.html">CONSULTA ING BRANDI (Área de texto y medios)</a></li>
+        </ul>
+        <hr>
+        <h3>Ing. PEDRAZA</h3>
+        <ul>
+            <li><a href="./rea_de_texto_y_medios_CONSULT..._.669873/index.html">CONSULTA DAMIÁN PEDRAZA (Área de texto y medios)</a></li>
+        </ul>
+        <hr>
+        <h3>Prof. REYNOSO</h3>
+        <hr>
+        <h3>EVALUACIONES (Parciales, Globales, Finales)</h3>
+        <div>
+            <h5>Esta sección está destinada a toda la información de evaluaciones: </h5>
+<p>Fechas, horarios, temario, etc.</p>
+        </div>
+        <ul>
+            <li><a href="./rea_de_texto_y_medios_AVISO_P..._.705268/index.html">AVISO PARA RECURSANTES DE CÁLCULO II (Área de texto y medios)</a></li>
+            <li><a href="./rea_de_texto_y_medios_RECUPER..._.702848/index.html">RECUPERATORIO DE GLOBAL (Área de texto y medios)</a></li>
+            <li><a href="./Archivo_RESULTADOS_GLOBAL_IND..._.697001/index.html">RESULTADOS GLOBAL INDUSTRIAL FEBRERO 2025 (Archivo)</a></li>
+            <li><a href="./Archivo_RESULTADOS_GLOBAL_BIO..._.697003/index.html">RESULTADOS GLOBAL BIO, INFORMÁTICA, COMPUTACIÓN, ELECTRÓNICA , ELECTRICA  FEBRERO 2025 (Archivo)</a></li>
+            <li><a href="./rea_de_texto_y_medios_ENTREGA..._.697004/index.html">ENTREGA GLOBALES (Área de texto y medios)</a></li>
+            <li><a href="./rea_de_texto_y_medios_importante_.697005/index.html">importante (Área de texto y medios)</a></li>
+            <li><a href="./rea_de_texto_y_medios__Global_.694089/index.html">. Global (Área de texto y medios)</a></li>
+            <li><a href="./rea_de_texto_y_medios_NOTAS_D..._.607663/index.html">NOTAS DE EXAMEN GLOBAL FEBRERO (Área de texto y medios)</a></li>
+            <li><a href="./rea_de_texto_y_medios_NOTAS_R..._.619150/index.html">NOTAS RECUPERATORIO GLOBAL CÁLCULO II MARZO 2024 (Área de texto y medios)</a></li>
+            <li><a href="./rea_de_texto_y_medios_SEGUNDO..._.689037/index.html">SEGUNDO PARCIAL NOTAS (Área de texto y medios)</a></li>
+            <li><a href="./Archivo_notas_del_segundo_par..._.689038/index.html">notas del segundo parcial de Industrial (Archivo)</a></li>
+            <li><a href="./Archivo_Notas_segundo_parcial..._.689039/index.html">Notas segundo parcial de BIO (Archivo)</a></li>
+            <li><a href="./Archivo_Notas_de_segundo_parc..._.689040/index.html">Notas de segundo parcial de INFORMÁTICA (Archivo)</a></li>
+            <li><a href="./Archivo_Notas_de_segundo_parc..._.689041/index.html">Notas de segundo parcial de COMPUTACIÓN (Archivo)</a></li>
+            <li><a href="./Archivo_Notas_de_segundo_parc..._.689047/index.html">Notas de segundo parcial de ELECTRÓNICA Y ELÉCTRICA (Archivo)</a></li>
+            <li><a href="./rea_de_texto_y_medios_LISTA_.689131/index.html">LISTA (Área de texto y medios)</a></li>
+            <li><a href="./Archivo_Lista_de_alumnos_que_..._.689132/index.html">Lista de alumnos que recuperan el primer parcial (Archivo)</a></li>
+            <li><a href="./Archivo_lista_de_alumnos_que_..._.689133/index.html">lista de alumnos que recuperan el segundo parcial (Archivo)</a></li>
+            <li><a href="./rea_de_texto_y_medios_NOTAS_R..._.690346/index.html">NOTAS RECUP DEL SEGUNDO PARCIAL (Área de texto y medios)</a></li>
+            <li><a href="./Archivo_NOTAS_DE_LOS_RECUPERA..._.690437/index.html">NOTAS DE LOS RECUPERATORIOS TM (Archivo)</a></li>
+            <li><a href="./Archivo_NOTAS_DE_LOS_RECUPERA..._.690438/index.html">NOTAS DE LOS RECUPERATORIOS TT (Archivo)</a></li>
+            <li><a href="./rea_de_texto_y_medios_GLOBAL_.694088/index.html">GLOBAL (Área de texto y medios)</a></li>
+        </ul>
+        <hr>
+        <h3>CAP I: EDO ORDINARIAS DE PRIMER ORDEN</h3>
+        <ul>
+            <li><a href="./rea_de_texto_y_medios_GUA_DE_..._.429328/index.html">GUÍA DE ESTUDIO&nbsp;(Teórico - Práctico) (Área de texto y medios)</a></li>
+            <li><a href="./rea_de_texto_y_medios_UNIDAD_I_.503783/index.html">UNIDAD I (Área de texto y medios)</a></li>
+            <li><a href="./Archivo_UNIDAD_I_.667218/index.html">UNIDAD I (Archivo)</a></li>
+            <li><a href="./Archivo_UNIDAD_I_.669533/index.html">UNIDAD I (Archivo)</a></li>
+            <li><a href="./rea_de_texto_y_medios_Etiqueta_.429333/index.html">Etiqueta (Área de texto y medios)</a></li>
+            <li><a href="./rea_de_texto_y_medios_Trabajo..._.429335/index.html">Trabajos Prácticos (Área de texto y medios)</a></li>
+            <li><a href="./Archivo_TRABAJO_PRCTICO_N1_-_..._.667384/index.html">TRABAJO PRÁCTICO N°1 - PARTE  A (Archivo)</a></li>
+            <li><a href="./Archivo_TRABAJO_PRCTICO_N1_-_..._.669592/index.html">TRABAJO PRÁCTICO N°1 - PARTE B (Archivo)</a></li>
+            <li><a href="./Archivo_EJERCITACIN_PROBLEMAS_.670607/index.html">EJERCITACIÓN PROBLEMAS (Archivo)</a></li>
+            <li><a href="./rea_de_texto_y_medios_Etiquet..._.429334/index.html">Etiqueta (copia) (Área de texto y medios)</a></li>
+        </ul>
+        <hr>
+        <h3>CAP II: EDO DE SEGUNDO ORDEN</h3>
+        <ul>
+            <li><a href="./rea_de_texto_y_medios_MATERIA..._.435101/index.html">MATERIAL DE ESTUDIO PARA LOS DOS TURNOS (Área de texto y medios)</a></li>
+            <li><a href="./Archivo_EDO_LINEALES_DE_SEGUN..._.671910/index.html">EDO LINEALES DE SEGUNDO ORDEN HOMOGÉNEAS 2024 (Archivo)</a></li>
+            <li><a href="./Archivo_EDO_LINEALES_DE_SEGUN..._.673961/index.html">EDO LINEALES DE SEGUNDO ORDEN NO HOMOGÉNEA 2024 (Archivo)</a></li>
+            <li><a href="./Archivo_Tabla_modelos_de_solu..._.676330/index.html">Tabla modelos de soluciones propuestas (Archivo)</a></li>
+            <li><a href="./rea_de_texto_y_medios_Etiqueta_.429341/index.html">Etiqueta (Área de texto y medios)</a></li>
+            <li><a href="./rea_de_texto_y_medios_TRABAJO..._.435656/index.html">TRABAJO&nbsp; PRÁCTICO&nbsp; (Área de texto y medios)</a></li>
+            <li><a href="./Archivo_Trabajo_Prctico_N2_ED..._.510753/index.html">Trabajo Práctico N°2: EDOs lineales de segundo orden (Archivo)</a></li>
+        </ul>
+        <hr>
+        <h3>CAP III: FUNCIONES DE VARIAS VARIABLES</h3>
+        <ul>
+            <li><a href="./Cuestionario_CUESTIONARIO_CAP..._.682055/index.html">CUESTIONARIO CAPÍTULO III (Cuestionario)</a></li>
+            <li><a href="./rea_de_texto_y_medios_AVISO_C..._.685274/index.html">AVISO CAMBIO DE PUNTAJE DEL CUESTIONARIO (Área de texto y medios)</a></li>
+            <li><a href="./rea_de_texto_y_medios_MATERIA..._.438960/index.html">´MATERIAL DE ESTUDIO PARA LOS DOS TURNOS(Teórico -... (Área de texto y medios)</a></li>
+            <li><a href="./Archivo_PARTE_A_PLANOS_EN_EL_..._.675507/index.html">PARTE A PLANOS EN EL ESPACIO TRIDIMENSIONAL (Archivo)</a></li>
+            <li><a href="./Archivo_CAPITULOIII_FUNCIONES..._.675503/index.html">CAPITULOIII: FUNCIONES DE VARIAS VARIABLES (Archivo)</a></li>
+            <li><a href="./Archivo_CAPTULO_III_LIMITE_DOBLE_.680394/index.html">CAPÍTULO III. LIMITE DOBLE (Archivo)</a></li>
+            <li><a href="./rea_de_texto_y_medios_TRABAJO..._.440771/index.html">TRABAJOS PRÁCTICOS (Área de texto y medios)</a></li>
+            <li><a href="./Archivo_TRABAJO_PRCTICO_N3_-_..._.675716/index.html">TRABAJO PRÁCTICO N°3 - Funciones de varias variables - 2024 (Archivo)</a></li>
+            <li><a href="./Archivo_TRABAJO_PRCTICO_N3_-_..._.680839/index.html">TRABAJO PRÁCTICO N°3 - PARTE B: Límite doble - 2024 (Archivo)</a></li>
+        </ul>
+        <hr>
+        <h3>CAP IV: DERIVADAS PARCIALES Y DIRECCIONALES</h3>
+        <ul>
+            <li><a href="./rea_de_texto_y_medios_MATERIA..._.444003/index.html">MATERIAL DE ESTUDIO PARA LOS DOS TURNOTeórico - Pr... (Área de texto y medios)</a></li>
+            <li><a href="./Archivo_CAPTULO_IV_Parte_A-DE..._.517912/index.html">CAPÍTULO IV: Parte A-DERIVADAS PARCIALES (Archivo)</a></li>
+            <li><a href="./Archivo_CAPITULO_IV_PARTE_B_F..._.520505/index.html">CAPITULO IV: PARTE B Fc Diferenciable (Archivo)</a></li>
+            <li><a href="./Archivo_CAPTULO_IV_PARTE_C_DE..._.520507/index.html">CAPÍTULO IV: PARTE C DERIVADA DIRECCIONAL (Archivo)</a></li>
+            <li><a href="./Archivo_CAPTULO_IV_PARTE_D_EX..._.611128/index.html">CAPÍTULO IV: PARTE D: EXTREMOS DE UNA FUNCIÓN DE DOS VARIABLES (Archivo)</a></li>
+            <li><a href="./rea_de_texto_y_medios_TRABAJO..._.444004/index.html">TRABAJOS PRÁCTICOS (Área de texto y medios)</a></li>
+            <li><a href="./Archivo_TRABAJO_PRCTICO_N_4_-..._.681931/index.html">TRABAJO PRÁCTICO N° 4 - Parte A - 2024 (Archivo)</a></li>
+            <li><a href="./Archivo_TRABAJO_PRCTICO_N4_Pa..._.683529/index.html">TRABAJO PRÁCTICO N°4: Parte B y C (Archivo)</a></li>
+            <li><a href="./Archivo_TRABAJO_PRCTICO_4__EX..._.611145/index.html">TRABAJO PRÁCTICO 4 : EXTREMOS DE UNA FUNCIÓN (Archivo)</a></li>
+        </ul>
+        <hr>
+        <h3>CAPÍTULO V -INTEGRALES DOBLES</h3>
+        <ul>
+            <li><a href="./rea_de_texto_y_medios_MATERIA..._.364400/index.html">MATERIAL DE ESTUDIO (Área de texto y medios)</a></li>
+            <li><a href="./Archivo_CAP_V_Integrales_dobl..._.522869/index.html">CAP V: Integrales dobles 2024 (Archivo)</a></li>
+            <li><a href="./rea_de_texto_y_medios_Etiqueta_.364404/index.html">Etiqueta (Área de texto y medios)</a></li>
+            <li><a href="./rea_de_texto_y_medios_TRABAJO..._.370050/index.html">TRABAJOS PRÁCTICOS (copia) (Área de texto y medios)</a></li>
+            <li><a href="./Archivo_TRABAJO_PRCTICO_N5_In..._.686557/index.html">TRABAJO PRÁCTICO N°5: Integrales Dobles - Año 2024 (Archivo)</a></li>
+            <li><a href="./rea_de_texto_y_medios_Etiquet..._.370051/index.html">Etiqueta (copia) (Área de texto y medios)</a></li>
+            <li><a href="./rea_de_texto_y_medios_Etiquet..._.371288/index.html">Etiqueta (copia) (copia) (copia) (copia) (Área de texto y medios)</a></li>
+        </ul>
+        <hr>
+        <h3>APUNTES 2020</h3>
+        <div>
+            <h3 style="text-align:left;"><strong>SOLO PARA ALUMNOS QUE CURSARON EN EL 2020</strong></h3>
+        </div>
+        <hr>
+        <h3>CONDICIONES DE REGULARIDAD 2022 </h3>
+        <hr>
+        <h3>CAP. I: E.D. Ordinarias de 1° orden</h3>
+        <hr>
+        <h3>CAP. II:  E.D. Ordinarias de 2° orden</h3>
+        <hr>
+        <h3>CAP.IV: Partes A y B: Deriv. Parciales - Direccionales - Gradiente</h3>
+        <div>
+            <h3><span><span style="background-color:#98ca3e;color:#333333;"><b><span style="background-color:#ffcf35;">.SOLO PARA ALUMNOS QUE CURSARON EN EL 2020</span></b></span></span></h3>
+        </div>
+        <hr>
+        <h3>CAP. IV: Parte C: Extremos de funciones</h3>
+        <div>
+            <h3 style="text-align:left;"><strong>SOLO PARA ALUMNOS QUE CURSARON EN EL 2020</strong></h3>
+        </div>
+        <hr>
+        <h3>CAP. V: Integrales Múltiples</h3>
+        <div>
+            <h3 style="text-align:left;"><strong><span style="background-color:rgb(255,207,53);">SOLO PARA ALUMNOS QUE CURSARON EN EL 2020</span></strong></h3>
+        </div>
+        <hr>
+        <h3>Material para profesores</h3>
+        <hr>
+        <h3>APUNTES PROGRAMA VIEJO PARA LOS ALUMNOS QUE CURSARON ANTES DEL 2020</h3>
+        <div>
+            <p dir="ltr" style="text-align:left;">SOLO PARA ALUMNOS QUE CURSARON ANTES DEL  2020</p>
+        </div>
+        <hr>
+        <h3>TEORÍA Y T.P. VIEJOS</h3>
+        <div>
+            <p dir="ltr" style="text-align:left;">Para los que tienen campos vectoriales</p>
+        </div>
+        <hr>
+        <h3>PRIMER PARCIAL</h3>
+        <hr>
+        <h3>RECURSADO DE CALCULO II EN 2025</h3>
+        <div>
+            <h3 style="text-align:left;"><span style="color:rgb(125,159,211);"><u><strong>RECURSADO DE CÁLCULO II EN 2025</strong></u></span></h3>
+<h4 style="text-align:left;"><strong><span style="color:rgb(125,159,211);"> </span></strong></h4>
+<h4 style="text-align:left;"><strong><span style="color:rgb(51,51,51);">Se informa a los alumnos que deberán recursar la materia de Cálculo II en el 2025, que deben matricularse en la materia para 2025, sin excepción</span></strong></h4>
+<h4 style="text-align:left;"> </h4>
+<h4 style="text-align:left;"> </h4>
+        </div>
+        <hr>
+        <h3>Mesa de examen febrero</h3>
+        <hr>
+        <h3>EXAMEN  FINAL DICIEMBRE</h3>
+        <hr>
+        <h3>GLOBAL Y RECUPERATORIO DE GLOBAL</h3>
+        <hr>
+        <h3>2018</h3>
+        <ul>
+            <li><a href="./Archivo_Programa_de_Clculo_I_..._.288694/index.html">Programa de Cálculo I 2020 (Archivo)</a></li>
+            <li><a href="./Carpeta_Comencemos_a_trabajar_.288698/index.html">Comencemos a trabajar.... (Carpeta)</a></li>
+            <li><a href="./Tarea_CAPITULO_1_FUNCIONES_re..._.288699/index.html">CAPITULO 1: FUNCIONES (revisión y estudio) (Tarea)</a></li>
+            <li><a href="./Archivo_Un_ejemplo_de_Aplicac..._.288700/index.html">Un ejemplo de Aplicación de análisis funcional (Archivo)</a></li>
+            <li><a href="./Carpeta_PRACTICO_1_CON_RESPUE..._.288701/index.html">PRACTICO 1 CON RESPUESTAS (Carpeta)</a></li>
+            <li><a href="./Tarea_CAPTULO_2_LMITE_FUNCIONAL_.288702/index.html">CAPÍTULO 2: LÍMITE FUNCIONAL (Tarea)</a></li>
+            <li><a href="./Archivo_Introduccin_al_trabaj..._.288703/index.html">Introducción al trabajo práctico de límite (Archivo)</a></li>
+            <li><a href="./Archivo_Ejemplos_de_lmite_en_..._.288704/index.html">Ejemplos de límite en un punto (Archivo)</a></li>
+            <li><a href="./Archivo_RESUMEN_DE_LA_FORMA_D..._.288705/index.html">RESUMEN DE LA FORMA DE CALCULAR LIMITE (Archivo)</a></li>
+            <li><a href="./Archivo_INFINITSIMOS_.288706/index.html">INFINITÉSIMOS (Archivo)</a></li>
+            <li><a href="./Archivo_CLASE_LIMITES_NOTABLES_.288707/index.html">CLASE LIMITES NOTABLES (Archivo)</a></li>
+            <li><a href="./Archivo_Continuidad_en_un_pun..._.288708/index.html">Continuidad en un punto y en un intervalo (Archivo)</a></li>
+            <li><a href="./rea_de_texto_y_medios_Estimad..._.288709/index.html">Estimados Alumnos
+recuerden por favor, que el vie... (Área de texto y medios)</a></li>
+            <li><a href="./Carpeta_RESPUESTAS_DEL_TRABAJ..._.288710/index.html">RESPUESTAS DEL TRABAJO PRÁCTICO DE LÍMITE (Carpeta)</a></li>
+            <li><a href="./Carpeta_CAPTULO_3_DERIVADA_DE..._.288711/index.html">CAPÍTULO 3: DERIVADA DE UNA FUNCIÓN (Carpeta)</a></li>
+            <li><a href="./Archivo_Ejercitacin_derivadas_.288713/index.html">Ejercitación derivadas (Archivo)</a></li>
+            <li><a href="./URL_Videos_de_derivada_.288714/index.html">Videos de derivada (URL)</a></li>
+            <li><a href="./Carpeta_RESPUESTAS_DE_LOS_TRA..._.288715/index.html">RESPUESTAS DE LOS TRABAJOS PRACTICOS DE DERIVADA (Carpeta)</a></li>
+            <li><a href="./rea_de_texto_y_medios_Estimad..._.288716/index.html">Estimados alumnos, algunas respuestas del TP 3 par... (Área de texto y medios)</a></li>
+            <li><a href="./Carpeta_CAPITULO_IV_APLICACIO..._.288717/index.html">CAPITULO IV: APLICACIONES DE LA DERIVADA (Carpeta)</a></li>
+            <li><a href="./rea_de_texto_y_medios_El_parc..._.288718/index.html">El parcial de derivada se tomará el lunes 4 de may... (Área de texto y medios)</a></li>
+            <li><a href="./Carpeta_CAPITULO_V_INTEGRAL_I..._.288719/index.html">CAPITULO V: INTEGRAL INDEFINIDA O PRIMITIVA (Carpeta)</a></li>
+            <li><a href="./Carpeta_otros_casos_important..._.288720/index.html">otros casos importantes de integrales  (Carpeta)</a></li>
+            <li><a href="./rea_de_texto_y_medios_SE_LES_..._.288721/index.html">SE LES RECUERDA A LOS ALUMNOS DE CALCULO I , TURNO... (Área de texto y medios)</a></li>
+            <li><a href="./URL_calculo_1_.288722/index.html">calculo 1 (URL)</a></li>
+            <li><a href="./URL_Clase_LUNES_11052020_Inte..._.288723/index.html">Clase LUNES 11/05/2020 (Integrales inmediatas y por Descomposición) Prof. Reynoso (URL)</a></li>
+            <li><a href="./URL_Clase_LUNES_18052020_Mtod..._.288724/index.html">Clase LUNES 18/05/2020 (Método de Integración por Partes) Prof. Reynoso (URL)</a></li>
+            <li><a href="./Carpeta_CAPITULO_VI_INTEGRAL_..._.288725/index.html">CAPITULO VI: INTEGRAL DEFINIDA (Carpeta)</a></li>
+            <li><a href="./URL_INTEGRAL_DEFINIDA_.288726/index.html">INTEGRAL DEFINIDA (URL)</a></li>
+            <li><a href="./URL_CONSULTA_TP_5_-_INTEGRAL_..._.288727/index.html">CONSULTA TP 5 - INTEGRAL DEFINIDA TP 6 (URL)</a></li>
+            <li><a href="./rea_de_texto_y_medios_CLASE_P..._.288728/index.html">CLASE PRACTICA DE APLICACIONES DE LA INTEGRAL&amp;nbsp... (Área de texto y medios)</a></li>
+            <li><a href="./URL_Clase_LUNES_01062020_Apli..._.288729/index.html">Clase LUNES 01/06/2020 (Aplicaciones de la Integral Definida) Prof. Reynoso (URL)</a></li>
+            <li><a href="./URL_Clase_035_Area_entre__cur..._.288730/index.html">Clase 03/5: Area entre  curvas ,y volumen de un solido de revolución (URL)</a></li>
+            <li><a href="./rea_de_texto_y_medios_Importa..._.288731/index.html">Importante:&nbsp;Esta tarea es para entrega de los... (Área de texto y medios)</a></li>
+            <li><a href="./Tarea_Prctico_Integral_indefi..._.288732/index.html">Práctico Integral indefinida  (Tarea)</a></li>
+            <li><a href="./Tarea_Prcticos_Integral_definida_.288733/index.html">Prácticos Integral definida (Tarea)</a></li>
+            <li><a href="./rea_de_texto_y_medios_PARCIAL..._.288734/index.html">PARCIAL DE INTEGRALESSe les informa a los alumnos ... (Área de texto y medios)</a></li>
+            <li><a href="./Chat_Grupo_3_.288735/index.html">Grupo 3 (Chat)</a></li>
+            <li><a href="./Archivo_Programa_de_Clculo_I_..._.288736/index.html">Programa de Cálculo I 2020 (Archivo)</a></li>
+            <li><a href="./Carpeta_CRONOGRAMA_2020_.288737/index.html">CRONOGRAMA 2020 (Carpeta)</a></li>
+            <li><a href="./Archivo_Sistema_de_evaluacin_..._.288738/index.html">Sistema de evaluación y regularidad (Archivo)</a></li>
+            <li><a href="./Carpeta_Comencemos_a_trabajar_.288740/index.html">Comencemos a trabajar.... (Carpeta)</a></li>
+            <li><a href="./Tarea_CAPITULO_1_FUNCIONES_re..._.288741/index.html">CAPITULO 1: FUNCIONES (revisión y estudio) (Tarea)</a></li>
+            <li><a href="./Archivo_Un_ejemplo_de_Aplicac..._.288742/index.html">Un ejemplo de Aplicación de análisis funcional (Archivo)</a></li>
+            <li><a href="./Carpeta_PRACTICO_1_CON_RESPUE..._.288743/index.html">PRACTICO 1 CON RESPUESTAS (Carpeta)</a></li>
+            <li><a href="./Tarea_CAPTULO_2_LMITE_FUNCIONAL_.288744/index.html">CAPÍTULO 2: LÍMITE FUNCIONAL (Tarea)</a></li>
+            <li><a href="./Archivo_Introduccin_al_trabaj..._.288745/index.html">Introducción al trabajo práctico de límite (Archivo)</a></li>
+            <li><a href="./Archivo_Ejemplos_de_lmite_en_..._.288746/index.html">Ejemplos de límite en un punto (Archivo)</a></li>
+            <li><a href="./Archivo_RESUMEN_DE_LA_FORMA_D..._.288747/index.html">RESUMEN DE LA FORMA DE CALCULAR LIMITE (Archivo)</a></li>
+            <li><a href="./Archivo_INFINITSIMOS_.288748/index.html">INFINITÉSIMOS (Archivo)</a></li>
+            <li><a href="./Archivo_CLASE_LIMITES_NOTABLES_.288749/index.html">CLASE LIMITES NOTABLES (Archivo)</a></li>
+            <li><a href="./Archivo_Continuidad_en_un_pun..._.288750/index.html">Continuidad en un punto y en un intervalo (Archivo)</a></li>
+            <li><a href="./rea_de_texto_y_medios_Estimad..._.288751/index.html">Estimados Alumnos
+recuerden por favor, que el vie... (Área de texto y medios)</a></li>
+            <li><a href="./Carpeta_RESPUESTAS_DEL_TRABAJ..._.288752/index.html">RESPUESTAS DEL TRABAJO PRÁCTICO DE LÍMITE (Carpeta)</a></li>
+            <li><a href="./Carpeta_CAPTULO_3_DERIVADA_DE..._.288753/index.html">CAPÍTULO 3: DERIVADA DE UNA FUNCIÓN (Carpeta)</a></li>
+            <li><a href="./Archivo_Ejercitacin_derivadas_.288755/index.html">Ejercitación derivadas (Archivo)</a></li>
+            <li><a href="./URL_Videos_de_derivada_.288756/index.html">Videos de derivada (URL)</a></li>
+            <li><a href="./Carpeta_RESPUESTAS_DE_LOS_TRA..._.288757/index.html">RESPUESTAS DE LOS TRABAJOS PRACTICOS DE DERIVADA (Carpeta)</a></li>
+            <li><a href="./rea_de_texto_y_medios_Estimad..._.288758/index.html">Estimados alumnos, algunas respuestas del TP 3 par... (Área de texto y medios)</a></li>
+            <li><a href="./Carpeta_CAPITULO_IV_APLICACIO..._.288759/index.html">CAPITULO IV: APLICACIONES DE LA DERIVADA (Carpeta)</a></li>
+            <li><a href="./rea_de_texto_y_medios_El_parc..._.288760/index.html">El parcial de derivada se tomará el lunes 4 de may... (Área de texto y medios)</a></li>
+            <li><a href="./Carpeta_CAPITULO_V_INTEGRAL_I..._.288761/index.html">CAPITULO V: INTEGRAL INDEFINIDA O PRIMITIVA (Carpeta)</a></li>
+            <li><a href="./Carpeta_otros_casos_important..._.288762/index.html">otros casos importantes de integrales  (Carpeta)</a></li>
+            <li><a href="./rea_de_texto_y_medios_SE_LES_..._.288763/index.html">SE LES RECUERDA A LOS ALUMNOS DE CALCULO I , TURNO... (Área de texto y medios)</a></li>
+            <li><a href="./URL_calculo_1_.288764/index.html">calculo 1 (URL)</a></li>
+            <li><a href="./URL_Clase_LUNES_11052020_Inte..._.288765/index.html">Clase LUNES 11/05/2020 (Integrales inmediatas y por Descomposición) Prof. Reynoso (URL)</a></li>
+            <li><a href="./URL_Clase_LUNES_18052020_Mtod..._.288766/index.html">Clase LUNES 18/05/2020 (Método de Integración por Partes) Prof. Reynoso (URL)</a></li>
+            <li><a href="./Carpeta_CAPITULO_VI_INTEGRAL_..._.288767/index.html">CAPITULO VI: INTEGRAL DEFINIDA (Carpeta)</a></li>
+            <li><a href="./URL_INTEGRAL_DEFINIDA_.288768/index.html">INTEGRAL DEFINIDA (URL)</a></li>
+            <li><a href="./URL_CONSULTA_TP_5_-_INTEGRAL_..._.288769/index.html">CONSULTA TP 5 - INTEGRAL DEFINIDA TP 6 (URL)</a></li>
+            <li><a href="./rea_de_texto_y_medios_CLASE_P..._.288770/index.html">CLASE PRACTICA DE APLICACIONES DE LA INTEGRAL&amp;nbsp... (Área de texto y medios)</a></li>
+            <li><a href="./URL_Clase_LUNES_01062020_Apli..._.288771/index.html">Clase LUNES 01/06/2020 (Aplicaciones de la Integral Definida) Prof. Reynoso (URL)</a></li>
+            <li><a href="./URL_Clase_035_Area_entre__cur..._.288772/index.html">Clase 03/5: Area entre  curvas ,y volumen de un solido de revolución (URL)</a></li>
+            <li><a href="./rea_de_texto_y_medios_Importa..._.288773/index.html">Importante:&nbsp;Esta tarea es para entrega de los... (Área de texto y medios)</a></li>
+            <li><a href="./Tarea_Prctico_Integral_indefi..._.288774/index.html">Práctico Integral indefinida  (Tarea)</a></li>
+            <li><a href="./Tarea_Prcticos_Integral_definida_.288775/index.html">Prácticos Integral definida (Tarea)</a></li>
+            <li><a href="./rea_de_texto_y_medios_PARCIAL..._.288776/index.html">PARCIAL DE INTEGRALESSe les informa a los alumnos ... (Área de texto y medios)</a></li>
+            <li><a href="./Archivo_Programa_de_Clculo_I_..._.289042/index.html">Programa de Cálculo I 2020 (Archivo)</a></li>
+            <li><a href="./Carpeta_Comencemos_a_trabajar_.289046/index.html">Comencemos a trabajar.... (Carpeta)</a></li>
+            <li><a href="./Tarea_CAPITULO_1_FUNCIONES_re..._.289047/index.html">CAPITULO 1: FUNCIONES (revisión y estudio) (Tarea)</a></li>
+            <li><a href="./Archivo_Un_ejemplo_de_Aplicac..._.289048/index.html">Un ejemplo de Aplicación de análisis funcional (Archivo)</a></li>
+            <li><a href="./Carpeta_PRACTICO_1_CON_RESPUE..._.289049/index.html">PRACTICO 1 CON RESPUESTAS (Carpeta)</a></li>
+            <li><a href="./Tarea_CAPTULO_2_LMITE_FUNCIONAL_.289050/index.html">CAPÍTULO 2: LÍMITE FUNCIONAL (Tarea)</a></li>
+            <li><a href="./Archivo_Introduccin_al_trabaj..._.289051/index.html">Introducción al trabajo práctico de límite (Archivo)</a></li>
+            <li><a href="./Archivo_Ejemplos_de_lmite_en_..._.289052/index.html">Ejemplos de límite en un punto (Archivo)</a></li>
+            <li><a href="./Archivo_RESUMEN_DE_LA_FORMA_D..._.289053/index.html">RESUMEN DE LA FORMA DE CALCULAR LIMITE (Archivo)</a></li>
+            <li><a href="./Archivo_INFINITSIMOS_.289054/index.html">INFINITÉSIMOS (Archivo)</a></li>
+            <li><a href="./Archivo_CLASE_LIMITES_NOTABLES_.289055/index.html">CLASE LIMITES NOTABLES (Archivo)</a></li>
+            <li><a href="./Archivo_Continuidad_en_un_pun..._.289056/index.html">Continuidad en un punto y en un intervalo (Archivo)</a></li>
+            <li><a href="./rea_de_texto_y_medios_Estimad..._.289057/index.html">Estimados Alumnos
+recuerden por favor, que el vie... (Área de texto y medios)</a></li>
+            <li><a href="./Carpeta_RESPUESTAS_DEL_TRABAJ..._.289058/index.html">RESPUESTAS DEL TRABAJO PRÁCTICO DE LÍMITE (Carpeta)</a></li>
+            <li><a href="./Carpeta_CAPTULO_3_DERIVADA_DE..._.289059/index.html">CAPÍTULO 3: DERIVADA DE UNA FUNCIÓN (Carpeta)</a></li>
+            <li><a href="./Archivo_Ejercitacin_derivadas_.289061/index.html">Ejercitación derivadas (Archivo)</a></li>
+            <li><a href="./URL_Videos_de_derivada_.289062/index.html">Videos de derivada (URL)</a></li>
+            <li><a href="./Carpeta_RESPUESTAS_DE_LOS_TRA..._.289063/index.html">RESPUESTAS DE LOS TRABAJOS PRACTICOS DE DERIVADA (Carpeta)</a></li>
+            <li><a href="./rea_de_texto_y_medios_Estimad..._.289064/index.html">Estimados alumnos, algunas respuestas del TP 3 par... (Área de texto y medios)</a></li>
+            <li><a href="./Carpeta_CAPITULO_IV_APLICACIO..._.289065/index.html">CAPITULO IV: APLICACIONES DE LA DERIVADA (Carpeta)</a></li>
+            <li><a href="./rea_de_texto_y_medios_El_parc..._.289066/index.html">El parcial de derivada se tomará el lunes 4 de may... (Área de texto y medios)</a></li>
+            <li><a href="./Carpeta_CAPITULO_V_INTEGRAL_I..._.289067/index.html">CAPITULO V: INTEGRAL INDEFINIDA O PRIMITIVA (Carpeta)</a></li>
+            <li><a href="./Carpeta_otros_casos_important..._.289068/index.html">otros casos importantes de integrales  (Carpeta)</a></li>
+            <li><a href="./rea_de_texto_y_medios_SE_LES_..._.289069/index.html">SE LES RECUERDA A LOS ALUMNOS DE CALCULO I , TURNO... (Área de texto y medios)</a></li>
+            <li><a href="./URL_calculo_1_.289070/index.html">calculo 1 (URL)</a></li>
+            <li><a href="./URL_Clase_LUNES_11052020_Inte..._.289071/index.html">Clase LUNES 11/05/2020 (Integrales inmediatas y por Descomposición) Prof. Reynoso (URL)</a></li>
+            <li><a href="./URL_Clase_LUNES_18052020_Mtod..._.289072/index.html">Clase LUNES 18/05/2020 (Método de Integración por Partes) Prof. Reynoso (URL)</a></li>
+            <li><a href="./Carpeta_CAPITULO_VI_INTEGRAL_..._.289073/index.html">CAPITULO VI: INTEGRAL DEFINIDA (Carpeta)</a></li>
+            <li><a href="./URL_INTEGRAL_DEFINIDA_.289074/index.html">INTEGRAL DEFINIDA (URL)</a></li>
+            <li><a href="./URL_CONSULTA_TP_5_-_INTEGRAL_..._.289075/index.html">CONSULTA TP 5 - INTEGRAL DEFINIDA TP 6 (URL)</a></li>
+            <li><a href="./rea_de_texto_y_medios_CLASE_P..._.289076/index.html">CLASE PRACTICA DE APLICACIONES DE LA INTEGRAL&amp;nbsp... (Área de texto y medios)</a></li>
+            <li><a href="./URL_Clase_LUNES_01062020_Apli..._.289077/index.html">Clase LUNES 01/06/2020 (Aplicaciones de la Integral Definida) Prof. Reynoso (URL)</a></li>
+            <li><a href="./URL_Clase_035_Area_entre__cur..._.289078/index.html">Clase 03/5: Area entre  curvas ,y volumen de un solido de revolución (URL)</a></li>
+            <li><a href="./rea_de_texto_y_medios_Importa..._.289079/index.html">Importante:&nbsp;Esta tarea es para entrega de los... (Área de texto y medios)</a></li>
+            <li><a href="./Tarea_Prctico_Integral_indefi..._.289080/index.html">Práctico Integral indefinida  (Tarea)</a></li>
+            <li><a href="./Tarea_Prcticos_Integral_definida_.289081/index.html">Prácticos Integral definida (Tarea)</a></li>
+            <li><a href="./rea_de_texto_y_medios_PARCIAL..._.289082/index.html">PARCIAL DE INTEGRALESSe les informa a los alumnos ... (Área de texto y medios)</a></li>
+            <li><a href="./Chat_Grupo_3_.289083/index.html">Grupo 3 (Chat)</a></li>
+            <li><a href="./Archivo_Programa_de_Clculo_I_..._.289084/index.html">Programa de Cálculo I 2020 (Archivo)</a></li>
+            <li><a href="./Carpeta_CRONOGRAMA_2020_.289085/index.html">CRONOGRAMA 2020 (Carpeta)</a></li>
+            <li><a href="./Archivo_Sistema_de_evaluacin_..._.289086/index.html">Sistema de evaluación y regularidad (Archivo)</a></li>
+            <li><a href="./Carpeta_Comencemos_a_trabajar_.289088/index.html">Comencemos a trabajar.... (Carpeta)</a></li>
+            <li><a href="./Tarea_CAPITULO_1_FUNCIONES_re..._.289089/index.html">CAPITULO 1: FUNCIONES (revisión y estudio) (Tarea)</a></li>
+            <li><a href="./Archivo_Un_ejemplo_de_Aplicac..._.289090/index.html">Un ejemplo de Aplicación de análisis funcional (Archivo)</a></li>
+            <li><a href="./Carpeta_PRACTICO_1_CON_RESPUE..._.289091/index.html">PRACTICO 1 CON RESPUESTAS (Carpeta)</a></li>
+            <li><a href="./Tarea_CAPTULO_2_LMITE_FUNCIONAL_.289092/index.html">CAPÍTULO 2: LÍMITE FUNCIONAL (Tarea)</a></li>
+            <li><a href="./Archivo_Introduccin_al_trabaj..._.289093/index.html">Introducción al trabajo práctico de límite (Archivo)</a></li>
+            <li><a href="./Archivo_Ejemplos_de_lmite_en_..._.289094/index.html">Ejemplos de límite en un punto (Archivo)</a></li>
+            <li><a href="./Archivo_RESUMEN_DE_LA_FORMA_D..._.289095/index.html">RESUMEN DE LA FORMA DE CALCULAR LIMITE (Archivo)</a></li>
+            <li><a href="./Archivo_INFINITSIMOS_.289096/index.html">INFINITÉSIMOS (Archivo)</a></li>
+            <li><a href="./Archivo_CLASE_LIMITES_NOTABLES_.289097/index.html">CLASE LIMITES NOTABLES (Archivo)</a></li>
+            <li><a href="./Archivo_Continuidad_en_un_pun..._.289098/index.html">Continuidad en un punto y en un intervalo (Archivo)</a></li>
+            <li><a href="./rea_de_texto_y_medios_Estimad..._.289099/index.html">Estimados Alumnos
+recuerden por favor, que el vie... (Área de texto y medios)</a></li>
+            <li><a href="./Carpeta_RESPUESTAS_DEL_TRABAJ..._.289100/index.html">RESPUESTAS DEL TRABAJO PRÁCTICO DE LÍMITE (Carpeta)</a></li>
+            <li><a href="./Carpeta_CAPTULO_3_DERIVADA_DE..._.289101/index.html">CAPÍTULO 3: DERIVADA DE UNA FUNCIÓN (Carpeta)</a></li>
+            <li><a href="./Archivo_Ejercitacin_derivadas_.289103/index.html">Ejercitación derivadas (Archivo)</a></li>
+            <li><a href="./URL_Videos_de_derivada_.289104/index.html">Videos de derivada (URL)</a></li>
+            <li><a href="./Carpeta_RESPUESTAS_DE_LOS_TRA..._.289105/index.html">RESPUESTAS DE LOS TRABAJOS PRACTICOS DE DERIVADA (Carpeta)</a></li>
+            <li><a href="./rea_de_texto_y_medios_Estimad..._.289106/index.html">Estimados alumnos, algunas respuestas del TP 3 par... (Área de texto y medios)</a></li>
+            <li><a href="./Carpeta_CAPITULO_IV_APLICACIO..._.289107/index.html">CAPITULO IV: APLICACIONES DE LA DERIVADA (Carpeta)</a></li>
+            <li><a href="./rea_de_texto_y_medios_El_parc..._.289108/index.html">El parcial de derivada se tomará el lunes 4 de may... (Área de texto y medios)</a></li>
+            <li><a href="./Carpeta_CAPITULO_V_INTEGRAL_I..._.289109/index.html">CAPITULO V: INTEGRAL INDEFINIDA O PRIMITIVA (Carpeta)</a></li>
+            <li><a href="./Carpeta_otros_casos_important..._.289110/index.html">otros casos importantes de integrales  (Carpeta)</a></li>
+            <li><a href="./rea_de_texto_y_medios_SE_LES_..._.289111/index.html">SE LES RECUERDA A LOS ALUMNOS DE CALCULO I , TURNO... (Área de texto y medios)</a></li>
+            <li><a href="./URL_calculo_1_.289112/index.html">calculo 1 (URL)</a></li>
+            <li><a href="./URL_Clase_LUNES_11052020_Inte..._.289113/index.html">Clase LUNES 11/05/2020 (Integrales inmediatas y por Descomposición) Prof. Reynoso (URL)</a></li>
+            <li><a href="./URL_Clase_LUNES_18052020_Mtod..._.289114/index.html">Clase LUNES 18/05/2020 (Método de Integración por Partes) Prof. Reynoso (URL)</a></li>
+            <li><a href="./Carpeta_CAPITULO_VI_INTEGRAL_..._.289115/index.html">CAPITULO VI: INTEGRAL DEFINIDA (Carpeta)</a></li>
+            <li><a href="./URL_INTEGRAL_DEFINIDA_.289116/index.html">INTEGRAL DEFINIDA (URL)</a></li>
+            <li><a href="./URL_CONSULTA_TP_5_-_INTEGRAL_..._.289117/index.html">CONSULTA TP 5 - INTEGRAL DEFINIDA TP 6 (URL)</a></li>
+            <li><a href="./rea_de_texto_y_medios_CLASE_P..._.289118/index.html">CLASE PRACTICA DE APLICACIONES DE LA INTEGRAL&amp;nbsp... (Área de texto y medios)</a></li>
+            <li><a href="./URL_Clase_LUNES_01062020_Apli..._.289119/index.html">Clase LUNES 01/06/2020 (Aplicaciones de la Integral Definida) Prof. Reynoso (URL)</a></li>
+            <li><a href="./URL_Clase_035_Area_entre__cur..._.289120/index.html">Clase 03/5: Area entre  curvas ,y volumen de un solido de revolución (URL)</a></li>
+            <li><a href="./rea_de_texto_y_medios_Importa..._.289121/index.html">Importante:&nbsp;Esta tarea es para entrega de los... (Área de texto y medios)</a></li>
+            <li><a href="./Tarea_Prctico_Integral_indefi..._.289122/index.html">Práctico Integral indefinida  (Tarea)</a></li>
+            <li><a href="./Tarea_Prcticos_Integral_definida_.289123/index.html">Prácticos Integral definida (Tarea)</a></li>
+            <li><a href="./rea_de_texto_y_medios_PARCIAL..._.289124/index.html">PARCIAL DE INTEGRALESSe les informa a los alumnos ... (Área de texto y medios)</a></li>
+        </ul>
+        <hr>
+        <h3>2019</h3>
+        <ul>
+            <li><a href="./Carpeta_Planilla_de_notas_2019_.230298/index.html">Planilla de notas 2019 (Carpeta)</a></li>
+        </ul>
+        <hr>
+        <h3>2020</h3>
+        <ul>
+            <li><a href="./Archivo_LISTA_DE_ALUMNOS_REGU..._.269800/index.html">LISTA DE ALUMNOS REGULARES AL12 DE NOVIEMBRE (Archivo)</a></li>
+        </ul>
+        <hr>
+        <h3>PRIMER PARCIAL ECUACIONES DIFERENCIALES</h3>
+        <hr>
+        <h3>SEGUNDO PARCIAL : DERIVADAS PARCIALES - INTEGRALES DOBLES</h3>
+        <hr>
+        <h3>EXAMEN MAYO</h3>
+        <hr>
+        <h3>MESA DE EXAMEN JUNIO</h3>
+        <hr>
+        <h3>MESA DE EXAMEN AGOSTO</h3>
+        <hr>
+        <h3>MESA DE EXAMEN SEPTIEMBRE</h3>
+        <hr>
+        <h3>MESA DE EXAMEN NOVIEMBRE</h3>
+        <hr>
+        <h3>MESA DE EXAMEN MARZO</h3>
+        <hr>
+        <h3>MESA DE EXAMEN MAYO</h3>
+        <hr>
+        <h3>MESA DE EXAMEN JUNIO</h3>
+        <hr>
+        <h3>MESA DE EXAMEN AGOSTO</h3>
+        <hr>
+        <h3>CAP. I: E. D. ORDINARIAS DE 1° ORDEN </h3>
+        <hr>
+        <h3>APUNTES 2021</h3>
+        <hr>
+        <h3>FINAL DICIEMBRE 2022</h3>
+        <div>
+            <p><span style="color:#0000ff;"><strong>HORARIO  DE CONSULTA PARA FINAL DICIEMBRE</strong></span></p>
+<p><span style="color:#0000ff;"><strong>Con Prof Brandi martes 19:30hs virtual</strong></span></p>
+<div class="nGJqzd OLw7vb"><img alt="" class="Oyv6id" src="https://ssl.gstatic.com/calendar/images/conferenceproviders/logo_meet_2020q4_192px.svg" /></div>
+<div class="NI2kfb DX3x9d">
+<div class="Q3pZ0e">
+<div class="JAPzS DX3x9d"><span class="EyDoae"><a target="_blank" href="https://meet.google.com/gkt-trtq-ywb?authuser=0&amp;hs=122" class="w1OTme" rel="noreferrer noopener">Unirme con Google Meet</a></span></div>
+<div class="DN1TJ fX8Pqc">meet.google.com/gkt-trtq-ywb</div>
+</div>
+</div>
+        </div>
+        <hr>
+        <h3>MESA DE EXAMEN DICIEMBRE 2024</h3>
+        <ul>
+            <li><a href="./rea_de_texto_y_medios_Mesa_Di..._.692763/index.html">Mesa Diciembre (Área de texto y medios)</a></li>
+        </ul>
+        <hr>
+        <h3>ALUMNOS REGULARES 2024</h3>
+        <div>
+            <p dir="ltr" style="text-align:left;">ALUMNOS REGULARES 2024</p>
+<p dir="ltr" style="text-align:left;">Se modificará la lista después de rendir el recuperatorio de los parciales</p>
+        </div>
+        <ul>
+            <li><a href="./rea_de_texto_y_medios_INFORMACIN_.688997/index.html">INFORMACIÓN (Área de texto y medios)</a></li>
+            <li><a href="./rea_de_texto_y_medios_regular..._.691675/index.html">regulares con recuperatorio (Área de texto y medios)</a></li>
+            <li><a href="./Archivo_REGULARES_DE_INFORMTICA_.691676/index.html">REGULARES DE INFORMÁTICA (Archivo)</a></li>
+            <li><a href="./Archivo_REGULARES_DE_INDUSTRIAL_.691678/index.html">REGULARES DE INDUSTRIAL (Archivo)</a></li>
+            <li><a href="./Archivo_REGULARES_DE_BIO_.691679/index.html">REGULARES DE BIO (Archivo)</a></li>
+            <li><a href="./Archivo_REGULARES_DE_COMPUTAC..._.691680/index.html">REGULARES DE COMPUTACIÓN, ELÉCTRICA Y ELECTRÓNICA (Archivo)</a></li>
+        </ul>
+        <hr>
+        <h3>CAP. II: E. D. ORDINARIAS DE 2° ORDEN 2021</h3>
+        <hr>
+        <h3>T P DE CAMPOS VECTORIALES PARA PROGRAMA VIEJO</h3>
+        <hr>
+        <h3>CAP.III: Funciones de dos variables</h3>
+        <hr>
+        <h3>CAP.III: Funciones de varias variables</h3>
+        <hr>
+        <h3>MESA DE EXAMEN SETIEMBRE</h3>
+        <hr>
+        <h3>PARCIAL DE ECUACIONES DIFERENCIALES</h3>
+        <hr>
+        <h3>CAP. IV:  DERIVADAS PARCIALES</h3>
+        <hr>
+        <h3>AVISO URGENTE CUESTIONARIO CAPÍTULO III</h3>
+        <div>
+            <h5><span style="text-decoration:underline;color:rgb(0,0,0);"><strong><a class="autolink" title="CUESTIONARIO CAPÍTULO III" href="https://virtual.um.edu.ar/mod/quiz/view.php?id=284155">CUESTIONARIO CAPÍTULO III</a></strong></span></h5>
+<h5><strong>Se informa a los alumnos que están cursando Cálculo II, que el día viernes 18 de octubre a las 20.00hs, se habilitará un cuestionario sobre el capítulo 3, a través de la plataforma de Moodle. Dicho cuestionario estará en la pestaña correspondiente al capítulo  III</strong></h5>
+<h5><strong>Se les recuerda que:</strong></h5>
+<ul>
+<li>
+<h5><strong> no es obligatorio</strong></h5>
+</li>
+<li>
+<h5><strong>se aprueba con el 60 % del puntaje total</strong></h5>
+</li>
+<li>
+<h5><strong>El alumno que apruebe dicho cuestionario, tendrá 10 puntos extras en el segundo parcial de la materia</strong></h5>
+</li>
+</ul>
+<h3> </h3>
+<p> </p>
+<p> </p>
+        </div>
+        <hr>
+        <h3>CAP. IV- PARTE D: EXTREMOS</h3>
+        <hr>
+        <h3>Recuperatorio primer y segundo parcial</h3>
+        <hr>
+        <h3>ALUMNOS REGULARES DEFINITIVO 2023  </h3>
+        <div>
+            <h5 style="text-align:left;"><strong>Alumnos regulares después de rendir los recuperatorios de los parciales Y GLOBAL</strong></h5>
+        </div>
+        <hr>
+        <h3>MESAS DE EXAMEN </h3>
+        <hr>
+        <h3>MESA DE EXAMEN MARZO  2023</h3>
+        <hr>
+    </div>
+
+            </div>
+        </main>
+        <footer id="page-footer" class="py-3">
+            <div class="container">
+                <div>Este archivo es parte del contenido descargado de <a href="https://virtual.um.edu.ar/course/view.php?id=262">Cálculo II (0004)</a> por Lucas Garcia el jueves, 24 de abril de 2025, 16:50.</div>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

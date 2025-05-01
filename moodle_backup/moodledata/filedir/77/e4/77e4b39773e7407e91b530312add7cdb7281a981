@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Cátedras Virtuales - UMVirtual - SISTEMAS OPERATIVOS</title>
+    <link rel="stylesheet" type="text/css" href="..//shared/moodle.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+    <div class="d-flex flex-column h-100">
+        <nav class="navbar navbar-light bg-white border-bottom">
+            <div class="container-fluid p-0">
+                <a class="navbar-brand" href="https://virtual.um.edu.ar" title="Cátedras Virtuales - UMVirtual">
+                    Cátedras Virtuales - UMVirtual
+                </a>
+            </div>
+        </nav>
+        <main class="container-fluid mt-2 flex-grow-1 flex-shrink-1">
+            <div>
+                <h1><a href="../index.html">SISTEMAS OPERATIVOS</a></h1>
+                <p>Sistemas_Operativos</p>
+                    <h2>
+        ejercicio traducción
+    </h2>
+
+    <div class="alert alert-info alert-block">
+        Este archivo descargado forma parte del contenido de <a href="https://virtual.um.edu.ar/mod/assign/view.php?id=111848">ejercicio traducción</a> el sábado, 26 de abril de 2025, 17:42. Tenga en cuenta que contenido o archivos con tamaño superior a  50 MB no serán descargados.    </div>
+
+    <h3>Descripción</h3>
+    <div>
+        <ol>
+<li>En base a las siguientes suposiciones:<ol>
+<li>un sistema ficticio de memoria virtual paginada donde las localidades de memoria se numeran decimalmente del 0 al 9999, se usa paginación y los marcos son de tamaño 100 cada uno.<a title=""><sup><sup>[1]</sup></sup></a></li>
+<li>Las imágenes de los procesos activos tienen el siguiente tamaño: proceso A= 352, proceso B= 189, proceso C= 280</li>
+<li> La tabla siguiente  muestra una imaginaria secuencia de referencia a direcciones virtuales y el resultado de la traducción</li>
+<li>hay un TLB con solo 3 entradas</li>
+</ol></li>
+</ol>
+<p>construya las tablas de páginas y el TLB lo más completos posible con la información dada.<a title=""><sup><sup>[2]</sup></sup></a> .</p>
+<p> </p>
+<table border="1" cellspacing="0" cellpadding="0" style="width:84%;">
+<tbody>
+<tr>
+<td width="32%" valign="top">
+<p>Dirección virtual</p>
+<p>(proc, página, desplazamiento)</p>
+</td>
+<td width="19%" valign="top">
+<p>Operación</p>
+</td>
+<td width="28%" valign="top">
+<p>Resultado de la traducción (dirección real)</p>
+</td>
+<td width="19%" valign="top">
+<p>Complete hit o miss TLB</p>
+</td>
+</tr>
+<tr>
+<td width="32%" valign="top">
+<p>C    0    25</p>
+</td>
+<td width="19%" valign="top">
+<p>Lectura</p>
+</td>
+<td width="28%" valign="top">
+<p>9925</p>
+</td>
+<td width="19%" valign="top">
+<p> </p>
+</td>
+</tr>
+<tr>
+<td width="32%" valign="top">
+<p>B    1    38</p>
+</td>
+<td width="19%" valign="top">
+<p>Lectura</p>
+</td>
+<td width="28%" valign="top">
+<p>Fallo de página</p>
+</td>
+<td width="19%" valign="top">
+<p> </p>
+</td>
+</tr>
+<tr>
+<td width="32%" valign="top">
+<p>C    2    29</p>
+</td>
+<td width="19%" valign="top">
+<p>Escritura</p>
+</td>
+<td width="28%" valign="top">
+<p>2529</p>
+</td>
+<td width="19%" valign="top">
+<p> </p>
+</td>
+</tr>
+<tr>
+<td width="32%" valign="top">
+<p>B    1    38</p>
+</td>
+<td width="19%" valign="top">
+<p>Lectura</p>
+</td>
+<td width="28%" valign="top">
+<p>1038</p>
+</td>
+<td width="19%" valign="top">
+<p> </p>
+</td>
+</tr>
+<tr>
+<td width="32%" valign="top">
+<p>A    0    45</p>
+</td>
+<td width="19%" valign="top">
+<p>lectura</p>
+</td>
+<td width="28%" valign="top">
+<p>0445</p>
+</td>
+<td width="19%" valign="top">
+<p> </p>
+</td>
+</tr>
+<tr>
+<td width="32%" valign="top">
+<p> B    1    84</p>
+</td>
+<td width="19%" valign="top">
+<p>Escritura</p>
+</td>
+<td width="28%" valign="top">
+<p>1084</p>
+</td>
+<td width="19%" valign="top">
+<p> </p>
+</td>
+</tr>
+<tr>
+<td width="32%" valign="top">
+<p>C    1    32</p>
+</td>
+<td width="19%" valign="top">
+<p>escritura</p>
+</td>
+<td width="28%" valign="top">
+<p>Fallo de página</p>
+</td>
+<td width="19%" valign="top">
+<p> </p>
+</td>
+</tr>
+<tr>
+<td width="32%" valign="top">
+<p>A    0    46</p>
+</td>
+<td width="19%" valign="top">
+<p>Lectura</p>
+</td>
+<td width="28%" valign="top">
+<p>0446</p>
+</td>
+<td width="19%" valign="top">
+<p> </p>
+</td>
+</tr>
+<tr>
+<td width="32%" valign="top">
+<p>A    1    27</p>
+</td>
+<td width="19%" valign="top">
+<p>Escritura</p>
+</td>
+<td width="28%" valign="top">
+<p>0327</p>
+</td>
+<td width="19%" valign="top">
+<p> </p>
+</td>
+</tr>
+</tbody>
+</table>
+<p> </p>
+<p> </p>
+<div><br clear="all" /><hr align="left" size="1" width="33%" />
+<div>
+<p><a title="">[1]</a> O sea que el marco número 0 va de la localidad 0 a la 99, el 1 de la 100 a 199, etc.</p>
+</div>
+<div>
+<p><a title="">[2]</a> Los datos no están completos, usted tiene que llenar lo que más se sepa del problema con la información brindada.</p>
+</div>
+</div>
+    </div>
+    <hr>
+
+
+            </div>
+        </main>
+        <footer id="page-footer" class="py-3">
+            <div class="container">
+                <div>Este archivo es parte del contenido descargado de <a href="https://virtual.um.edu.ar/course/view.php?id=348">SISTEMAS OPERATIVOS</a> por Lucas Garcia el sábado, 26 de abril de 2025, 17:42.</div>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

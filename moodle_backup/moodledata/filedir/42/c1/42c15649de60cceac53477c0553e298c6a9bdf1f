@@ -1,0 +1,1064 @@
+UM
+UNIVERSIDAD
+DE MENDOZA
+Aseguramiento de Calidad de Software
+Año: 2025
+Carrera: Ingenieria en Software
+Profesores:
+- Julieta Barrionuevo
+- Juan Manuel Ojeda
+1 1
+
+UM
+UNIVERSIDAD
+DE MENDOZA
+Sección Introductoria
+Contenido N°1
+Objetivos de este curso:
+Ligero repaso de terminología necesaria para afrontar el curso
+Areas de conocimiento Relacionadas
+Calidad de Software - Generalidades
+Definición de Calidad:
+Herramientas para el testing Manual
+Estructura de los Test Cases - Teórico ( Wikipedia)
+Issue trackers y Ambientes de pruebas
+Clase Nº2
+Issue Trackers
+Herramientas Ofimáticas como herramientas de testing / Issue tracker
+Ambientes de pruebas
+Niveles de Staging
+Relación de "Entregables"
+U.M.L
+Testing - Estableciendo diferencias
+Quality Assurance Vs Quality Control
+Aseguramiento de calidad ( Quality Assurance )
+Quality Control ( Control de Calidad )
+Factores, Objetivos y Tipos de Testing
+Contenido N°3
+Factores de calidad del software
+Los objetivos del proceso de Calidad
+Tipos de Testing
+Testing Funcional
+Testing no funcional (Non-functional testing)
+Defect Management
+Defectos - Concepto
+Defect Severity
+Defect Type
+Metodologías Ágiles - SCRUM
+10
+10
+10
+10
+10
+11
+11
+11
+12
+13
+13
+13
+13
+14
+14
+14
+15
+15
+16
+16
+17
+2
+
+UM
+UNIVERSIDAD
+DE MENDOZA
+Contenido N°4
+Procesos para el desarrollo de software.
+Modelos de Desarrollo de Software
+Metodologías Agiles vs Tradicionales
+Metodologias Ágiles
+Tipos de metodologías Agiles
+SCRUM
+Roles
+Artefactos
+Reuniones en Scrum
+17
+17
+17
+17
+18
+21
+21
+22
+23
+23
+Sección Introductoria
+Contenido N°1
+Objetivos de este curso:
+Actualmente se habla mucho de la necesidad de un área de calidad de software en cualquier equipo de
+desarrollo ya sea parte de una software Factory, un emprendimiento personal, cualquier equipo formal o
+informal en donde se pretenda generar software confiable, portable, robusto y un sinfín de características que
+son comunes a un buen producto.
+Debido a lo previamente mencionado existe mucha confusión acerca de que es lo que debe (competencias) ser
+parte del trabajo de las personas que integran equipos de calidad de software.
+Una vez finalizado el curso se pretende, entre otros factores, que las personas que asistieron:
+• Conozcan las competencias de un profesional dedicado a la Calidad de Software.
+• Utilicen terminología adecuada para referirse y discutir acerca de temas relacionados con los procesos
+de Ingeniería y desarrollo de software
+• Puedan formar parte de un equipo de QA sin necesidad de requerir un entrenamiento de niveles
+extremadamente básicos.
+• Sean Capaces de proponer/comprender soluciones y puedan proponer herramientas, técnicas o mejoras
+al proceso actual de un equipo
+• Comprendan que existen diferentes tipos de metodologías ágiles de desarrollo de sw
+3
+
+UM
+DE MENDOZA
+• Sientan confianza en el manejo y uso de terminología, requerimientos y buenas prácticas de la
+metodología SCRUM.
+• Sean capaces de justificar el por qué es cada vez más necesario un área especializada de Calidad de
+software en todo equipo de desarrollo de software
+• Sean capaces de justificar la naturaleza de la automatización de pruebas comprendiendo que la misma
+depende mucho del cliente, sistema y las características de los mismos.
+• Tengan nociones prácticas básicas de herramientas de automatización de pruebas así como de las
+capacidades de las mismas.
+Ligero repaso de terminología necesaria para afrontar el curso
+• Que es Testing y Diferencias con Quality Assurance
+• Terminología necesaria para afrontar documentación relacionada con el área de Qa.
+Areas de conocimiento Relacionadas
+v Software Engineering
+v Software Quality
+v Quality Assurance & Control
+v Software Process
+v Reviews & Inspections
+v Test Strategy
+v Test Planning
+v Test Estimation
+v Test Requirements
+v
+Test Design
+Test Techniques
+Static Test Techniques
+Test Metrics
+Test Execution
+Test Environment
+Test Reporting
+Test Process
+Testing Standards
+Test Tools
+V
+Configuration Management
+v Test Team Management
+v Defect Prevention
+
+UM
+UNIVERSIDAD
+DE MENDOZA
+Contenido N°2
+Calidad de Software - Generalidades
+Definición de Calidad:
+Calidad es mucho más que la ausencia de defectos que nos permite cumplir con las expectativas de los clientes.
+La Calidad requiere la evolución del proceso de control y solamente puede ser obtenida a través de la mejora
+continua de todos los procesos y sistemas de la organización, no solo de los productos y servicios ofrecidos por
+la empresa sino también todos los aspectos que involucran la transacción con el cliente (diseño, desarrollo,
+servicio de compra, administración, etc)
+Definicion de Calidad según Norma ISO 8204:
+"Totality of characteristics of an entity that bears on its ability to satisfy stated and implied needs."
+Algo así como:
+"Totalidad de las características de una entidad que satisfacen las necesidades explicitas e
+implícitas "
+Esto implica no solo entregar un producto que cumple con los requerimientos sino también que se ajusta al uso
+del cliente.
+Calidad Funcional ( Functional Quality ):
+Responde al "QUE HACE"
+Refleja que TAN BIEN el producto cumple o cumplimenta un diseño que ha sido provisto por el cliente
+relacionado con los requerimientos funcionales o especificaciones.
+Calidad Estructural
+Responde al "COMO LO HACE"
+5
+
+UM
+DE MENDOZA
+Se refiere al "COMO" el producto cumple con los requisitos no funcionales que dan soporte a los requisitos
+funcionales ( robusto, mantenibilidad, portabilidad )
+SQM
+El objetivo del Software Quality management es el de administrar la calidad de software, definir los procesos y
+los requisitos para esos procesos. Debe a su vez implementar métricas para cada proceso, sus salidas y un canal
+de feedback.
+6 1
+
+UM
+DE MENDOZA
+Tipos de Testing - Diferencias
+1. Caso de Prueba (Test Case) / Caso de Uso (Use Case)
+• Caso de Prueba:
+• Un conjunto específico de condiciones de entrada, acciones ejecutadas y resultados esperados
+para verificar una característica del software.
+• Se enfoca en "cómo" probar.
+• Caso de Uso:
+• Describe cómo un usuario interactúa con el sistema para lograr un objetivo específico.
+• Se enfoca en "qué" hace el usuario.
+2. Rastreador de Problemas (Issue Tracker) / Herramienta de Seguimiento de
+Tiempo (Time Tracking Tool)
+• Rastreador de Problemas:
+• Sistema para registrar, rastrear y gestionar errores, fallas y mejoras en el software.
+• Ejemplos: Jira, Bugzilla.
+• Herramienta de Seguimiento de Tiempo:
+• Aplicación para registrar y gestionar el tiempo dedicado a tareas y proyectos.
+• Ejemplos: Toggl, Clockify.
+3. Requisitos Funcionales / Requisitos No Funcionales
+• Requisitos Funcionales:
+• Describen "qué" debe hacer el software.
+• Ejemplo: "El usuario debe poder iniciar sesión con un nombre de usuario y contraseña".
+• Requisitos No Funcionales:
+• Describen "cómo" debe ser el software.
+• Ejemplos: rendimiento, seguridad, usabilidad.
+4. Calidad Estructural / Calidad Funcional
+• Calidad Estructural:
+• Evalúa la arquitectura interna del software, la calidad del código y la mantenibilidad.
+• Se mide con herramientas de análisis estático.
+• Calidad Funcional:
+• Verifica que el software cumpla con los requisitos funcionales.
+7
+
+UM
+DE MENDOZA
+• Se mide mediante pruebas funcionales.
+5. Criterios de Aceptación (Acceptance Criteria) / Definición de Terminado
+(Definition of Done)
+• Criterios de Aceptación:
+• Condiciones que debe cumplir el software para ser aceptado por el cliente.
+• Se usan en pruebas de aceptación.
+• Definición de Terminado:
+• Lista de tareas que deben completarse para considerar que una tarea o historia de usuario está
+terminada.
+• Se usa en metodologías ágiles.
+6. Pruebas Exploratorias (Exploratory Testing) / Pruebas de Rendimiento
+(Performance Testing)
+• Pruebas Exploratorias:
+• Enfoque de prueba informal donde los probadores exploran el software sin casos de prueba
+predefinidos.
+• Se enfoca en el descubrimiento.
+• Pruebas de Rendimiento:
+• Evalúan la velocidad, estabilidad y capacidad de respuesta del software bajo carga.
+• Ejemplos: pruebas de carga, estrés.
+7. Pruebas Manuales (Manual Testing) / Pruebas Automatizadas (Automation
+Testing)
+• Pruebas Manuales:
+• Los probadores ejecutan casos de prueba manualmente.
+• Útil para pruebas de usabilidad y exploratorias.
+• Pruebas Automatizadas:
+• Se usan herramientas para ejecutar casos de prueba automáticamente.
+• Útil para pruebas de regresión y rendimiento.
+8. Pruebas de Integración / Pruebas de Unidad (Unit Testing)
+• Pruebas de Integración:
+• Verifican la interacción entre diferentes módulos del software.
+• Se aseguran de que los componentes funcionen juntos correctamente.
+• Pruebas de Unidad:
+8
+
+UM
+DE MENDOZA
+• Prueban componentes individuales del software de manera aislada.
+• Se aseguran de que cada parte funcione correctamente por sí sola.
+9. Pruebas de Regresión / Pruebas de Humo (Smoke Testing)
+• Pruebas de Regresión:
+• Aseguran que los cambios recientes no hayan afectado funcionalidades existentes.
+• Se ejecutan después de cada nueva compilación.
+• Pruebas de Humo:
+• Pruebas rápidas para verificar la funcionalidad básica del software.
+• Se ejecutan antes de pruebas más exhaustivas.
+10. Pruebas de Seguridad / Pruebas de Usabilidad
+• Pruebas de Seguridad:
+• Identifican vulnerabilidades y aseguran que el software esté protegido.
+• Ejemplos: pruebas de penetración.
+• Pruebas de Usabilidad:
+• Evalúan qué tan fácil es para los usuarios interactuar con el software.
+• Se enfocan en la experiencia del usuario.
+Contenido N°3
+Herramientas para el testing Manual
+Para el testing manual existen un numero importante de herramientas que podemos utilizar para
+testear "features" y poder asegurar un nivel de calidad aceptable.
+Podemos pensar en Feature como un Conjunto de funcionalidades
+Dentro de las herramientas podemos mencionar las siguientes
+9
+
+UM
+UNIVERSIDAD
+DE MENDOZA
+• Casos de Uso
+• Diagramas O.O (Clase, ER , Secuencia)
+• Wireframes
+• SQL - Bases de Datos
+• Documentación del sistema bajo prueba
+Además de las mencionadas existe una herramienta que hoy por hoy es la herramienta por excelencia
+utilizada por persona que se dedica a la calidad de software. Esta herramienta se llama Caso de
+prueba (Test Case )
+Definición:
+Existen muchas definiciones que intentan describir lo que es un buen test case y muchas de ellas son válidas.
+Para fines prácticos podemos decir que un test case (Caso de prueba) es un conjunto de pasos/acciones que al
+seguirlas de forma ordenada e ingresando datos validos cuando sea necesario permiten verificar el correcto
+funcionamiento ( por lo tanto desarrollo ) del feature que está siendo probado.
+• Que es un Test Case?
+Podemos definir un test case como una mera secuencia de acciones (pasos) que son realizados para poder
+VERIFICAR que el sistema nos da el resultado (outcome) que es esperado.
+Contenido N°4
+• Que es un escenario y como se relaciona con un test case?
+Cuando nos encontramos en etapas de análisis y de definición/Creación de test cases podemos comenzar a
+dudar de si es una buena idea generar un test case por cada uno de lo que nosotros podemos entender como
+"casos de prueba"
+La pregunta que generalmente sale a la luz es... "Cuantos test cases necesito para cubrir una funcionalidad que
+se encuentra siendo testeada?"
+10
+
+UM
+UNIVERSIDAD
+DE MENDOZA
+Podemos concebir a un escenario como una situación hipotética dentro de nuestro sistema. Es decir, una
+combinación de variables dentro las posibilidades del feature que estamos evaluando en un momento
+determinado.
+Un escenario ideal valido es aquel que es creíble, fácil de evaluar y a su vez complejo.
+Se diferencia a los escenarios de testing con los test cases en el sentido de que un escenario puede ser validado
+por más de un test case
+https://wiki.evolveum.com/display/midPoint/Test+Scenarios
+Por ejemplo:
+Escenario: Usuario ingresa sus credenciales para ingresar al sistema
+Validaciones necesarias:
+Existencia de componentes de pantalla, Valor de las variables presentes en la pantalla, internacionalización,
+seguridad, cifrado de los datos, etc.
+Supongamos que queremos testear el escenario en donde el usuario desea ingresar al sitio con sus credenciales.
+Realice el siguiente ejercicio
+• Cobertura- Podemos cubrir TODOS los escenarios?
+NO, para tener una idea de la cantidad de pruebas necesarias para cubrir la mayor cdad posible de escenarios
+utilizamos una estrategia que se llama "Pairwise testing". Esta estrategia nos ayudará a determinar que
+escenarios debemos cubrir
+El pairwise testing ayuda a definir un subset mínimo de pruebas para garantizar un nivel de cobertura aceptable.
+El uso de esta técnica nos ayudará a "machear" cada valor posible de las variables con los valores de las otras
+variables, una vez obtenido esto podemos tomar decisiones acerca de cuáles test son los más importantes para
+nosotros.
+Supongamos que tenemos lo siguiente:
+Lang: 2 idiomas
+User field : Correcto / Incorrecto
+Password: Correcto / Incorrecto
+Remember me : Yes/ No
+11
+
+UM
+DE MENDOZA
+Después de realizar la combinatoria correspondiente podemos discutir lo siguiente:
+• Pairwise testing puede no incluir combinaciones que los desarrolladores y tester consideran
+como peligrosas (seguridad, dispositivos, etc). En caso de que existan podemos añadir esos
+test a los que consideramos validos después de evaluar los resultados de la combinatoria.
+• Se puede ver que la combinatoria total no es la definitiva ya que en la mayoría de los casos
+existen escenarios que no deseamos o no encontramos útil testear.
+• Existen casos en los cuales los datos ingresados pueden determinar distintos escenarios
+Estructura de los Test Cases - Teórico ( Wikipedia)
+Formalmente, los casos de prueba escritos consisten principalmente en tres partes con subdivisiones:
+• Introducción/visión general: Contiene información general acerca de los Casos de Prueba.
+• Identificador: Es un identificador único para futuras referencias, por ejemplo, mientras se describe un
+defecto encontrado.
+• Caso de prueba dueño/creador: Es el nombre del analista o diseñador de pruebas, quien ha
+desarrollado pruebas o es responsable de su desarrollo.
+• Versión: La actual definición del caso de prueba.
+• Nombre: El caso de prueba debe ser un título entendible por personas, para la fácil comprensión del
+propósito del caso de prueba y su campo de aplicación.
+• Identificador de requerimientos el cuál está incluido por el caso de prueba. También aquí puede ser un
+identificador de casos de use o de especificación funcional.
+• Propósito: Contiene una breve descripción del propósito de la prueba, y la funcionalidad que chequea.
+• Dependencias: Indica qué otros subsistemas están involucrados y en qué grado.
+• Actividades de los casos de prueba
+• Ambiente de prueba/configuración: Contiene información acerca de la configuración del hardware o
+software en el cuál se ejecutará el caso de prueba.
+• Inicialización: Describe acciones, que deben ser ejecutadas antes de que los casos de prueba se hayan
+inicializado. Por ejemplo, debemos abrir algún archivo.
+• Finalización: Describe acciones, que deben ser ejecutadas después de realizado el caso de prueba. Por
+ejemplo si el caso de prueba estropea la base de datos, el analista debe restaurarla antes de que otro
+caso de prueba sea ejecutado.
+• Acciones: Pasos a realizar para completar la prueba.
+• Descripción de los datos de entrada
+12
+
+UM
+DE MENDOZA
+• Resultados
+• Salida esperada: Contiene una descripción de lo que el analista debería ver tras haber completado
+todos los pasos de la prueba.
+• Salida obtenida: Contiene una breve descripción de lo que el analista encuentra después de que los
+pasos de prueba se hayan completado.
+• Resultado: Indica el resultado cualitativo de la ejecución del caso de prueba, a menudo con
+un Correcto/Fallido.
+• Severidad: Indica el impacto del defecto en el sistema: Grave, Mayor, Normal, Menor.
+• Evidencia: En los casos que aplica, contiene un link al print de pantalla (screenshot) donde se evidencia
+la salida obtenida.
+• Seguimiento: Si un caso de prueba falla, frecuentemente la referencia al defecto implicado se debe
+enumerar en esta columna. Contiene el código correlativo del defecto, a menudo corresponde al código
+del sistema de tracking de bugs que se esté usando.
+Estado: Indica si el caso de prueba está: No iniciado, En curso, o terminado.
+13
+
+UM
+UNIVERSIDAD
+DE MENDOZA
+Issue trackers y Ambientes de pruebas
+Issue Trackers
+Introducción, Generalidades
+Un issue tracker system (sistema de seguimiento de incidentes ) es básicamente un software wue
+ayuda el equipo de desarrollo y todo aquel involucrado en el desarrollo de un sistema a administrar y
+mantener un listado actualizado de los "incidentes" existentes.
+Un Incidente es todo aquello que requiera un esfuerzo o trabajo por parte del equipo de desarrollo, es
+decir, un incidente puede requerir implementación de código nuevo, validación de requisitos por parte
+de alguna persona dentro del equipo, investigación de tecnologías, creación de wireframes, defectos,
+etc.
+Herramientas del mercado
+Actualmente en el mercado existe un gran número de herramientas para la gestión de incidentes.
+La selección de la herramienta a utilizar por el equipo depende de muchos factores entr los que
+podemos destacar el factor técnico (soporte para metodología utilizada por el equipo, integración con
+herramientas de desarrollo, alertas, etc ) y financiero (costos de su instalación y mantenimiento).
+Algunos de las herramientas mas populares son
+Test Link, HP Quatity Center, Version one, Jira, TFS
+14
+
+UM
+UNIVERSIDAD
+DE MENDOZA
+https://en.wikipedia.org/wiki/Comparison_of_issue-tracking_systems
+Herramientas Ofimáticas como herramientas de testing / Issue tracker
+• Uso de cada una de las aplicaciones office como opción para profesionales de Calidad de Sw.
+• Ventajas y desventajas con issue trackers
+Ambientes de pruebas
+Niveles de Staging
+• Nombres, descripción y motivos de su existencia
+Requisitos en cuanto a su localización ( geográfica o de arquitectura)
+• Diferencias entre los niveles de staging
+Niveles de Staging: La Clave para un Desarrollo Exitoso
+• ¿Qué son los Niveles de Staging?
+• Idealmente hablamos de réplicas controladas del entorno de producción,
+utilizadas para probar y validar cambios en el software antes de su lanzamiento
+al público.
+• Permiten identificar y corregir errores en un ambiente seguro, minimizando el
+riesgo de problemas en producción.
+• Número Ideal de Niveles de Staging:
+• No hay un número único, pero un enfoque común es tener al menos tres niveles:
+• Desarrollo: Para que los desarrolladores trabajen y prueben sus cambios
+de forma individual.
+• Integración/QA: Para probar la integración de diferentes componentes y
+realizar pruebas de calidad.
+• Pre-Producción/Staging: Una réplica casi exacta de producción para
+pruebas finales y aceptación del usuario.
+• Propósito de Cada Nivel:
+• Desarrollo:
+• Entorno aislado para que los desarrolladores implementen y prueben
+nuevas funcionalidades.
+• Permite la experimentación sin afectar otros entornos.
+15
+
+UM
+DE MENDOZA
+• Integración/QA:
+• Verifica la correcta integración de los cambios de diferentes
+desarrolladores.
+• Realiza pruebas de calidad (funcionales, de rendimiento, de seguridad)
+para identificar errores.
+Pre-Producción/Staging:
+Simula el entorno de producción lo más fielmente posible.
+Permite pruebas finales, pruebas de aceptación del usuario (UAT) y
+validación de la configuración.
+• Importancia y Similitud con el Ambiente Productivo:
+• Los entornos de staging son cruciales para asegurar la calidad y estabilidad del
+software antes de su lanzamiento.
+• Deben ser lo más similares posible al entorno de producción en términos de
+configuración, datos y recursos.
+• Contras de la Replicación y Riesgos:
+• Costo: Replicar entornos puede ser costoso en términos de infraestructura y
+mantenimiento.
+• Complejidad: Mantener la coherencia entre los entornos puede ser complejo y
+requerir automatización.
+• Datos Sensibles: Replicar datos de producción puede plantear riesgos de
+seguridad y privacidad.
+• Relación con Quality Assurance (QA):
+• Los entornos de staging son esenciales para el proceso de QA.
+• QA utiliza estos entornos para ejecutar pruebas exhaustivas y validar que el
+software cumple con los requisitos y estándares de calidad.
+• La retroalimentación de QA en los entornos de staging permite a los
+desarrolladores corregir errores antes de que lleguen a producción.
+• Comentarios Finales:
+• Implementar una estrategia de staging adecuada es una inversión que reduce
+significativamente los riesgos asociados con el lanzamiento de software.
+• La automatización y la gestión eficiente de la configuración son clave para
+mantener la coherencia y reducir los costos.
+• La colaboración entre desarrollo, QA y operaciones es fundamental para el éxito
+de la estrategia de staging.
+16
+
+UM
+UNIVERSIDAD
+DE MENDOZA
+Relación de "Entregables"
+• Relación entre: Modulos, Features, Funciones, Casos de uso, test Case, Escenario
+U.M.L
+Diagramas, Usos y caracteristicas
+requisitos
+ver el archivo Guía General UML.doc
+17 |
+
+UM
+DE MENDOZA
+Testing - Estableciendo diferencias
+El proceso de operar un sistema o componente en condiciones especificadas, observar o registrar resultados
+haciendo una evaluación de algún aspecto del sistema o componente bajo testing
+Testing/Testear es el proceso de comparar "lo que es" con "lo que debería ser."
+La prueba es un proceso de ciclo de vida de la ingeniería concurrente.
+Utilizar y mantener testware con el fin de medir y mejorar la calidad del software que está siendo probado es un
+objetivo claramente definido en el proceso de testing.
+Quality Assurance Vs Quality Control
+El Testing es una actividad de Control de Calidad.
+Los métodos de calidad pueden ser divididos en 2 segmentos: Métodos preventivos y métodos de detección.
+Esta Distinción sirve para dilucidar las calidades de Control de calidad y las de Aseguramiento de Calidad
+Aseguramiento de calidad ( Quality Assurance )
+El aseguramiento de Calidad es un set de actividades planificado y systematico el cual resulta necesario para
+proveer la confianza necesaria de que el producto/servicio está trabajando en conformidad a los requerimientos
+especificados y que cumple con las necesidades del usuario.
+El aseguramiento de calidad es un trabajo en equipo y es responsable de implementar una política de calidad a
+través del desarrollo y la mejora continua del desarrollo de software.
+Aseguramiento de Calidad es una actividad que establece y evalúa el/los procesos que producen algún
+producto.
+Si no hay necesidad de procesos no hay lugar para el aseguramiento de calidad
+Quality assurance is an activity that establishes and evaluates the processes that produce
+products. If there is no need for process, there is no role for quality assurance. For example,
+Las Actividades del aseguramiento de calidad en un ambiente IT deben ayudar a determinar la necesidad de
+adquisición o ayudar a instaurar lo siguiente :
+18
+
+UM
+DE MENDOZA
+• Metodologías de desarrollo de sistemas
+• Los procesos de estimación
+• Los procesos de mantenimiento de sistemas
+• Los procesos de definición de requerimientos
+• Procesos y Normas de ensayo
+Una vez instalada, la garantía de calidad mediría estos procesos para identificar las debilidades y
+a continuación, debe corregir esas debilidades para mejorar continuamente el proceso.
+• Aseguramiento de la calidad ayuda a establecer procesos.
+• Garantía de calidad establece los programas de medición para evaluar los procesos.
+• Aseguramiento de la calidad determina las deficiencias de los procesos y los mejora.
+• La garantía de calidad es una responsabilidad de gestión, frecuentemente realizada por un personal
+función.
+• La garantía de calidad se refiere a todos los productos que jamás se producirían por un proceso.
+• La garantía de calidad es a veces llamado el control de calidad sobre el control de calidad, ya que
+evalúa si el control de calidad está funcionando.
+• El personal de garantía de calidad no deben realizar el control de calidad a menos que sea para validar
+Quality Control ( Control de Calidad )
+Control de calidad es el proceso por el cual la calidad de un producto es comparada con estándares o normas.
+Es necesario tomar acciones cuando existen características en nuestro producto en donde no hay conformidad
+con dichos estándares/normas/requerimientos.
+Las actividades de control de calidad se centran en la identificación de defectos en los productos reales.
+Estas actividades comienzan en el inicio del proceso de desarrollo de software con las revisiones de los
+requisitos, y continuarán hasta que todas las pruebas de sistema estén completas.
+Es posible tener el control de calidad y sin garantía de calidad. Por ejemplo, un equipo de prueba puede estar
+en su lugar para llevar a cabo las pruebas del sistema al final de desarrollo, independientemente de si esa
+sistema se produce utilizando una metodología de desarrollo de software.
+Tanto la garantía de calidad y control de calidad son separados y distintos de la auditoría interna
+función. Auditoría Interna es una actividad de evaluación independiente dentro de una organización para la
+revisión de las operaciones, y es un servicio a la administración. Se trata de un control de gestión que funciona
+midiendo y evaluando la eficacia de otros controles.
+• El control de calidad se refiere a un producto o servicio específico.
+• Control de calidad verifica si atributo específico(s) están en, o no están en una producto o servicio específico.
+• El control de calidad es responsabilidad del equipo / trabajador.
+• El control de calidad se refiere a un producto específico.
+19
+
+UM
+UNIVERSIDAD
+DE MENDOZA
+Factores, Objetivos y Tipos de Testing
+Contenido N°3
+Factores de calidad del software
+• Correctitud: Grado en que un programa satisface sus especificaciones y cumple con los objetivos requeridos
+por el usuario
+• Fiabilidad: Medida en que se puede esperar de un programa para llevar a cabo su función prevista con la
+precisión requerida.
+• Eficiencia: La cantidad de recursos informáticos y código requerido por un programa para realizar una función.
+• Integridad: Grado en el cual el acceso a software o datos por parte de personas no autorizadas puede ser
+controlada.
+• Usabilidad: Esfuerzo requerido aprendizaje, funcionamiento, preparación de entrada, y la interpretación de la
+salida de un programa.
+• Mantenibilidad: Esfuerzo requerido localización y arreglo de un error en un programa ya operativo.
+• Testeabilidad: Esfuerzo necesario probar un programa para garantizar que se produce el resultado
+deseado/esperado
+• Flexibilidad: Esfuerzo requiere la modificación de un programa operativo.
+20
+
+UM
+UNIVERSIDAD
+DE MENDOZA
+• Portabilidad: Esfuerzo requerido para transferir el software de una configuración a otra.
+• Reutilización: Grado en que un programa se puede utilizar en otras aplicaciones -
+• Interoperabilidad: Esfuerzo requerido para acoplar un sistema por otro.
+Los objetivos del proceso de Calidad
+1. La mejora del producto Software (prevención, detección y eliminación de defectos).
+2. Evaluación de la calidad del producto (a través de la definición de los objetivos de calidad).
+3. Mejora de la calidad a largo plazo y la eficacia del proceso de calidad (costo vs calidad efectividad).
+Wireframes - Balsamia mockups
+Cuando deseamos comensar a diseñar un sistema, o quizás, proponer mejoras sobre sitemas preexistentes
+siempre es una buena idea generar pantallas, navegabilidades y diseños tentativos a medida que vamos
+adquiriendo conocimiento acerca de lo que se desea.
+Podemos considerar a la generación de wireframes como una buena practica a la hora de poder ser certeros en
+que el diseño propuesto y las funcionalidades capturadas cumplimentan los requisitos de un cliente.
+Muchas veces nos encontramos con:
+• Definiciones pobres en detalles y sin demasiada información acerca de la lógica que el sistema debe
+seguir.
+• Clientes con bajo nivel técnico que no tienen intenciones de aprender UML o a interpretar diegramas de
+BD
+21
+
+UM
+DE MENDOZA
+Clientes sin Idea de sistemas web y de sus funcionalidades
+Requisitos faltantes o incompletos
+Para que el impacto negativo de todas los aspectos mencionados previamente sean lo menor posible es que
+desde este curso proponemos la utilización de Wireframes como herramienta del aseguramiento de calidad.
+Puede pensarse que la creación de wireframes es tarea de un diseñador, desarrollador o algún eventual cliente
+pero esto no tiene por qué ser asi.
+Siguiendo la premisa que dice " Si un desarrollador puede desarrollar, el Qa debe poder testear" hacemos
+incapié en que el profesional de la Calidad del software a implementar DEBE ser capaz de capturar requisitos y
+poder bajarlos a un diagrama o conjunto de diagramas que puedan ser comprendidos por la totalidad del equipo.
+En muchos casos un wireframe robusto y consistente puede servir como contrato entre partes indicando entre
+otras:
+QUE se va a desarrollar.
+COMO va a estar distribuida la información en las pantallas
+COMO va a ser la navegabilidad de páginas (web o desktop )
+CUAL es el alcance del desarrollo final
+Para poder comprender las ventajas del uso de los wireframes primero vamos a introducir el tema.
+Que es un wireframe?
+Un wireframe ( Cuadros Cableados ) es un diseño conceptual y bastante aproximado (gráficamente hablando) a
+lo que va a ser desarrollado por nuestro equipo.
+Responsabilidades de un wireframe:
+Las responsabilidades que tiene un wireframe para poder decir que es útil se relacionan con la exactitud con la
+el mismo provee información a la persona que lo observa de:
+Diseño de la lógica de la aplicación
+Relaciones entre pantallas
+Descripción de las funcionalidades que van a desarrollarse
+Los wireframes son creados y van cambiando a medida que se van refinando los requerimientos.
+Podemos decir que el proceso de creación y mantenimiento de wireframes es interactivo y básicamente consiste
+en la creación de prototipos no funcionales del sistema a desarrollar.
+Usos de los wireframes:
+22
+
+UM
+UNIVERSIDAD
+DE MENDOZA
+Los wireframes actualmente se utilizan para diseñar, modelar y refinar sistemas WEB, mobiles, desktops y todo
+aquello que entendemos consta de pantallas con funcionalidades y también de interacción entre humanos y
+dispositivos
+Herramientas
+De la misma forma que sucede para los test cases, issues y defectos. No existe una única herramienta para
+diseñar y crear wireframes como asi no existe "LA MEJOR" herramienta.
+La idea de este curso es que el alumno pueda elegir entre las posibilidades existentes en el mercado y tomar
+decisiones que se ajusten a sus necesidades en cuanto al producto y sus ventajas/ desventajas.
+Cabe aclarar que un buen wireframe no necesariamente es generado con una herramienta cara.
+Si el wireframe en cuestión cumplimenta las siguientes características:
+• Claro (no ambiguo)
+• Consistente entre sus pantallas y la lógica que se implementará
+• Intuitivo para el lector
+esta lascate de lo que se desarollará
+Puede ser desarrollado en una hoja de papel para luego digitalizarse y "Atacharse" a un requerimiento o
+Entregables para los clientes.
+Lo importante es que el wireframe sea entendible y no consuma demasiado tiempo en ser generado/mantenido.
+Tipos de Testing
+Testing Funcional
+Las funciones que un sistema, subsistema o componente supone que va a realizar se pueden describir en
+productos de trabajo, tales como especificación de requisitos, casos de uso, o la especificación funcional, o ser
+indocumentados.
+Las funciones son "QUE" hace el sistema.
+23
+
+UM
+DE MENDOZA
+Prueba de funcionamiento se basa en las funciones y características (descritas en los documentos o entendidos
+por los testers) y su interoperabilidad con los sistemas específicos, y se pueden realizar en todas las pruebas
+niveles de abstracción.
+Testing no funcional (Non-functional testing)
+Testing no funcional incluye, pero no está limitado a, pruebas de rendimiento, pruebas de carga, pruebas de
+stress, pruebas de usabilidad, pruebas de mantenimiento, pruebas de fiabilidad y pruebas de portablilidad.
+Es la prueba de "COMO" funciona el sistema.
+El testing no funcional se puede realizar en todos los niveles de abstracción de prueba.
+En este testing las pruebas describen los tests necesarios para medir las características de los sistemas y el
+software que pueden ser cuantificables en una escala variable, tales como tiempos de respuesta para las
+pruebas de rendimiento.
+Testing no funcional considera, entre otros, el comportamiento externo
+del software y en la mayoría de los casos utiliz apruebas de caja negra para lograr eso.
+Defect Management
+El proceso de gestión de defectos involucra los siguientes principios generales:
+• El objetivo primario es prevenir defectos. Cuando no sea posible o práctico el objetivo es encontrar los defectos
+lo antes posible y minimizar el impacto del defecto.
+• La información del defecto debe ser utilizada para mejorar el proceso. Esto es en efecto la razón primaria para
+almacenar información de defectos.
+Defectos - Concepto
+24
+
+UM
+UNIVERSIDAD
+DE MENDOZA
+La pregunta que utilizaremos para arrancar esta sección es: Que es un defecto?
+Olvidémonos de las definiciones científicas y complejas que intentan explicar las características que debe
+cumplir un "issue" para que sea considerado un "defecto"... Tengamos en nuestras mentes lo siguiente: "Un
+Defecto es un estado no deseable"
+Bug vs. Failure vs. Defect vs Mistake vs Fault.
+La industria del software no puede coincidir en una única definición para bug, defect, error, fault, or failure.
+En esencia, si se utiliza el término específico para decir alguna cosa puede no ser entendido por las personas a
+las que se les está comunicando la falla
+Sin embargo, como estos términos no son utilizados correctamente, nosotros debemos aprender el significado
+de los términos en el lugar donde trabajamos.
+Podemos decir que es correcto usar el término defecto para remplazar a los términos siguientes:
+Mistake
+Anomaly
+Fault
+Failure
+Error
+Exception
+Crash
+Bug
+Incident
+Side Effect
+En lugar de tratar de categorizar lo que se necesita arreglar con diferentes términos por que no implementamos
+mejor una forma de categorizar la importancia/criticidad
+Severidad and Tipo.
+Defect Severity
+La severidad debería describir como el defecto afecta al funcionamiento del sistema:
+Ejemplos :
+• Critical - The defect(s) would stop the software system from operating.
+• Major - The defect(s) would cause incorrect output to be produced.
+• Minor - The defect(s) would be a problem but would not cause improper output to be
+produced, such as a system documentation error or a cosmetic failure.
+25
+
+UM
+UNIVERSIDAD
+DE MENDOZA
+Defect Type
+Indica la causa del defecto. Por ejemplo, defectos de código, defectos en la lógica procedural o código que no
+satisface los requerimientos o se desvían de los standards.
+Ejemplos:
+• Compatibility
+• Residual Problems
+• Requirements
+• Design
+• Coding
+• Testing Environment
+• Wrong Testing
+How to split defects
+How atomic should the defects be reported and according to what criteria?
+Defect reporting and agile
+On Validation Inform before reporting.
+26 |
+
+UM
+DE MENDOZA
+Metodologías Ágiles - SCRUM
+Contenido N°4
+Procesos para el desarrollo de software.
+El Proceso para el desarrollo de software, también denominado ciclo de vida del desarrollo
+de software es una estructura aplicada al desarrollo de un producto de software. Hay varios
+modelos a seguir para el establecimiento de un proceso para el desarrollo de software, cada
+uno de los cuales describe un enfoque diferente para diferentes actividades que tienen lugar
+durante el proceso.
+Modelos de Desarrollo de Software
+1. Modelo de cascada
+2. Modelo de espiral
+3. Desarrollo Iterativo e incremental
+4. Desarrollo Agil
+Metodologías Agiles vs Tradicionales
+Metodología Ágil
+Pocos Artefactos. EL
+modelado es prescindible,
+modelos desechables.
+Pocos Roles, más genéricos y
+flexibles
+Metodología Tradicional
+Más Artefactos. El modelado
+es esencial, mantenimiento
+de modelos
+Más Roles, más específicos
+27
+
+UM
+UNIVERSIDAD
+DE MENDOZA
+No existe un contrato
+tradicional, debe ser
+bastante flexible
+Cliente es parte del equipo
+de desarrollo
+(además
+in-situ)
+Orientada a proyectos
+pequeños. Corta duración (o
+entregas frecuentes),
+equipos pequeños (< 10
+integrantes) y trabajando en
+el mismo sitio
+La arquitectura se va
+definiendo y mejorando a lo
+largo del proyecto
+Énfasis en los aspectos
+humanos: el individuo y el
+trabajo en equipo
+Basadas en heurísticas
+provenientes de prácticas de
+producción de código
+Se esperan cambios durante
+el proyecto
+Existe un contrato prefijado
+El cliente interactúa con el
+equipo de desarrollo
+mediante reuniones
+Aplicables a proyectos de
+cualquier tamaño, pero
+suelen ser especialmente
+efectivas/usadas en
+proyectos grandes y con
+equipos posiblemente
+dispersos
+Se promueve que la
+arquitectura se defina
+tempranamente en el
+proyecto
+Énfasis en la definición del
+proceso: roles, actividades y
+artefactos
+Basadas en normas
+provenientes de estándares
+seguidos por el entorno de
+desarrollo
+Se espera que no ocurran
+cambios de gran impacto
+durante el proyecto
+Metodologias Ágiles
+Todas las metodologías que se consideran ágiles cumplen con el manifiesto ágil que no es
+más que una serie de principios que se agrupan en 4 valores:
+28
+
+UM
+DE MENDOZA
+1. Los individuos y su interacción, por encima de los procesos y las herramientas.
+2. El software que funciona, frente a la documentación exhaustiva.
+3. La colaboración con el cliente, por encima de la negociación contractual.
+4. La respuesta al cambio, por encima del seguimiento de un plan.
+El Manifiesto comienza enumerando los principales valores del desarrollo ágil. Se
+valora:
+Al individuo y las interacciones del equipo de desarrollo sobre el proceso y las
+herramientas. La gente es el principal factor de éxito de un proyecto software. Si se
+sigue un buen proceso de desarrollo, pero el equipo falla, el éxito no está
+asegurado; sin embargo, si el equipo funciona, es más fácil conseguir el objetivo
+final, aunque no se tenga un proceso bien definido. No se necesitan desarrolladores
+brillantes, sino desarrolladores que se adapten bien al trabajo en equipo.
+Desarrollar software que
+funciona más que conseguir una buena
+documentación. Aunque se parte de la base de que el software sin documentación
+es un desastre, la regla a seguir es "no producir documentos a menos que sean
+necesarios de forma inmediata para tomar un decisión importante". Estos
+documentos deben ser cortos y centrarse en lo fundamental. Si una vez iniciado el
+proyecto, un nuevo miembro se incorpora al equipo de desarrollo, se considera que
+los dos elementos que más le van a servir para ponerse al día son: el propio código
+y la interacción con el equipo.
+La colaboración con el cliente más que la negociación de un contrato. Las
+características particulares del desarrollo de software hace que muchos proyectos
+hayan fracasado por intentar cumplir unos plazos y unos costes preestablecidos al
+inicio del mismo, según los requisitos que el cliente manifestaba en ese momento.
+Por ello, se propone que exista una interacción constante entre el cliente y el
+equipo de desarrollo. Esta colaboración entre ambos será la que marque la marcha
+del proyecto y asegure su éxito.
+Responder a los cambios más que seguir estrictamente un plan. La habilidad de
+responder a los cambios que puedan surgir a los largo del proyecto (cambios en los
+requisitos, en la tecnología, en el equipo, etc.) determina también el éxito o fracaso
+del mismo. Por lo tanto, la planificación no debe ser estricta puesto que hay muchas
+variables en juego, debe ser flexible para poder adaptarse a los cambios que
+puedan surgir. Una buena estrategia es hacer planificaciones detalladas para unas
+pocas semanas y planificaciones mucho más abiertas para unos pocos meses.
+29
+
+UM
+DE MENDOZA
+Los valores anteriores inspiran los doce principios del manifiesto. Estos principios son
+las características que diferencian un proceso ágil de uno tradicional. Los dos primeros
+son generales y resumen gran parte del espíritu ágil. Son:
+I. La prioridad es satisfacer al cliente mediante tempranas y continuas entregas de
+software que le aporte un valor. Un proceso es ágil si a las pocas semanas de empezar
+ya entrega software que funcione aunque sea rudimentario. El cliente decide si pone en
+marcha dicho software con la funcionalidad que ahora le proporciona o simplemente lo
+revisa e informa de posibles cambios a realizar.
+II. Dar la bienvenida a los cambios. Se capturan los cambios para que el cliente tenga
+una ventaja competitiva. Este principio es una actitud que deben adoptar los miembros
+del equipo de desarrollo. Los cambios en los requisitos deben verse como algo positivo.
+Les va a permitir aprender más, a la vez que logran una mayor satisfacción del cliente.
+Este principio implica además que la estructura del software debe ser flexible para
+poder incorporar los cambios sin demasiado coste añadido. El paradigma orientado a
+objetos puede ayudar a conseguir esta flexibilidad.
+Luego existen una serie de principios que tienen que ver directamente con el proceso de
+desarrollo de software a seguir.
+Ill. Entregar frecuentemente software que funcione desde un par de semanas a un
+par de meses, con el menor intervalo de tiempo posible entre entregas. Las entregas
+al cliente se insiste en que sean software, no planificaciones, ni documentación de
+análisis o de diseño.
+IV. La gente del negocio y los desarrolladores deben trabajar juntos a lo largo del
+proyecto. El proceso de desarrollo necesita ser guiado por el cliente, por lo que la
+interacción con el equipo es muy frecuente.
+V. Construir el proyecto en torno a individuos motivados. Darles el entorno y el apoyo
+que necesitan y confiar en ellos para conseguir finalizar el trabajo. La gente es el
+principal factor de éxito, todo los demás (proceso, entorno, gestión, etc.) queda en
+segundo plano. Si cualquiera de ellos tiene un efecto negativo sobre los individuos debe
+ser cambiado.
+VI. El diálogo cara a cara es el método más eficiente y efectivo para comunicar
+información dentro de un equipo de desarrollo. Los miembros de equipo deben hablar
+entre ellos, éste es el principal modo de comunicación. Se pueden crear documentos
+pero no todo estará en ellos, no es lo que el equipo espera.
+VII. El software que funciona es la medida principal de progreso. El estado de un
+proyecto no viene dado por la documentación generada o la fase en la que se encuentre,
+30
+
+UM
+DE MENDOZA
+sino por el código generado y en funcionamiento. Por ejemplo, un proyecto se encuentra
+al 50% si el 50% de los requisitos ya están en funcionamiento.
+VIII. Los procesos ágiles promueven un desarrollo sostenible. Los promotores,
+desarrolladores y usuarios deberían ser capaces de mantener una paz constante. No se
+trata de desarrollar lo más rápido posible, sino de mantener el ritmo de desarrollo
+durante toda la duración del proyecto, asegurando en todo momento que la calidad de lo
+producido es máxima.
+Finalmente los últimos principios están más directamente relacionados con el equipo de
+desarrollo, en cuanto metas a seguir y organización del mismo.
+IX. La atención continua a la calidad técnica y al buen diseño mejora la agilidad.
+Producir código claro y robusto es la clave para avanzar más rápidamente en el proyecto.
+X. La simplicidad es esencial. Tomar los caminos más simples que sean consistentes
+con los objetivos perseguidos. Si el código producido es simple y de alta calidad será
+más sencillo adaptarlo a los cambios que puedan surgir.
+XI. Las mejores arquitecturas, requisitos y diseños surgen de los equipos organizados
+por sí mismos. Todo el equipo es informado de las responsabilidades y éstas recaen
+sobre todos sus miembros. Es el propio equipo el que decide la mejor forma de
+organizarse, de acuerdo a los objetivos que se persigan.
+XII. En intervalos regulares, el equipo reflexiona respecto a cómo llegar a ser más
+efectivo, y según esto ajusta su comportamiento. Puesto que el entorno está
+cambiando continuamente, el equipo también debe ajustarse al nuevo escenario de
+forma continua. Puede cambiar su organización, sus reglas, sus convenciones, sus
+relaciones, etc., para seguir siendo ágil.
+Tipos de metodologías Agiles
+Entre las metodologías ágiles más usadas se encuentran:
+• SCRUM. Desarrollada por Ken Schwaber, Jeff Sutherland y Mike Beedle. Define un marco
+para la gestión de proyectos, que se ha utilizado con éxito durante los últimos 10 años.
+Está especialmente indicada para proyectos con un rápido cambio de requisitos. Sus
+principales características se pueden resumir en dos.
+31
+
+UM
+DE MENDOZA
+• El desarrollo de software se realiza mediante iteraciones, denominadas sprints,
+con una duración de 30 días. El resultado de cada sprint un incremento
+ejecutable que se muestra al cliente.
+• La segunda característica importante son las reuniones a lo largo proyecto.
+Éstas son las verdaderas protagonistas, especialmente la reunión diaria de 15
+minutos del equipo de desarrollo para coordinación e integración. Es un marco
+de trabajo que nos proporciona una serie de herramientas y roles para, de una
+forma iterativa, poder ver el progreso y los resultados de un proyecto.
+• KANBAN. Se basa en una idea muy simple. Esta es que el trabajo en curso (Work In
+Progress, WIP) debería limitarse y sólo deberíamos empezar con algo nuevo cuando un
+bloque de trabajo anterior haya sido entregado o ha pasado a otra función posterior de la
+cadena.
+• XP: Es una metodología ágil centrada en potenciar las relaciones interpersonales como
+clave para el éxito en desarrollo de software, promoviendo el trabajo en equipo,
+preocupándose por el aprendizaje de los desarrolladores y propiciando un buen clima de
+trabajo.
+SCRUM
+Es un modelo de referencia que define un conjunto de prácticas y roles, y que puede tomarse
+como punto de partida para definir el proceso de desarrollo que se ejecutará durante un
+proyecto
+32 |
+
+UM
+DE MENDOZA
+Roles
+Product Owner
+El Product Owner representa la voz del cliente. Se asegura de que el equipo Scrum trabaja de
+forma adecuada desde la perspectiva del negocio. El Product Owner escribe historias de
+usuario, las prioriza, y las coloca en el Product Backlog:
+• Define las funcionalidades del producto
+• Decide las fechas de lanzamiento y contenido
+• Acepta o no el trabajo realizado
+Scum Master
+El Scrum es facilitado por un ScrumMaster, cuyo trabajo primario es eliminar los obstáculos
+que impiden que el equipo alcance el objetivo del sprint. El ScrumMaster no es el líder del
+equipo (porque ellos se auto-organizan), sino que actúa como una protección entre el equipo
+y cualquier influencia que le distraiga. El ScrumMaster se asegura de que el proceso Scrum se
+utiliza como es debido. El ScrumMaster es el que hace que las reglas se cumplan:
+• Responsable de la aplicación de los valores y prácticas de Scrum
+• Elimina impedimentos
+• Asegura que el equipo es completamente funcional y productivo
+• Garantiza la cooperación de los diferentes roles y funciones
+Equipo
+El equipo tiene la responsabilidad de entregar el producto. Un pequeño equipo de 5 a 9
+personas con las habilidades transversales necesarias para realizar el trabajo (diseñador,
+desarrollador, etc).Reuniones
+33
+
+UM
+UNIVERSIDAD
+DE MENDOZA
+Artefactos
+Product Backlog.
+Conjunto de requisitos denominados historias descritos en un lenguaje no técnico y
+priorizados por valor de negocio, o lo que es lo mismo, por retorno de inversión considerando
+su beneficio y coste. Los requisitos y prioridades se revisan y ajustan durante el curso del
+proyecto a intervalos regulares.
+Sprint Backlog.
+Lista de las tareas necesarias para llevar a cabo las historias del sprint.
+Sprint.
+Iteración de duración prefijada durante la cual el equipo trabaja para convertir
+las historias del Product Backlog a las que se ha comprometido, en una nueva versión del
+software totalmente operativo.
+Historias de usuario.
+Una historia de usuario es una representación de un requisito escrito en una o dos frases
+utilizando el lenguaje común del usuario.
+Formato: As as [user role] | want to [goal] so that [benefit]
+Ej.Como comprador, quiero agregar libros al carrito de compras para elegir los libros que voy
+a comprar
+• Especifican qué hay que hacer, evitando especificar cómo hacerlo
+• Pueden agregarse detalles (breves)
+• Pueden tener attachments que definan el contexto
+• Conviene que incluyan los criterios de aceptación
+• Pueden estar en una herramienta (issue tracker), en un excel, en un repositorio, en
+google docs o en tarjetas
+• Se completa la info en una conversación
+34
+
+UNIVERSIDAD
+DE MENDOZA
+• Escribir buenas stories suele ser lo más difícil al arrancar un proyecto de Scrum
+• Beneficio: ayuda a pensar desde la perspectiva del usuario
+Reuniones en Scrum
+Daily Scrum
+Cada día de un sprint, se realiza la reunión sobre el estado de un proyecto. Esto se llama
+"daily standup". El scrum tiene unas guías específicas:
+La reunión tiene una duración aproximada de 15 minutos, de forma independiente del
+tamaño del equipo.
+Durante la reunión, cada miembro del equipo contesta a tres preguntas:
+• ¿Qué has hecho desde ayer?
+• ¿Qué es lo que estás planeando hacer hoy?
+• ¿Has tenido algún problema que te haya impedido alcanzar tu objetivo? (Es el papel del
+ScrumMaster recordar estos impedimentos).
+Reunión de Revisión del Sprint (Sprint Review Meeting)
+• Revisar el trabajo que fue completado y no completado
+• Presentar el trabajo completado a los interesados (alias "demo")
+• El trabajo incompleto no puede ser demostrado
+• Cuatro horas como límite
+Retrospectiva del Sprint (Sprint Retrospective)
+Después de cada sprint, se lleva a cabo una retrospectiva del sprint, en la cual todos los
+miembros del equipo dejan sus impresiones sobre el sprint recién superado. El propósito de la
+retrospectiva es realizar una mejora continua del proceso. Esta reunión tiene un tiempo fijo de
+cuatro horas.
+35
+
+UM
+UNIVERSIDAD
+DE MENDOZA
+roduct Backlo
+NUEVA VERS
+DE PRODUCT
+36

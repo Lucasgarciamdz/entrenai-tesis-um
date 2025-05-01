@@ -1,0 +1,102 @@
+# Trabajo práctico Nº1
+
+## Aseguramiento de la calidad de software
+
+### Alumno
+
+- Lucas Garcia
+- [Perfil LinkedIn](https://www.linkedin.com/in/lucasgarcia54/)
+- Legajo: 61136
+- Fecha: 16/04/2025
+
+### Pregunta 1: Exponga con sus palabras que es lo que entiende por Calidad de Software, mencione alguna herramienta del profesional de la Calidad de sw vista en clase e indique la importancia que tiene el rol dentro de los equipos de desarrollo de software segun lo visto en clase. (1.5pts)
+
+> La calidad es la capacidad que tienen las caracteristicas de una entidad para satisfacer las necesidades implicitas y explicitas. Si nos referimos especificamente al software, no solo incluye las caracteristicas si no que tambien se habla del proceso. Es decir, calidad de software se define como un proceso eficaz que logra crear un software util, el cual tiene un valor medible para las personas.
+
+**Herramientas:**
+
+- Caso de pureba: permite ejecutar pruebas para reconocer si el software funciona como se espera.
+- Issue Tracker: es una de las mas importantes en un equipo de trabajo, permite llevar un orden de los errores que tiene el software; Además, se puede medir el progreso a la hora de corregirlos.
+- Wireframes: muestra el diseño basico de un sistema, un boceto para que se entienda la estructura que debe tener.
+
+### Pregunta 2: Segun lo discutido en clase, Indique cuáles de estas actividades serian responsabilidad ESPECIFICA del área de Calidad si consideramos los ideales discutidos en clase (1.5pts).
+
+1. **(Específica)** Realiza el análisis de requerimientos y elabora pruebas enfocadas en la detección y reporte de errores.
+
+2. **(No Específica)** Desarrolla pruebas unitarias para evaluar el correcto funcionamiento del codigo que se pretende commitear.
+
+3. **(Específica)** En caso de ser posible, deberia ejecutar las pruebas de manera simultánea al desarrollo, con el objetivo de detectar tempranamente los errores en las fases iniciales del proyecto.
+
+4. **(No Específica)** Realiza la codificación y mantenimiento del código.
+
+5. **(No Específica)** Diseña la arquitectura del proyecto.
+
+6. **(No Específica)** Elabora, ejecuta y evalúa las pruebas y conjuntos de datos correspondientes.
+
+7. **(No Específica)** Define el alcance y los riesgos del proyecto.
+
+8. **(No Específica)** De existir test automatizado implementado, el QA o QA team automatiza las pruebas definidas previamente por el equipo, las cuales se ejecutan con una frecuencia predefinida.
+
+9. **(Específica)** Genera métricas de calidad que brinden información valiosa al cliente.
+
+10. **(No Específica)** Revisa, corrige errores y toma medidas preventivas.
+
+11. **(No Específica)** Investiga herramientas y propone diferentes tipos de pruebas basados en las necesidades del sistema.
+
+12. **(Específica)** Lleva a cabo la revisión de código, siguiendo los estándares de codificación preestablecidos.
+
+### Pregunta 3: Analice las siguientes afirmaciones sobre “Dimensiones/Factores de calidad que se Persiguen”, indique a cual de las siguientes corresponde “Intuitiva”, ”Fiable”, ”Reusabilidad”, ”Eficiencia” (1.5pts)
+
+1. **(Intuitiva)** La interfaz sigue patrones de uso esperados para que incluso un usuario novato pueda utilizarla sin necesidad de una capacitación extensa.
+
+2. **(Intuitiva)** Es muy facil localizar y acceder a la información y operaciones en la interfaz.
+
+3. **(Fiable)** El software proporciona un servicio estable y sin fallas.
+
+4. **(Fiable)** El software maneja y soporta las entradas erróneas de datos o la interacción del usuario.
+
+5. **(Intuitiva)** La interfaz es fácil de entender para el usuario.
+
+6. **(Intuitiva)** La distribución y el estilo de la interfaz permiten al usuario introducir las operaciones y la información de manera eficiente.
+
+7. **(Fiable)** El software reconocerá el error si entran datos en el límite de lo permitido o más allá y,lo que es más importante, continuará operando sin fallar ni degradarse.
+
+8. **(Eficiencia)** El software utiliza pocos recursos para realizar las tareas.
+
+9. **(Reusabilidad)** Todas las pantallas usan el mismo set de componentes visuales.
+
+10. **(Reusabilidad)** El sistema es facil de testear porque sus funciones se repl.ican sin cambios.
+
+### Pregunta 4: Si el software es de mala calidad, nadie lo comprará. Pero si se busca perfección absoluta, se tardara demasiado y costará tanto que igual existe riesgo de fracaso. En ambos casos, se pierde, ya sea por tiempo o recursos. (2pts)
+
+#### WhatsApp
+
+> La aplicación de WhatsApp es la Nroº1 para comunicarse en Argentina, pero durante mucho tiempo, implemento prácticas de software "suficientemente bueno". Frente a sus competidores, WhatsApp contaba con muchas menos funciones, muchas de las funciones no estaban pulidas y las caidas del software eran frecuentes. Pese a esto, las personas continuan utilizando WhatsApp ya que es la aplicacion más común. Si lo comparamos con telegram, siempre estuvo 10 pasos adelante con respecto a calidad de producto. Contaba con mayor seguridad, mejores features, y aunque algunos la probaban durante las caidas de WhatsApp, una vez el servicio de Meta volvía a funcionar, la desinstalaban. 
+
+Por nombrar alguna de las funciones que no fueron incluidas en WhatsApp durante mucho tiempo:
+
+- Subir fotos en mayor calidad.
+- Enviar mas de 30 fotos.
+- Stickers.
+- Transcripción de audio.
+- Grupos con mayor capacidad.
+- Chat de voz para grupos.
+- Reacciones.
+
+### Pregunta 5: Segun lo discutido en clase - Marque V/F y justifique su respuesta cuando sea Falso o lo crea necesario. (2pts)
+
+1. **(Verdadero)** El trabajo del QA no es únicamente realizar unit tests para asegurar que la logica del código no posee fallas.
+
+2. **(Falso)** Parte de los que no podemos considerar objetivos aspiracionales del área de Calidad es la reducción del Riesgo y evitar el retrabajo
+
+> **JUSTIFICACIÓN:** Uno de los principales objetivos de la calidad es evitar el retrabajo y la reduccioón de riesgo.
+
+3. **(Verdadero)** Las metodologías ágiles aseguran que un producto/proyecto va a realizarse muchisimo mas rapido ( reduccion de tiempos ) que uno realizado con metodología de “cascada”
+
+4. **(Falso)** Una buena practica de Aseguramiento de calidad de software es testear en la misma computadora del desarrollador para asegurarse de que el entorno esta preparado para dicha prueba
+
+> **JUSTIFICACIÓN:** Testear en la computadora del desarrollador no es bueno ya que la aplicación corre en un entorno que preparo el desarrollador, lo mas probable es que este no sea el mismo que reciba el cliente o pruebe todo el equipo de desarrollo. Es decir, es necesario desarrollar un entorno de pruebas donde todo el equipo pueda acceder y sea similar al que recibe el cliente.
+
+### Pregunta 6: Elaborar una conclusión personal sobre el siguiente Artículo e indique como un equipo de QA podria colaborar. (1.5pts)
+
+Por lo leido en el artículo entiendo que Microsoft utilizaba la práctica de software "suficientemente bueno". Aun asi sabiendo la gran limitación de su programa, todas las computadoras de la época con Windows contaban con Microsoft Excel, por lo que el exito lo tenían asegurado. En este caso, un QA podría haber prevenido que el software se lanze con errores tan graves como esos. ¿De qué forma podría haberlo hecho? Un equipo de QA podría haber identificado previo al lanzamiento, analizando la tendencia del mercado y los productos de la competencia. Ademas, incluiría metodologías claras de desarrollo, contaría con issue trackers y tendría métricas de la aplicacion, por lo que arreglar y prevenir errores sería una prioridad. Hoy en día contamos con metodologías como scrum que permiten solucionar los problemas de manera agil, por lo que el error podria haberse incluido como un arreglo crítico dentro del desarrollo. A pesar que un equipo de QA podría haber ayudado, asumo que la intención de Microsoft era cobrar por las actualizaciones y la corrección de errores.

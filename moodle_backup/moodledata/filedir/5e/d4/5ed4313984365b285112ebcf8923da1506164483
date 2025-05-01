@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Cátedras Virtuales - UMVirtual - SISTEMAS OPERATIVOS</title>
+    <link rel="stylesheet" type="text/css" href="..//shared/moodle.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+    <div class="d-flex flex-column h-100">
+        <nav class="navbar navbar-light bg-white border-bottom">
+            <div class="container-fluid p-0">
+                <a class="navbar-brand" href="https://virtual.um.edu.ar" title="Cátedras Virtuales - UMVirtual">
+                    Cátedras Virtuales - UMVirtual
+                </a>
+            </div>
+        </nav>
+        <main class="container-fluid mt-2 flex-grow-1 flex-shrink-1">
+            <div>
+                <h1><a href="../index.html">SISTEMAS OPERATIVOS</a></h1>
+                <p>Sistemas_Operativos</p>
+                    <h2>
+        Documentos | Presentaciones | Guías
+    </h2>
+
+    <div class="alert alert-info alert-block">
+        Este archivo descargado forma parte del contenido de <a href="https://virtual.um.edu.ar/mod/page/view.php?id=273672">Documentos | Presentaciones | Guías</a> el sábado, 26 de abril de 2025, 17:42. Tenga en cuenta que contenido o archivos con tamaño superior a  50 MB no serán descargados.    </div>
+
+
+    <div>
+        <h3>Contenido de la página</h3>
+        <div>
+            <div>
+                <h3>Documentos</h3>
+<p><a href="https://docs.google.com/document/d/1m_zb_4LCU2f1_q1pHRxvw6RgBTZaqzHBaA09NXzd9s4/export?format=pdf" target="_blank" rel="noreferrer noopener">01_Documento de la Cátedra: GNU/Linux</a></p>
+<p><a href="https://iie.fing.edu.uy/personal/vagonbar/sample-page/curso-basico-de-linux/" target="_blank" rel="noreferrer noopener">02_Tutorial Externo #1</a></p>
+<h3>Presentaciones y Guías</h3>
+<table style="border-collapse:collapse;width:74.1683%;" border="1"><colgroup><col style="width:34.1888%;" /><col style="width:65.8462%;" /></colgroup>
+<tbody>
+<tr>
+<td style="text-align:center;"><strong>Presentación</strong></td>
+<td style="text-align:center;"><strong>Guía</strong></td>
+</tr>
+<tr>
+<td><a href="https://docs.google.com/presentation/d/19GxHAIz9fCY3xxTRCLol9oFmHaPbMV0En4riR-gffH8/export/pdf" target="_blank" rel="noreferrer noopener">01_Introducción</a></td>
+<td><a href="https://docs.google.com/document/d/1psNiAAQziyhkRmq3dl10vcGv7FB8BaxLchmOCPwp6S4/export?format=pdf" target="_blank" rel="noreferrer noopener">Guía 1: Comandos Básicos</a></td>
+</tr>
+<tr>
+<td><a href="https://docs.google.com/presentation/d/1IjicD4EiU25UYDbO8sANNdVgkfFcBSpVWvA4ZEyBILs/export/pdf" target="_blank" rel="noreferrer noopener">02_Estructura de Directorios</a></td>
+<td><a href="https://docs.google.com/document/d/1W002Nwp7-hpn8ixkOdoT6JafJQr4IEBtovI6cMoEMnA/export?format=pdf" target="_blank" rel="noreferrer noopener">Guía 2: Comandos | Descargas | Editor | Compresión</a></td>
+</tr>
+<tr>
+<td><a href="https://docs.google.com/presentation/d/1TqG_VGO1n0Qfxv6lkyL1P_XyKUs8OnWhqU8wnJBgegw/export/pdf" target="_blank" rel="noreferrer noopener">03_Compresión y Editores</a></td>
+<td><a href="https://docs.google.com/document/d/1VIa8uk4YpNs8O3GuWbtPUsJ5pvazIlW6Bxk3TO3pZfM/export?format=pdf" target="_blank" rel="noreferrer noopener">Guía 3: Comandos de Administración | Discos | File System</a></td>
+</tr>
+<tr>
+<td><a href="https://docs.google.com/presentation/d/1w5Gy8x8YJMlMjOwwI1XwmAwUIaI1hisqJ6MEA6g_FZ4/export/pdf" target="_blank" rel="noreferrer noopener">04_Discos y Filesystem</a></td>
+<td><a href="https://docs.google.com/document/d/1kGODTxOYVboN_NCvrnstCL3ndFul-AFuwNrGPYNX5vY/export?format=pdf" target="_blank" rel="noreferrer noopener">Guía 4: Usuarios Grupos y Permisos</a></td>
+</tr>
+<tr>
+<td><a href="https://docs.google.com/presentation/d/12aHf-6ruegAKynUijuUkmj1ZSvEySO60gSfO4YtsKcs/export/pdf" target="_blank" rel="noreferrer noopener">05_Shell Script</a></td>
+<td><a href="https://docs.google.com/document/d/1EHE6QQRXOTLScGySVZK5F8xsRvUPKbT0OLSSfqiJdu8/export?format=pdf" target="_blank" rel="noreferrer noopener">Guía 5: Shell Script</a></td>
+</tr>
+</tbody>
+</table>
+<p> </p>
+<h3> </h3>
+<p> </p>
+            </div>
+
+        </div>
+    </div>
+    <hr>
+
+            </div>
+        </main>
+        <footer id="page-footer" class="py-3">
+            <div class="container">
+                <div>Este archivo es parte del contenido descargado de <a href="https://virtual.um.edu.ar/course/view.php?id=348">SISTEMAS OPERATIVOS</a> por Lucas Garcia el sábado, 26 de abril de 2025, 17:42.</div>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

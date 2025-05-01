@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Cátedras Virtuales - UMVirtual - TELEINFORMATICA</title>
+    <link rel="stylesheet" type="text/css" href=".//shared/moodle.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+    <div class="d-flex flex-column h-100">
+        <nav class="navbar navbar-light bg-white border-bottom">
+            <div class="container-fluid p-0">
+                <a class="navbar-brand" href="https://virtual.um.edu.ar" title="Cátedras Virtuales - UMVirtual">
+                    Cátedras Virtuales - UMVirtual
+                </a>
+            </div>
+        </nav>
+        <main class="container-fluid mt-2 flex-grow-1 flex-shrink-1">
+            <div>
+                <h1><a href="./index.html">TELEINFORMATICA</a></h1>
+                <p>Teleinformatica</p>
+                    <div class="alert alert-info alert-block">
+        Este archivo es parte del contenido descargado de <a href="https://virtual.um.edu.ar/course/view.php?id=244">TELEINFORMATICA</a>.
+    </div>
+    <div>
+        <a href="./about.html">Resumen del curso</a>
+    </div>
+
+    <div>
+        <h3></h3>
+        <ul>
+            <li><a href="./Foro_Avisos_.529124/index.html">Avisos (Foro)</a></li>
+        </ul>
+        <hr>
+        <h3>Subirse a Bordo</h3>
+        <div>
+            <ul>
+<li>
+<h2>Herramientas de Aula Virtual [Horario: Jueves 18:00 - 21.30]</h2>
+<ul>
+<li>
+<h2><a href="https://meet.google.com/ceh-mvjb-xqd"><strong>Google-Meet</strong></a></h2>
+</li>
+<li>
+<h2><strong><a href="http://bit.ly/slack-um-tele-25" target="_blank" rel="noreferrer noopener">Slack</a></strong></h2>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>
+<h2>Acceso a UM-Cloud</h2>
+<ul>
+<li>
+<h2><strong><a href="https://cloud.um.edu.ar" target="_blank" rel="noreferrer noopener">https://cloud.um.edu.ar/</a><br /></strong></h2>
+</li>
+</ul>
+</li>
+<li>
+<h2><strong>Profe Juan Diego </strong></h2>
+<ul>
+<li>
+<h2><strong><a href="https://bit.ly/el-profe-de-tele">https://bit.ly/el-profe-de-tele </a></strong><strong>[ChatGPT] </strong></h2>
+</li>
+</ul>
+</li>
+</ul>
+        </div>
+        <ul>
+            <li><a href="./URL_Programa_de_la_Materia_.487158/index.html">Programa de la Materia (URL)</a></li>
+        </ul>
+        <hr>
+        <h3>Casos Prácticos</h3>
+        <ul>
+            <li><a href="./Archivo_Caso-1_Direccionamien..._.135238/index.html">Caso-1: Direccionamiento IP y routing interno (Archivo)</a></li>
+            <li><a href="./Tarea_Caso_1_Entrega_.486869/index.html">Caso 1: Entrega (Tarea)</a></li>
+            <li><a href="./Pgina_Caso_2_Cloud_Computing_..._.203340/index.html">Caso 2: Cloud Computing Classic (Página)</a></li>
+            <li><a href="./Archivo_Dataset_Google_Mobility_.489896/index.html">Dataset Google Mobility (Archivo)</a></li>
+            <li><a href="./Tarea_Caso_2_Entrega_.206289/index.html">Caso 2: Entrega (Tarea)</a></li>
+            <li><a href="./Pgina_Caso_3_Cloud_Native_.501691/index.html">Caso 3: Cloud Native (Página)</a></li>
+            <li><a href="./Archivo_Dataset_Google_Mobility_.501692/index.html">Dataset Google Mobility (Archivo)</a></li>
+            <li><a href="./Tarea_Caso_3_Entrega_.501693/index.html">Caso 3: Entrega (Tarea)</a></li>
+        </ul>
+        <hr>
+        <h3>Clases</h3>
+        <ul>
+            <li><a href="./rea_de_texto_y_medios________..._.421190/index.html">__________________________________________________... (copia) (Área de texto y medios)</a></li>
+            <li><a href="./rea_de_texto_y_medios_2025_.401556/index.html">2025 (Área de texto y medios)</a></li>
+            <li><a href="./URL_Planificacin_-__Introducc..._.467315/index.html">Planificación -  Introducción- UM-Cloud Onboarding [Slides] (URL)</a></li>
+            <li><a href="./URL_Red_Protocolo_IPv4__Slides_.474944/index.html">Red: Protocolo IPv4  [Slides] (URL)</a></li>
+            <li><a href="./URL_Red_Protocolo_IPv6_Slides_.474941/index.html">Red: Protocolo IPv6 [Slides] (URL)</a></li>
+            <li><a href="./URL_Caso_1_Routing_-_Clase_de..._.487084/index.html">Caso 1: Routing - Clase de Consulta [Video] (URL)</a></li>
+            <li><a href="./URL_Transporte_Protocolos_TCP..._.336358/index.html">Transporte: Protocolos TCP/UDP [Slides] (URL)</a></li>
+            <li><a href="./URL_Cloud_Computing_Slides_.488214/index.html">Cloud Computing [Slides] (URL)</a></li>
+            <li><a href="./URL_Cloud-Classic-Caso-LB-WP-..._.492019/index.html">Cloud-Classic-Caso-LB-WP-DB con SGs [Video] (URL)</a></li>
+            <li><a href="./URL_Cloud-Classic-Infra-as-Co..._.492020/index.html">Cloud-Classic-Infra-as-Code: Intro + Terraform [Video] (URL)</a></li>
+            <li><a href="./URL_Cloud-Classic-Infra-as-Co..._.492680/index.html">Cloud-Classic-Infra-as-Code: Caso con Terraform parte 1 [Video] (URL)</a></li>
+            <li><a href="./URL_Cloud-Classic-Infra-as-Co..._.492681/index.html">Cloud-Classic-Infra-as-Code: Caso con Terraform parte 2 [Video] (URL)</a></li>
+            <li><a href="./URL_Cloud-Native_Clase_Introd..._.495090/index.html">Cloud-Native: Clase Introductoria parte 1 [Video] (URL)</a></li>
+            <li><a href="./URL_Cloud-Native_Clase_Introd..._.495091/index.html">Cloud-Native: Clase Introductoria parte 2 [Video] (URL)</a></li>
+            <li><a href="./URL_Cloud-Native_Docker_Conta..._.495655/index.html">Cloud-Native: Docker Containers parte 1 [Video] (URL)</a></li>
+            <li><a href="./URL_Cloud-Native_Docker_Conta..._.495656/index.html">Cloud-Native: Docker Containers parte 2 [Video] (URL)</a></li>
+            <li><a href="./URL_Cloud-Native_Introduccin_..._.495752/index.html">Cloud-Native: Introducción a Kubernetes [Video] (URL)</a></li>
+            <li><a href="./URL_Cloud-Native_Kubernetes_y..._.496796/index.html">Cloud-Native: Kubernetes y Acceso al cluster [Video] (URL)</a></li>
+            <li><a href="./URL_Cloud-Native_Kubernetes_P..._.496797/index.html">Cloud-Native: Kubernetes Pods [Video] (URL)</a></li>
+            <li><a href="./URL_Cloud-Native_Kubernetes_D..._.496863/index.html">Cloud-Native: Kubernetes Deployments, Services [Video] (URL)</a></li>
+            <li><a href="./URL_Cloud-Native_Kubernetes_S..._.496864/index.html">Cloud-Native: Kubernetes Services++, ConfigMaps [Video] (URL)</a></li>
+            <li><a href="./URL_Cloud-Native_Kubernetes_C..._.497759/index.html">Cloud-Native: Kubernetes ConfigMaps++,Secrets [Video] (URL)</a></li>
+            <li><a href="./URL_Cloud-Native_Kubernetes_D..._.497760/index.html">Cloud-Native: Kubernetes Deploys++, Storage-PVC [Video] (URL)</a></li>
+            <li><a href="./URL_Cloud-Native_Kubernetes_S..._.498566/index.html">Cloud-Native: Kubernetes Storage-PVC-Sts [Video] (URL)</a></li>
+            <li><a href="./URL_Cloud-Native_Kubernetes_S..._.498567/index.html">Cloud-Native: Kubernetes Services++-Ingress [Video] (URL)</a></li>
+            <li><a href="./rea_de_texto_y_medios________..._.467317/index.html">__________________________________________________... (copia) (copia) (Área de texto y medios)</a></li>
+            <li><a href="./rea_de_texto_y_medios_UM-Clou..._.401560/index.html">UM-Cloud: Definiciones y Acceso [Onboarding] (Área de texto y medios)</a></li>
+            <li><a href="./URL_UM-Cloud_Acceso_y_Setup_.421179/index.html">UM-Cloud: Acceso y Setup (URL)</a></li>
+            <li><a href="./URL_UM-Cloud_Definiciones_Video_.421180/index.html">UM-Cloud: Definiciones [Video] (URL)</a></li>
+            <li><a href="./URL_UM-Cloud_Acceso_Setup_Video_.421188/index.html">UM-Cloud: Acceso Setup [Video] (URL)</a></li>
+            <li><a href="./rea_de_texto_y_medios________..._.421178/index.html">__________________________________________________... (Área de texto y medios)</a></li>
+            <li><a href="./rea_de_texto_y_medios_Biblioteca_.421181/index.html">Biblioteca (Área de texto y medios)</a></li>
+            <li><a href="./rea_de_texto_y_medios_Sesin_0..._.401563/index.html">Sesión 01 (copia) (copia) (copia) (copia) (Área de texto y medios)</a></li>
+            <li><a href="./URL_Sesion-01__Protocolo_IP_S..._.162582/index.html">Sesion-01 | Protocolo IP [Slides]   (URL)</a></li>
+            <li><a href="./URL_Sesion-01__Introduccin_Re..._.299546/index.html">Sesion-01 | Introducción: Review Conceptos - 2021-03-18-Parte 1 [Video] (URL)</a></li>
+            <li><a href="./URL_Sesion-01__Introduccin_Se..._.314996/index.html">Sesion-01 | Introducción: Setup Cloud  (URL)</a></li>
+            <li><a href="./URL_Sesion-01__Introduccin_Se..._.299548/index.html">Sesion-01 | Introducción: Setup Cloud - 2021-03-18-Parte 2 [Video] (URL)</a></li>
+            <li><a href="./rea_de_texto_y_medios_Sesin_02_.314786/index.html">Sesión 02 (Área de texto y medios)</a></li>
+            <li><a href="./URL_Sesion-02__Protocolo_IP_F..._.310457/index.html">Sesion-02 | Protocolo IP: Fundamentos - 2021-03-25-Parte 1 [Video] (URL)</a></li>
+            <li><a href="./URL_Sesion-02__Protocolo_IP_C..._.310458/index.html">Sesion-02 | Protocolo IP: Caso I - 2021-03-25-Parte 2 [Video] (URL)</a></li>
+            <li><a href="./rea_de_texto_y_medios_Sesin_03_.314787/index.html">Sesión 03 (Área de texto y medios)</a></li>
+            <li><a href="./URL_Sesion-03__Protocolo_IP_R..._.314997/index.html">Sesion-03 | Protocolo IP: Routing - 2021-04-07-Parte 1 [Video] (URL)</a></li>
+            <li><a href="./URL_Sesion-03__Protocolo_IP_R..._.314999/index.html">Sesion-03 | Protocolo IP: Routing - 2021-04-07-Parte 2 [Video] (URL)</a></li>
+            <li><a href="./URL_Sesion-03__Protocolo_IP_R..._.315001/index.html">Sesion-03 | Protocolo IP: Routing - 2021-04-07-Parte 1 [Pizarra] (URL)</a></li>
+            <li><a href="./rea_de_texto_y_medios_Sesin_04_.318081/index.html">Sesión 04 (Área de texto y medios)</a></li>
+            <li><a href="./URL_Sesion-04__Protocolo_IP_R..._.318086/index.html">Sesion-04 | Protocolo IP: Routing - 2021-04-15-Parte 1 [Video] (URL)</a></li>
+            <li><a href="./Archivo_Sesion-04__Protocolo_..._.318088/index.html">Sesion-04 | Protocolo IP: Routing Caso 2 - 2021-04-15 [Pizarra] (Archivo)</a></li>
+            <li><a href="./URL_Sesion-04__Datagrama_IP_2..._.178862/index.html">Sesion-04 | Datagrama IP 2021-04-15 [Slides] (URL)</a></li>
+            <li><a href="./URL_Sesion-04__Protocolo_IP_R..._.318259/index.html">Sesion-04 | Protocolo IP: Routing - 2021-04-15-Parte 2 [Video] (URL)</a></li>
+            <li><a href="./rea_de_texto_y_medios_Sesin_05_.318084/index.html">Sesión 05 (Área de texto y medios)</a></li>
+            <li><a href="./URL_Sesion-05__Protocolo_IP_M..._.322693/index.html">Sesion-05 | Protocolo IP: Marco IP - 2021-04-22-Parte 1 [Video] (URL)</a></li>
+            <li><a href="./URL_Sesion-05__Protocolo_IP_M..._.322694/index.html">Sesion-05 | Protocolo IP: Marco IP - 2021-04-22-Parte 2 [Video] (URL)</a></li>
+            <li><a href="./URL_Sesion-05__Protocolo_IP_M..._.322715/index.html">Sesion-05 | Protocolo IP: Marco IP - 2021-04-22 [Pizarra]) (URL)</a></li>
+            <li><a href="./rea_de_texto_y_medios_Sesin_06_.322695/index.html">Sesión 06 (Área de texto y medios)</a></li>
+            <li><a href="./URL_Sesion-06__Protocolos_ICM..._.324232/index.html">Sesion-06 | Protocolos ICMP/ARP/DHCP - 2021-04-29-Parte 1 [Video] (URL)</a></li>
+            <li><a href="./URL_Sesion-06__Protocolos_ICM..._.324234/index.html">Sesion-06 | Protocolos ICMP/ARP/DHCP - 2021-04-29-Parte 2 [Video] (URL)</a></li>
+            <li><a href="./Archivo_Sesion-05__Protocolos..._.324235/index.html">Sesion-05 | Protocolos ICMP/ARP/DHCP - 2021-04-29 [Pizarra] (Archivo)</a></li>
+            <li><a href="./rea_de_texto_y_medios_Sesin_07_.324886/index.html">Sesión 07 (Área de texto y medios)</a></li>
+            <li><a href="./URL_Sesion-07__IPv6_-_2021-05..._.325930/index.html">Sesion-07 | IPv6 - 2021-05-06 [Slides]  (URL)</a></li>
+            <li><a href="./URL_Sesion-07__IPv6_-_2021-05..._.331920/index.html">Sesion-07 | IPv6 - 2021-05-06-Parte 1 [Video] (URL)</a></li>
+            <li><a href="./URL_Sesion-07__IPv6_-_2021-05..._.331921/index.html">Sesion-07 | IPv6 - 2021-05-06-Parte 2 [Video] (URL)</a></li>
+            <li><a href="./rea_de_texto_y_medios_Sesin_08_.331909/index.html">Sesión 08 (Área de texto y medios)</a></li>
+            <li><a href="./Archivo_Sesion-08__IPv6_-_Mec..._.332024/index.html">Sesion-08 | IPv6 - Mecanismos de Transición - 2021-05-27 [Pizarra] (Archivo)</a></li>
+            <li><a href="./URL_Sesion-08__IPv6_-_2021-05..._.332015/index.html">Sesion-08 | IPv6 - 2021-05-27 [Video] (URL)</a></li>
+            <li><a href="./URL_Sesion-08__ICMPv6_-_Proto..._.332190/index.html">Sesion-08 | ICMPv6 - Protocolo TCP - 2021-05-27 [Video]  (URL)</a></li>
+            <li><a href="./URL_Sesion-08__Protocolo_TCP_..._.331910/index.html">Sesion-08 | Protocolo TCP - 2021-05-27 [Slides] (URL)</a></li>
+            <li><a href="./rea_de_texto_y_medios_Sesin_09_.331919/index.html">Sesión 09 (Área de texto y medios)</a></li>
+            <li><a href="./URL_Sesion-09__Protocolo_TCP_..._.336353/index.html">Sesion-09 | Protocolo TCP - 2021-06-03 [Slides] (URL)</a></li>
+            <li><a href="./URL_Sesion-09__Protocolo_TCP_..._.336350/index.html">Sesion-09 | Protocolo TCP - 2021-06-03-Parte 1 [Video] (URL)</a></li>
+            <li><a href="./URL_Sesion-09__Protocolo_TCP_..._.336351/index.html">Sesion-09 | Protocolo TCP - 2021-06-03-Parte 2 [Video] (URL)</a></li>
+            <li><a href="./rea_de_texto_y_medios_Sesin_10_.336352/index.html">Sesión 10 (Área de texto y medios)</a></li>
+            <li><a href="./rea_de_texto_y_medios_Sesin_11_.338460/index.html">Sesión 11 (Área de texto y medios)</a></li>
+            <li><a href="./URL_Sesion-11__Cloud_Computin..._.336357/index.html">Sesion-11 | Cloud Computing - 2021-06-17 [Slides] (URL)</a></li>
+            <li><a href="./rea_de_texto_y_medios_Sesin_1..._.340816/index.html">Sesión 12 (copia) (Área de texto y medios)</a></li>
+            <li><a href="./URL_Sesion-12__Cloud_Computin..._.339569/index.html">Sesion-12 | Cloud Computing - 2021-06-22-Parte1 [Video] (URL)</a></li>
+            <li><a href="./URL_Sesion-12__Cloud_Computin..._.339570/index.html">Sesion-12 | Cloud Computing - 2021-06-22-Parte2 [Video] (URL)</a></li>
+            <li><a href="./rea_de_texto_y_medios_Sesin_13_.339568/index.html">Sesión 13 (Área de texto y medios)</a></li>
+            <li><a href="./URL_Sesion-13__Cloud_Computin..._.340817/index.html">Sesion-13 | Cloud Computing - 2021-06-24-Parte1 [Video] (URL)</a></li>
+            <li><a href="./URL_Sesion-13__Cloud_Computin..._.340818/index.html">Sesion-13 | Cloud Computing - 2021-06-24-Parte2 [Video] (URL)</a></li>
+            <li><a href="./URL_Sesion-06__Protocolo_TCP_..._.203293/index.html">Sesion-06 | Protocolo TCP - 2020-05-21 [Slides] (URL)</a></li>
+            <li><a href="./URL_Sesion-07__Cloud_Computin..._.206196/index.html">Sesion-07 | Cloud Computing - 2020-06-04 [Slides] (URL)</a></li>
+            <li><a href="./URL_Sesion-09__Cloud_Computin..._.211788/index.html">Sesion-09 | Cloud Computing: Cloud Classic, Caso: Webapp (LB -&gt; WP -&gt; DB) multi-instancia - Networking + Security Groups - 2020-06-18 [Video] [Parte 1] (URL)</a></li>
+            <li><a href="./rea_de_texto_y_medios_Libros_.332000/index.html">Libros (Área de texto y medios)</a></li>
+            <li><a href="./Carpeta_Libros_.331999/index.html">Libros (Carpeta)</a></li>
+        </ul>
+        <hr>
+        <h3>Finales Modelo</h3>
+        <ul>
+            <li><a href="./Archivo_Examen-Final-01_.135240/index.html">Examen-Final-01 (Archivo)</a></li>
+            <li><a href="./Archivo_Examen-Final-02_.135241/index.html">Examen-Final-02 (Archivo)</a></li>
+            <li><a href="./Archivo_Examen-Final-03_.135243/index.html">Examen-Final-03 (Archivo)</a></li>
+            <li><a href="./Archivo_Examen-Final-04_.135245/index.html">Examen-Final-04 (Archivo)</a></li>
+            <li><a href="./Archivo_Examen-Final-05_.135247/index.html">Examen-Final-05 (Archivo)</a></li>
+        </ul>
+        <hr>
+        <h3>Examen Final</h3>
+        <div>
+            <h1></h1>
+<p></p>
+<h3><span style="font-size:medium;">El examen consta de una parte práctica que de ser aprobada habilitará la instancia de evaluación teórica.</span></h3>
+<h3><span style="font-size:medium;"></span><span style="font-size:medium;">La parte práctica constará de un problema que será subido a la plataforma en el horario de inicio de la mesa examinadora y tendrá como fecha límite de entrega 2 hs de iniciada la mesa a través de la plataforma.</span></h3>
+<h3><span style="font-size:medium;">Los profesores en todo momento estarán conectados al canal de <a href="https://join.slack.com/t/um-tele-21/shared_invite/zt-no0t7bye-amxd1LhaYGnbRsjfpRtGWA"><span class="nolink">slack</span></a> de la cátedra para consultas sobre la parte práctica.</span></h3>
+<h3><span style="font-size:medium;">Evaluada la instancia práctica se convocará al alumno a través del canal de <a href="https://join.slack.com/t/um-tele-21/shared_invite/zt-no0t7bye-amxd1LhaYGnbRsjfpRtGWA">slack</a> para que  por videoconferencia en meet (con cámara abierta )  realizar la devolución del examen práctico y en caso de estar aprobado realizar la parte de teoría.</span></h3>
+<p></p>
+        </div>
+        <hr>
+    </div>
+
+            </div>
+        </main>
+        <footer id="page-footer" class="py-3">
+            <div class="container">
+                <div>Este archivo es parte del contenido descargado de <a href="https://virtual.um.edu.ar/course/view.php?id=244">TELEINFORMATICA</a> por Lucas Garcia el sábado, 26 de abril de 2025, 17:41.</div>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

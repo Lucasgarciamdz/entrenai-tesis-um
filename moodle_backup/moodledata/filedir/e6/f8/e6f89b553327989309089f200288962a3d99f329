@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Cátedras Virtuales - UMVirtual - Cálculo II (0004)</title>
+    <link rel="stylesheet" type="text/css" href="..//shared/moodle.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+    <div class="d-flex flex-column h-100">
+        <nav class="navbar navbar-light bg-white border-bottom">
+            <div class="container-fluid p-0">
+                <a class="navbar-brand" href="https://virtual.um.edu.ar" title="Cátedras Virtuales - UMVirtual">
+                    Cátedras Virtuales - UMVirtual
+                </a>
+            </div>
+        </nav>
+        <main class="container-fluid mt-2 flex-grow-1 flex-shrink-1">
+            <div>
+                <h1><a href="../index.html">Cálculo II (0004)</a></h1>
+                <p>Cálculo II (0004)</p>
+                    <h2>
+        CAPITULO V: INTEGRAL INDEFINIDA O PRIMITIVA
+    </h2>
+
+    <div class="alert alert-info alert-block">
+        Este archivo descargado forma parte del contenido de <a href="https://virtual.um.edu.ar/mod/folder/view.php?id=126194">CAPITULO V: INTEGRAL INDEFINIDA O PRIMITIVA</a> el jueves, 24 de abril de 2025, 16:49. Tenga en cuenta que contenido o archivos con tamaño superior a  50 MB no serán descargados.    </div>
+
+
+    <div>
+        <h3>Archivos y subcarpetas</h3>
+        <div>
+
+            <ul>
+                <li><a href="content/CAPITULO V TABLA_DE_INTEGRALES.pdf" title="Visualizar el archivo CAPITULO V TABLA_DE_INTEGRALES.pdf">CAPITULO V TABLA_DE_INTEGRALES.pdf</a></li>
+                <li><a href="content/CAPITULO_V_Primitivas_e_integral_indefinida.pdf" title="Visualizar el archivo CAPITULO_V_Primitivas_e_integral_indefinida.pdf">CAPITULO_V_Primitivas_e_integral_indefinida.pdf</a></li>
+                <li><a href="content/Presentacion Integral indefinida - copia.pdf" title="Visualizar el archivo Presentacion Integral indefinida - copia.pdf">Presentacion Integral indefinida - copia.pdf</a></li>
+                <li><a href="content/TP_5_Integral_indefinida_2020.pdf" title="Visualizar el archivo TP_5_Integral_indefinida_2020.pdf">TP_5_Integral_indefinida_2020.pdf</a></li>
+            </ul>
+        </div>
+    </div>
+    <hr>
+
+            </div>
+        </main>
+        <footer id="page-footer" class="py-3">
+            <div class="container">
+                <div>Este archivo es parte del contenido descargado de <a href="https://virtual.um.edu.ar/course/view.php?id=262">Cálculo II (0004)</a> por Lucas Garcia el jueves, 24 de abril de 2025, 16:49.</div>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

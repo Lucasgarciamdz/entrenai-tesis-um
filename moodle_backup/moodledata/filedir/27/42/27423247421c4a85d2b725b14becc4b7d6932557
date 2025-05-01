@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Cátedras Virtuales - UMVirtual - SISTEMAS OPERATIVOS</title>
+    <link rel="stylesheet" type="text/css" href="..//shared/moodle.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+    <div class="d-flex flex-column h-100">
+        <nav class="navbar navbar-light bg-white border-bottom">
+            <div class="container-fluid p-0">
+                <a class="navbar-brand" href="https://virtual.um.edu.ar" title="Cátedras Virtuales - UMVirtual">
+                    Cátedras Virtuales - UMVirtual
+                </a>
+            </div>
+        </nav>
+        <main class="container-fluid mt-2 flex-grow-1 flex-shrink-1">
+            <div>
+                <h1><a href="../index.html">SISTEMAS OPERATIVOS</a></h1>
+                <p>Sistemas_Operativos</p>
+                    <h2>
+        clase 20211112 parte 1
+    </h2>
+
+    <div class="alert alert-info alert-block">
+        Este archivo descargado forma parte del contenido de <a href="https://virtual.um.edu.ar/mod/url/view.php?id=181722">clase 20211112 parte 1</a> el sábado, 26 de abril de 2025, 17:42. Tenga en cuenta que contenido o archivos con tamaño superior a  50 MB no serán descargados.    </div>
+
+    <h3>Descripción</h3>
+    <div>
+        <p>virtualización</p>
+    </div>
+    <hr>
+
+
+            </div>
+        </main>
+        <footer id="page-footer" class="py-3">
+            <div class="container">
+                <div>Este archivo es parte del contenido descargado de <a href="https://virtual.um.edu.ar/course/view.php?id=348">SISTEMAS OPERATIVOS</a> por Lucas Garcia el sábado, 26 de abril de 2025, 17:42.</div>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

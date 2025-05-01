@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title></title>
+	<meta name="generator" content="LibreOffice 6.0.7.3 (Linux)"/>
+	<meta name="author" content=" "/>
+	<meta name="created" content="2003-03-27T00:00:00.017173600"/>
+	<meta name="changed" content="2019-06-22T13:26:26.625169417"/>
+</head>
+<body lang="es-AR" dir="ltr">
+<p><font face="Arial">Enunciado</font></p>
+<p><font face="Arial">Una organización con alcance nacional ha
+contratado enlaces para sus 6 sucursales con la idea de armar una red
+Wan Nacional. En el armado de esta red Wan se ha dispuesto utilizar
+para el direccionamiento IP la red 192.168.100.0/24 dividida en
+subredes con máscara /29.</font></p>
+<p><font face="Arial">Cada una de las sucursales utilizará para su
+direccionamiento IP interno una red /24 completa, del tipo
+10.0.n.0/24.</font></p>
+<p><font face="Arial">De este modo cada sucursal poseerá un enlace
+Wan (red 192.168.100.n/29) y una red interna (10.0.n.0/24).</font></p>
+<p><font face="Arial">La Dirección IP del enlace wan del router de
+la sucursal será la primera dirección utilizable de la red /29 su
+contraparte en la casa matríz será la última dirección utilizable
+de la red /29.</font></p>
+<p><font face="Arial">La dirección IP privada del router de la
+sucursal será la primer dirección utilizable de la red 10.0.n.0/24.</font></p>
+<p><br/>
+<br/>
+
+</p>
+<p><font face="Arial">La correspondencia de direcciones de enlaces y
+redes estará dada por la siguiente regla:</font></p>
+<p><font face="Arial">Sucursal 1-&gt; Enlace Wan: Primer red
+192.168.100.n/29 -&gt; Direccionamiento privado: 10.0.1.0/24</font></p>
+<p><font face="Arial">Sucursal 2-&gt; Enlace Wan: Segunda red
+192.168.100.n/29 -&gt; Direccionamiento privado: 10.0.2.0/24</font></p>
+<p><font face="Arial">Sucursal 3-&gt; Enlace Wan: Tercer red
+192.168.100.n/29 -&gt; Direccionamiento privado: 10.0.3.0/24</font></p>
+<p><font face="Arial">Sucursal 4-&gt; Enlace Wan: Cuarta red
+192.168.100.n/29 -&gt; Direccionamiento privado: 10.0.4.0/24</font></p>
+<p><font face="Arial">Sucursal 5-&gt; Enlace Wan: Quinta red
+192.168.100.n/29 -&gt; Direccionamiento privado: 10.0.5.0/24</font></p>
+<p><font face="Arial">Sucursal 6-&gt; Enlace Wan: Sexta red
+192.168.100.n/29 -&gt; Direccionamiento privado: 10.0.6.0/24</font></p>
+<p><br/>
+<br/>
+
+</p>
+<p><font face="Arial">Resolución:</font></p>
+<p><font face="Arial">Deberá desarrollar todo el direccionamiento IP
+de las redes conjuntamente con un esquema de la misma.</font></p>
+<p><font face="Arial">Implementar con mininet el router de casa
+matriz, dos sucursales con:  el router </font><font face="Arial">[primer
+IP]</font><font face="Arial"> y un puesto de trabajo de la sucursal
+</font><font face="Arial">[última IP]</font><font face="Arial">.</font></p>
+</body>
+</html>

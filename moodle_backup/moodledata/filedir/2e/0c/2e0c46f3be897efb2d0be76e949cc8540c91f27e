@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Cátedras Virtuales - UMVirtual - TELEINFORMATICA</title>
+    <link rel="stylesheet" type="text/css" href="..//shared/moodle.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+    <div class="d-flex flex-column h-100">
+        <nav class="navbar navbar-light bg-white border-bottom">
+            <div class="container-fluid p-0">
+                <a class="navbar-brand" href="https://virtual.um.edu.ar" title="Cátedras Virtuales - UMVirtual">
+                    Cátedras Virtuales - UMVirtual
+                </a>
+            </div>
+        </nav>
+        <main class="container-fluid mt-2 flex-grow-1 flex-shrink-1">
+            <div>
+                <h1><a href="../index.html">TELEINFORMATICA</a></h1>
+                <p>Teleinformatica</p>
+                    <h2>
+        Sesión 01 (copia) (copia) (copia) (copia)
+    </h2>
+
+    <div class="alert alert-info alert-block">
+        Este archivo descargado forma parte del contenido de <a href="">Sesión 01 (copia) (copia) (copia) (copia)</a> el sábado, 26 de abril de 2025, 17:41. Tenga en cuenta que contenido o archivos con tamaño superior a  50 MB no serán descargados.    </div>
+
+    <h3>Descripción</h3>
+    <div>
+        <p><span style="font-size:x-large;"><strong>Sesión 01</strong></span></p>
+    </div>
+    <hr>
+
+
+            </div>
+        </main>
+        <footer id="page-footer" class="py-3">
+            <div class="container">
+                <div>Este archivo es parte del contenido descargado de <a href="https://virtual.um.edu.ar/course/view.php?id=244">TELEINFORMATICA</a> por Lucas Garcia el sábado, 26 de abril de 2025, 17:41.</div>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

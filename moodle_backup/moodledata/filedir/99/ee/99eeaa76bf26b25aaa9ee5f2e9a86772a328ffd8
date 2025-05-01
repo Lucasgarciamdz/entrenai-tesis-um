@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Cátedras Virtuales - UMVirtual - SISTEMAS OPERATIVOS</title>
+    <link rel="stylesheet" type="text/css" href="..//shared/moodle.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+    <div class="d-flex flex-column h-100">
+        <nav class="navbar navbar-light bg-white border-bottom">
+            <div class="container-fluid p-0">
+                <a class="navbar-brand" href="https://virtual.um.edu.ar" title="Cátedras Virtuales - UMVirtual">
+                    Cátedras Virtuales - UMVirtual
+                </a>
+            </div>
+        </nav>
+        <main class="container-fluid mt-2 flex-grow-1 flex-shrink-1">
+            <div>
+                <h1><a href="../index.html">SISTEMAS OPERATIVOS</a></h1>
+                <p>Sistemas_Operativos</p>
+                    <h2>
+        Actividad Grupal: Active Directory
+    </h2>
+
+    <div class="alert alert-info alert-block">
+        Este archivo descargado forma parte del contenido de <a href="">Actividad Grupal: Active Directory</a> el sábado, 26 de abril de 2025, 17:42. Tenga en cuenta que contenido o archivos con tamaño superior a  50 MB no serán descargados.    </div>
+
+    <h3>Descripción</h3>
+    <div>
+        <div class="padlet-embed" style="border:1px solid rgba(0,0,0,0.1);width:100%;background:#F4F4F4;">
+<p style="padding:0;margin:0;"><strong>ACTIVIDAD GRUPAL:</strong></p>
+<p style="padding:0;margin:0;"> </p>
+<p style="padding:0;margin:0;">Este trabajo, puedes presentarlo en forma grupal. Los grupos fueron asignados en la Primer clase de la materia.</p>
+<p dir="ltr">Utiliza la IA:</p>
+<p dir="ltr"><a href="https://tutorai.me/">https://tutorai.me/</a></p>
+<p dir="ltr">en modo “aprendizaje” con el siguiente prompt: </p>
+<p dir="ltr">“Ms. Windows Server 2019. Utilización de Active Directory en español”</p>
+<p dir="ltr">Realiza el cursado en función de la tutoría brindada por la herramienta.</p>
+<p style="padding:0;margin:0;"><strong> </strong></p>
+<p dir="ltr">Finalizado el cursado, deberás generar un video de no más de 3 minutos utilizando la herramienta:</p>
+<p dir="ltr"><a href="https://es.vidnoz.com/">https://es.vidnoz.com/</a></p>
+<p dir="ltr">El mismo debe contener un resumen de la Administración de Usuarios y Grupos en Active Directory. </p>
+<p style="padding:0;margin:0;">Crea una publicación en el Padlet que se presenta a continuación para agregar tu video, recuerda agregar un breve resumen del mismo, incluir a los miembros del grupo y dejar comentarios en el video que agregaron tus compañeros.</p>
+<p style="padding:0;margin:0;"> </p>
+<p style="padding:0;margin:0;"></p>
+<div style="margin:0;height:28px;"><a style="margin:0;border:none;padding:0;text-decoration:none;" href="https://padlet.com?ref=embed" target="_blank" rel="noreferrer noopener">
+</a><div><a style="margin:0;border:none;padding:0;text-decoration:none;" href="https://padlet.com?ref=embed" target="_blank" rel="noreferrer noopener"><img style="padding:0;margin:0;background:0 0;border:none;" src="https://padlet.net/embeds/made_with_padlet_2022.png" alt="Hecho con Padlet" width="114" height="28" /></a></div><a style="margin:0;border:none;padding:0;text-decoration:none;" href="https://padlet.com?ref=embed" target="_blank" rel="noreferrer noopener">
+</a></div>
+</div>
+    </div>
+    <hr>
+
+
+            </div>
+        </main>
+        <footer id="page-footer" class="py-3">
+            <div class="container">
+                <div>Este archivo es parte del contenido descargado de <a href="https://virtual.um.edu.ar/course/view.php?id=348">SISTEMAS OPERATIVOS</a> por Lucas Garcia el sábado, 26 de abril de 2025, 17:42.</div>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

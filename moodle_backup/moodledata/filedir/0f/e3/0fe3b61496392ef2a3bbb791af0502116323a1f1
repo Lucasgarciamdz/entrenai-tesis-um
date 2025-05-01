@@ -1,0 +1,138 @@
+# Clase N° 2: Herramientas del Área de QA
+
+## Herramientas fundamentales en calidad de software
+
+### Herramientas principales
+Dentro de las herramientas podemos mencionar las siguientes:
+- Casos de Uso
+- Diagramas OO (Clase, ER, Secuencia)
+- Wireframes
+- SQL - Bases de Datos
+- Documentación del sistema bajo prueba
+
+**Importante**: Además de las mencionadas, existe una herramienta que hoy por hoy es la herramienta por excelencia utilizada por toda persona que se dedica a la calidad de software. Esta herramienta se llama **Caso de Prueba (Test Case)**.
+
+## Terminología relacionada con el área
+
+### Conceptos fundamentales
+- **Test Case**: Herramienta compuesta de instrucciones que describen cómo probar una funcionalidad específica. Se utiliza para verificar si el software funciona como se espera.
+- **Use Case**: Describe cómo un usuario interactúa con el software para lograr un objetivo particular. Define el "qué" y el "por qué" detrás de una funcionalidad.
+- **Issue Tracker**: Registra y gestiona los errores (bugs) encontrados en el software. También monitorea el progreso de resolución.
+- **Time Tracking Tool**: Registra el tiempo dedicado a diferentes tareas, como desarrollo, testing, diseño. Sirve para monitorear el rendimiento.
+- **Calidad Estructural**: Refiere a la organización interna del código y su capacidad de mantenerse estable, ser escalable y modificable (software robusto).
+- **Calidad Funcional**: Se enfoca en cómo el software cumple con sus funcionalidades previstas. Evalúa si el software funciona correctamente y satisface las necesidades del usuario.
+
+### Conceptos avanzados
+- **Acceptance Criteria**: Son las condiciones que debe cumplir una funcionalidad (feature) para considerarse lista y ser aceptada por el cliente (o stakeholder primario).
+- **Definition of Done (DoD)**: Estado en el que debe encontrarse un feature o característica para que se considere completa y lista para ser incluida en la entrega final.
+- **Exploratory Testing**: Tipo de prueba donde el QA explora el software de manera creativa para encontrar errores inesperados. Básicamente busca bugs.
+- **Performance Testing**: Testea la velocidad, estabilidad (entre otras) del software bajo carga. Mide el "rendimiento" del software en situaciones reales de uso.
+- **Manual Testing**: Ejecuta las pruebas a mano, siguiendo un plan predefinido. Es como un "trabajo de campo" para verificar el software.
+- **Automation Testing**: Incluye herramientas para automatizar la ejecución de pruebas repetitivas. Hay que evaluar cuando conviene o no hacer manual/automatizado testing.
+
+## ¿Qué es la calidad?
+
+### Tipos de calidad
+- **Calidad Funcional (Functional Quality)**:
+  - Responde al "QUÉ HACE"
+  - Refleja qué tan bien el producto cumple o complementa un diseño provisto por el cliente relacionado con los requerimientos funcionales o especificaciones.
+
+- **Calidad Estructural**:
+  - Responde al "CÓMO LO HACE"
+  - Se refiere al "cómo" el producto cumple con los requisitos no funcionales que dan soporte a los requisitos funcionales (robustez, mantenibilidad, portabilidad)
+
+### Software Quality Management (SQM)
+El objetivo del Software Quality Management es administrar la calidad de software, definir los procesos y los requisitos para esos procesos. Debe a su vez implementar métricas para cada proceso, sus salidas y un canal de feedback.
+
+## Perspectivas de la Calidad según David Garvin
+
+### Punto de vista trascendental
+El punto de vista trascendental es el punto de vista del usuario que concibe la calidad en términos de las metas específicas del usuario final. Si un producto las satisface, tiene calidad.
+
+**Cada usuario tiene diferentes estándares de calidad**
+
+**Ejemplo**:
+La prioridad de funcionalidades varía según el negocio:
+- McDonald's se enfoca en pedidos rápidos
+- Burger King en descuentos
+- Un banco en seguridad y transacciones
+
+Cada aplicación prioriza lo que sus clientes valoran más.
+
+### Punto de vista del fabricante
+La calidad del producto se define en términos de las especificaciones originales del producto. Si el producto cumple con estas especificaciones, entonces se considera que tiene calidad.
+
+**Ejemplo**:
+Si yo hago una aplicación, puedo definir la calidad de la aplicación en base a si cumple con las especificaciones que yo necesito. Esto no asegura el éxito ante los ojos del cliente. El punto de vista del fabricante no siempre es el mismo que el del cliente.
+
+### Punto de vista del producto
+- Tiene que ver con las características inherentes (funciones y características) de un producto
+- ¿Cuánto de lo que se desea está presente en el producto?
+- El consumidor confunde "calidad con precio", entiende que mientras más caro es el producto, más cantidad de atributo está presente en el mismo.
+
+### Punto de vista basado en el valor
+De acuerdo con lo que un cliente está dispuesto a pagar por un producto.
+
+**Ejemplo**:
+- McDonald's pagará más dinero por una aplicación con mayor seguridad
+- Burger King pagará más dinero por un mejor diseño, usabilidad.
+
+### Punto de vista del diseño
+- La calidad del diseño se refiere a las características que los diseñadores especifican para un producto (tipo de materiales, tolerancias y especificaciones del desempeño)
+- En el desarrollo del software, la calidad del diseño incluye el grado en el que el diseño cumple las funciones y características especificadas en el modelo de requerimientos.
+
+**Ejemplo**:
+McDonald's requiere que se puedan visualizar las diferentes sucursales. Los diseñadores implementan un módulo de visualización en Google Maps.
+
+> "La calidad es importante, pero si el usuario no está satisfecho, nada de lo demás importa."
+
+## Definición de "Calidad del Software"
+
+Proceso eficaz de software que se aplica de manera que crea un producto útil que proporciona valor medible a quienes lo producen y a quienes lo utilizan.
+
+### ¿Qué es un proceso eficaz de software?
+Infraestructura que da apoyo a cualquier esfuerzo de elaboración de un producto de software de alta calidad. (Administración de proyectos, prácticas de ingeniería de software, administración de los cambios, revisiones técnicas)
+
+> Satisfacción del usuario = Producto que funciona + Buena calidad + Entrega dentro del presupuesto y plazo
+
+Robert Glass (Ingeniero de Software y escritor especializado en calidad) afirma que es mejor plantear una relación más intuitiva:
+
+### Características de un producto útil
+- Entrega contenido, funciones y características que el usuario final desea
+- Satisface los requerimientos establecidos en forma explícita por los participantes
+
+### Valor para el productor y para el usuario
+- Proporciona beneficios a la organización que lo produce y a la comunidad de usuarios finales
+- Software de alta calidad requiere un menor esfuerzo de mantenimiento, menos errores que corregir y poca asistencia al cliente
+- Usuarios obtienen valor agregado porque la aplicación provee una capacidad útil en forma tal que agiliza algún proceso de negocios
+
+> Satisfacción del usuario = Producto que funciona + Buena calidad + Entrega dentro del presupuesto y plazo
+
+## Ejercicios Prácticos
+
+### Ejercicio 1: Terminología del área de QA
+
+En grupos, indique en forma breve, qué es, para qué sirven y las diferencias entre los términos de la misma línea:
+
+1. Test Case / Use Case
+2. Issue Tracker / Time Tracking Tool
+3. Requisitos Funcionales / Requisitos No Funcionales
+4. Calidad Estructural / Calidad Funcional
+5. Acceptance Criteria / Definition of Done
+6. Exploratory Testing / Performance Testing
+7. Manual Testing / Automation Testing
+8. Pruebas de Integración / Pruebas de Unidad
+9. Pruebas de Regresión / Pruebas de Humo (Smoke Testing)
+10. Pruebas de Seguridad / Pruebas de Usabilidad
+
+### Ejercicio 2: Calidad en aplicaciones que usamos
+
+Preparar una presentación breve para exponer su análisis de una aplicación al resto de la clase.
+
+**Criterios a analizar**:
+1. **Funcionalidad**: ¿La aplicación cumple con las funcionalidades que ofrece? ¿Es fácil de usar?
+2. **Usabilidad**: ¿La interfaz de usuario es intuitiva y atractiva? ¿La aplicación es fácil de navegar?
+3. **Rendimiento**: ¿La aplicación funciona correctamente en diferentes dispositivos y navegadores? ¿Es rápida y receptiva?
+4. **Seguridad**: ¿La aplicación protege la información del usuario de forma segura?
+5. **Accesibilidad**: ¿La aplicación es accesible para usuarios con diferentes discapacidades?
+6. **Mantenimiento**: ¿La aplicación se actualiza con frecuencia? ¿Se corrigen los errores con prontitud?

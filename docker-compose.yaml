@@ -1,0 +1,71 @@
+services:
+  mariadb:
+    image: bitnami/mariadb:11.4.5
+    ports:
+      - "3307:3306"
+    environment:
+      - MARIADB_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD}
+      - MARIADB_DATABASE=${MARIADB_DATABASE}
+      - MARIADB_USER=${MARIADB_USER}
+      - MARIADB_PASSWORD=${MARIADB_PASSWORD}
+    volumes:
+      - mariadb_volume:/bitnami/mariadb
+      - ./moodle_backup/moodle-database.sql:/docker-entrypoint-initdb.d/moodle-database.sql
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u root -p${MARIADB_ROOT_PASSWORD} || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    networks:
+      - tesis_network
+
+  moodle:
+    image: bitnami/moodle:4.5.4
+    environment:
+      - MOODLE_DATABASE_HOST=${MOODLE_DATABASE_HOST}
+      - MOODLE_DATABASE_PORT_NUMBER=${MOODLE_DATABASE_PORT_NUMBER}
+      - MOODLE_DATABASE_USER=${MOODLE_DATABASE_USER}
+      - MOODLE_DATABASE_PASSWORD=${MOODLE_DATABASE_PASSWORD}
+      - MOODLE_DATABASE_NAME=${MOODLE_DATABASE_NAME}
+      - MOODLE_USERNAME=${MOODLE_USERNAME}
+      - MOODLE_PASSWORD=${MOODLE_PASSWORD}
+      - MOODLE_EMAIL=${MOODLE_EMAIL}
+      - MOODLE_SITE_NAME=${MOODLE_SITE_NAME}
+      - MOODLE_SKIP_BOOTSTRAP=${MOODLE_SKIP_BOOTSTRAP}
+    ports:
+      - "8081:8080"
+    volumes:
+      - moodle_volume:/bitnami/moodle
+      - moodledata_volume:/bitnami/moodledata
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8080/ || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+    networks:
+      - tesis_network
+
+  init-moodledata:
+    image: alpine:latest
+    volumes:
+      - ./moodle_backup/moodledata/filedir:/source/filedir
+      - moodledata_volume:/destination
+    command: sh -c "mkdir -p /destination/filedir && cp -r /source/filedir/* /destination/filedir/ && chown -R 1001:1001 /destination/filedir"
+    depends_on:
+      - moodle
+
+volumes:
+  mariadb_volume:
+  moodle_volume:
+  moodledata_volume:
+  
+networks:
+  tesis_network:
+    driver: bridge

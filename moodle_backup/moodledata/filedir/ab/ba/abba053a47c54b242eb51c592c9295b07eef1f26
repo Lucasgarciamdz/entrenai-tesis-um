@@ -1,0 +1,168 @@
+# Clase N° 3: Dimensiones y Factores de Calidad
+
+## Contenido de la clase
+- Repaso de metodologías ágiles (SCRUM)
+- Dimensiones de calidad según Garvin
+- Factores de calidad según Garvin
+- Factores de calidad según McCall
+- Repaso para TP1
+
+## David A. Garvin - Perfil
+
+**Datos biográficos:**
+- Nacimiento: 12 de mayo de 1952, Nueva York, Estados Unidos
+- Profesor de la Escuela de Negocios de Harvard desde 1979
+
+**Contribuciones:**
+- Autor del libro "Operations Strategy: Text and Cases"
+- Reconocido como "profesor de casos" debido a su labor docente en la que ayuda a sus estudiantes a aprender de forma práctica y efectiva a través del análisis de casos empresariales
+- Se ha destacado por su enfoque en el uso de casos para la enseñanza, lo que ha llevado a numerosos aportes en este campo
+
+## Dimensiones de la Calidad de Garvin
+
+Garvin sugiere que la calidad debe tomarse en cuenta adoptando un punto de vista multidimensional que comience con la evaluación de la conformidad y termine con una visión trascendental (estética).
+
+### 1. Calidad del desempeño
+¿El software entrega todo el contenido, las funciones y las características especificadas como parte del modelo de requerimientos, de manera que da valor al usuario final?
+
+### 2. Calidad de las características
+¿El software tiene características que sorprenden y agradan la primera vez que lo emplean los usuarios finales?
+
+### 3. Confiabilidad
+- ¿El software proporciona todas las características y capacidades sin fallar?
+- ¿Está disponible cuando se necesita?
+- ¿Entrega funcionalidad libre de errores?
+
+### 4. Conformidad
+- ¿El software concuerda con los estándares locales y externos que son relevantes para la aplicación?
+- ¿Concuerda con el diseño de facto y las convenciones de código?
+- Por ejemplo, ¿la interfaz de usuario está de acuerdo con las reglas aceptadas del diseño para la selección de menú o para la entrada de datos?
+
+### 5. Durabilidad
+- ¿El software puede recibir mantenimiento (cambiar) o corregirse (depurarse) sin la generación inadvertida de eventos colaterales?
+- ¿Los cambios ocasionarán que la tasa de errores o la confiabilidad disminuyan con el tiempo?
+
+### 6. Servicio
+- ¿Existe la posibilidad de que el software reciba mantenimiento (cambios) o correcciones (depuración) a corto plazo?
+- ¿El equipo de apoyo puede adquirir toda la información necesaria para hacer cambios o corregir defectos?
+
+### 7. Estética
+Una entidad estética posee cierta elegancia, un flujo único y una "presencia" obvia que es difícil de cuantificar y que, no obstante, resulta evidente.
+
+### 8. Percepción
+En ciertas situaciones, existen prejuicios que influirán en la percepción de la calidad por parte del usuario.
+
+**Ejemplo:**
+La percepción de calidad de un producto depende de la reputación del proveedor o vendedor. Problemas de calidad previos generan desconfianza en un nuevo producto, mientras que una buena reputación del vendedor crea una percepción positiva del producto, aunque no sea realmente de alta calidad.
+
+## Modelo de McCall
+
+**Contexto:**
+- Modelo creado en 1977 por McCall, Richard y Walters
+- Herramienta importante para evaluar la calidad de software
+
+**Resumen:**
+El modelo descompone el concepto genérico de calidad en tres capacidades esenciales para el software. Este modelo sigue siendo ampliamente utilizado en la actualidad y nos ayuda a entender mejor cómo se mide y se evalúa la calidad del software en diferentes contextos.
+
+## Factores de Calidad de McCall
+
+McCall organiza los factores de calidad en tres categorías principales:
+
+1. **Revisión del producto**
+   - Facilidad de mantenimiento
+   - Flexibilidad
+   - Facilidad de prueba
+
+2. **Transición del producto**
+   - Portabilidad
+   - Reusabilidad
+   - Interoperabilidad
+
+3. **Operación del producto**
+   - Corrección
+   - Fiabilidad
+   - Usabilidad
+   - Integridad
+   - Eficiencia
+
+### Factores de transición - Adaptabilidad a nuevos entornos
+
+#### Portabilidad
+- Mide la facilidad con la que el software puede ser adaptado y ejecutado en diferentes plataformas o entornos
+- Se puede ejecutar en diferentes plataformas o sistemas operativos sin necesidad de grandes modificaciones
+- Definición formal: Esfuerzo que se necesita para transferir el programa de un ambiente de sistema de hardware o software a otro
+
+#### Reusabilidad
+- Evalúa la capacidad de los componentes del software para ser utilizados en diferentes proyectos o aplicaciones
+- Existen interfaces claras y bien documentadas para los componentes del software
+- Definición formal: Grado en el que un programa (o partes de uno) pueden volverse a utilizar en otras aplicaciones (se relaciona con el empaque y el alcance de las funciones que lleva a cabo el programa)
+
+#### Interoperabilidad
+- Mide la capacidad del software para comunicarse e intercambiar información con otros sistemas o aplicaciones
+- Hay mecanismos para adaptar el software a diferentes formatos de datos y estructuras de intercambio
+- Definición formal: Esfuerzo requerido para acoplar un sistema con otro
+
+### Beneficios del Modelo de McCall
+
+1. **Enfoque centrado en el usuario**
+   - Se consideran las necesidades y expectativas de los usuarios al evaluar la calidad del software
+
+2. **Visión holística**
+   - Se evalúan diversos aspectos del software, desde su funcionamiento hasta su facilidad de mantenimiento y adaptación
+
+3. **Base para la mejora continua**
+   - Los factores identificados sirven como base para identificar áreas de mejora en el desarrollo de software
+
+4. **Comunicación efectiva**
+   - Se facilita la comunicación entre diferentes partes interesadas al hablar un lenguaje común sobre la calidad del software
+
+### Limitaciones del Modelo de McCall
+
+1. **Falta de métricas específicas**
+   - Si bien los factores identifican atributos importantes, no siempre se dispone de métricas concretas para medirlos
+
+2. **Dependencia del contexto**
+   - La relevancia de los factores puede variar dependiendo del tipo de software y su contexto de uso
+
+3. **Evolución del software**
+   - Con el tiempo, la importancia de algunos factores puede cambiar, requiriendo una actualización del modelo
+
+## Usabilidad e Intuitividad
+
+Para evaluar la usabilidad e intuitividad del software, debemos considerar:
+
+### Interfaces intuitivas
+- Grado en el que la interfaz sigue patrones esperados de uso, de modo que hasta un novato la pueda utilizar sin mucha capacitación
+
+**Preguntas clave:**
+- ¿La interfaz lleva hacia una comprensión fácil?
+- ¿Todas las operaciones son fáciles de localizar e iniciar?
+- ¿La interfaz usa una metáfora reconocible?
+- ¿La entrada está especificada de modo que economiza el uso del teclado o del mouse?
+- ¿La estética ayuda a la comprensión y uso?
+
+### Ejemplos de mala usabilidad
+- http://www.lingscars.com/
+- http://arngren.net/
+- http://dokimos.org/index.aspx
+- http://www.web_4_all.republika.pl/
+
+## Ejercicio Práctico: Factores de Calidad
+
+**Instrucciones:**
+En grupos de 4 personas y en un tiempo de no más de 15 minutos, utilizando las páginas:
+- http://www.lingscars.com
+- http://arngren.net
+- http://dokimos.org/index.aspx
+
+Encuentre la mayor cantidad de factores de calidad que no sean cumplimentados y lístelos en alguna de las siguientes categorías:
+
+- Usabilidad y navegación
+- Diseño visual y estructura
+- Legibilidad y tipografía
+- Consistencia y coherencia
+- Tiempo de carga y optimización
+- Accesibilidad
+- Contenido relevante y actualizado
+- Propósito claro y llamados a la acción (CTA)
+- Experiencia móvil (responsive design)

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Cátedras Virtuales - UMVirtual - SISTEMAS OPERATIVOS</title>
+    <link rel="stylesheet" type="text/css" href=".//shared/moodle.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+    <div class="d-flex flex-column h-100">
+        <nav class="navbar navbar-light bg-white border-bottom">
+            <div class="container-fluid p-0">
+                <a class="navbar-brand" href="https://virtual.um.edu.ar" title="Cátedras Virtuales - UMVirtual">
+                    Cátedras Virtuales - UMVirtual
+                </a>
+            </div>
+        </nav>
+        <main class="container-fluid mt-2 flex-grow-1 flex-shrink-1">
+            <div>
+                <h1><a href="./index.html">SISTEMAS OPERATIVOS</a></h1>
+                <p>Sistemas_Operativos</p>
+                    <div class="alert alert-info alert-block">
+        Este archivo es parte del contenido descargado de <a href="https://virtual.um.edu.ar/course/view.php?id=348">SISTEMAS OPERATIVOS</a>.
+    </div>
+    <div>
+        <a href="./about.html">Resumen del curso</a>
+    </div>
+
+    <div>
+        <h3></h3>
+        <div>
+            <p style="text-align:center;"><span style="font-size:2.5rem;color:#000080;">Te damos la bienvenida a </span></p>
+<p style="text-align:center;"></p>
+<p style="text-align:center;"><strong><span style="font-size:2.5rem;color:#000080;">Sistemas Operativos</span></strong></p>
+<p style="text-align:center;"></p>
+<p></p>
+        </div>
+        <ul>
+            <li><a href="./Pgina_Profesores_-_Contacto_.230355/index.html">Profesores - Contacto (Página)</a></li>
+            <li><a href="./URL_Horario_de_consulta_para_..._.278925/index.html">Horario de consulta para examen (URL)</a></li>
+            <li><a href="./Foro_Anuncios_.6596/index.html">Anuncios (Foro)</a></li>
+            <li><a href="./Carpeta_Programa_de_la_asigna..._.230309/index.html">Programa de la asignatura (Carpeta)</a></li>
+            <li><a href="./URL_Cronograma_2024_.675433/index.html">Cronograma 2024 (URL)</a></li>
+        </ul>
+        <hr>
+        <h3>Teoría</h3>
+        <ul>
+            <li><a href="./rea_de_texto_y_medios_PRESENT..._.506113/index.html">PRESENTACIONES (Área de texto y medios)</a></li>
+            <li><a href="./URL_1_Introduccin_sistemas_op..._.506115/index.html">1. Introducción sistemas operativos (URL)</a></li>
+            <li><a href="./URL_2_Procesos_e_Hilos_.508907/index.html">2. Procesos e Hilos (URL)</a></li>
+            <li><a href="./URL_3Planificacin_procesador_.510613/index.html">3.Planificación procesador (URL)</a></li>
+            <li><a href="./URL_4Concurrencia_.512095/index.html">4.Concurrencia (URL)</a></li>
+            <li><a href="./Archivo_NIveles_de_RAID_.518808/index.html">NIveles de RAID (Archivo)</a></li>
+            <li><a href="./URL_5Memoria_.520068/index.html">5.Memoria (URL)</a></li>
+            <li><a href="./URL_clase_extra_memoria_.687471/index.html">clase extra memoria (URL)</a></li>
+            <li><a href="./URL_6_Virtualizacion_.522619/index.html">6. Virtualizacion (URL)</a></li>
+            <li><a href="./URL_6_Virtualizacin_2024_.523938/index.html">6. Virtualización 2024 (URL)</a></li>
+        </ul>
+        <hr>
+        <h3>Material clases anteriores</h3>
+        <ul>
+            <li><a href="./rea_de_texto_y_medios_Present..._.230361/index.html">Presentaciones (copia) (Área de texto y medios)</a></li>
+            <li><a href="./Archivo_Presentacin_de_Introd..._.231424/index.html">Presentación de Introducción (Archivo)</a></li>
+            <li><a href="./Archivo_Presentacin_de_Introd..._.433134/index.html">Presentación de Introducción clase 12 de agosto 2022 (Archivo)</a></li>
+            <li><a href="./Archivo_Presentacin_de_Procesos_.251134/index.html">Presentación de Procesos (Archivo)</a></li>
+            <li><a href="./Archivo_Presentacin_de_Planif..._.440073/index.html">Presentación de Planificación (09-09-2022) (Archivo)</a></li>
+            <li><a href="./URL_monitores_mensajes_27102022_.449248/index.html">monitores mensajes 27/10/2022 (URL)</a></li>
+            <li><a href="./Archivo_Presentacin_de_Concur..._.254525/index.html">Presentación de Concurrencia (Archivo)</a></li>
+            <li><a href="./Archivo_Presentacin_de_Memoria_.262770/index.html">Presentación de Memoria (Archivo)</a></li>
+            <li><a href="./Archivo_Presentacin_de_RAID_N..._.381933/index.html">Presentación de RAID Niveles Estandar (Archivo)</a></li>
+            <li><a href="./Archivo_Presentacin_de_RAID_N..._.381934/index.html">Presentación de RAID Niveles Anidados (Archivo)</a></li>
+            <li><a href="./Archivo_Presentacin_de_Virtua..._.381935/index.html">Presentación de Virtualización (Archivo)</a></li>
+            <li><a href="./rea_de_texto_y_medios_Grabaci..._.230362/index.html">Grabaciones (Área de texto y medios)</a></li>
+            <li><a href="./URL_interbloqueo_27102022_.449298/index.html">interbloqueo 27/10/2022 (URL)</a></li>
+            <li><a href="./URL_Clase_20200814_.231413/index.html">Clase 20200814 (URL)</a></li>
+            <li><a href="./URL_Clase_20200821_.234888/index.html">Clase 20200821 (URL)</a></li>
+            <li><a href="./URL_clase_20200828_a_.246651/index.html">clase 20200828 a (URL)</a></li>
+            <li><a href="./URL_clase_20200828_b_.246652/index.html">clase 20200828 b (URL)</a></li>
+            <li><a href="./URL_clase_20200904_raid_.246645/index.html">clase 20200904 raid (URL)</a></li>
+            <li><a href="./URL_clase_20200911_raid_.246644/index.html">clase 20200911 raid (URL)</a></li>
+            <li><a href="./URL_clase_20201002_a_.255121/index.html">clase 20201002 a (URL)</a></li>
+            <li><a href="./URL_clase_20201002_b_.255120/index.html">clase 20201002 b (URL)</a></li>
+            <li><a href="./URL_clase_20201002_c_.255122/index.html">clase 20201002 c (URL)</a></li>
+            <li><a href="./URL_clase_20201009_.261306/index.html">clase 20201009 (URL)</a></li>
+            <li><a href="./URL_clase_20201016_a_.261307/index.html">clase 20201016 a (URL)</a></li>
+            <li><a href="./URL_clase_20201016_b_.261308/index.html">clase 20201016 b (URL)</a></li>
+            <li><a href="./URL_clase_20201023_b_.263407/index.html">clase 20201023 b (URL)</a></li>
+            <li><a href="./URL_clase_20201023_a_.263406/index.html">clase 20201023 a (URL)</a></li>
+            <li><a href="./URL_clase_30_de_octubre_a_.271606/index.html">clase 30 de octubre a (URL)</a></li>
+            <li><a href="./URL_clase_30_de_octubre_b_.271607/index.html">clase 30 de octubre b (URL)</a></li>
+            <li><a href="./URL_clase_6_noviembre_.271608/index.html">clase 6 noviembre (URL)</a></li>
+            <li><a href="./URL_clase_6_noviembre_Rodrigo_.271610/index.html">clase 6 noviembre Rodrigo (URL)</a></li>
+            <li><a href="./Tarea_ejercicio_traduccin_.263253/index.html">ejercicio traducción (Tarea)</a></li>
+            <li><a href="./URL_clase_20210813_parte_1_.349908/index.html">clase 20210813 parte 1 (URL)</a></li>
+            <li><a href="./URL_clase_20210813_parte_2_.349831/index.html">clase 20210813 parte 2 (URL)</a></li>
+            <li><a href="./URL_clase_20210820_parte_1_.349905/index.html">clase 20210820 parte 1 (URL)</a></li>
+            <li><a href="./URL_clase_20210820_parte_2_.349907/index.html">clase 20210820 parte 2 (URL)</a></li>
+            <li><a href="./URL_clase_20210827_parte_1_.352453/index.html">clase 20210827 parte 1 (URL)</a></li>
+            <li><a href="./URL_clase_20210827_parte_2_.352460/index.html">clase 20210827 parte 2 (URL)</a></li>
+            <li><a href="./URL_clase_20210903_parte_1_.356066/index.html">clase 20210903 parte 1 (URL)</a></li>
+            <li><a href="./URL_clase_20210903_parte_2_.356067/index.html">clase 20210903 parte 2 (URL)</a></li>
+            <li><a href="./URL_clase_20210910_parte_1_.360698/index.html">clase 20210910 parte 1 (URL)</a></li>
+            <li><a href="./URL_clase_20210910_parte_2_.360699/index.html">clase 20210910 parte 2 (URL)</a></li>
+            <li><a href="./URL_clase_20201001_parte_1_.371072/index.html">clase 20201001 parte 1 (URL)</a></li>
+            <li><a href="./URL_clase_20211007_.371073/index.html">clase 20211007 (URL)</a></li>
+            <li><a href="./URL_clase_20211015_.371074/index.html">clase 20211015 (URL)</a></li>
+            <li><a href="./URL_clase_20211029_parte_1_.371076/index.html">clase 20211029 parte 1 (URL)</a></li>
+            <li><a href="./URL_clase_20211029_parte_2_.371075/index.html">clase 20211029 parte 2 (URL)</a></li>
+            <li><a href="./URL_clase_20211105_parte_1_.372270/index.html">clase 20211105 parte 1 (URL)</a></li>
+            <li><a href="./URL_clase_20211105_parte_2_.372271/index.html">clase 20211105 parte 2 (URL)</a></li>
+            <li><a href="./URL_clase_20211112_parte_1_.373799/index.html">clase 20211112 parte 1 (URL)</a></li>
+            <li><a href="./URL_clase_20211112_parte_2_.373800/index.html">clase 20211112 parte 2 (URL)</a></li>
+            <li><a href="./URL_clase_20211112_parte_3_.373808/index.html">clase 20211112 parte 3 (URL)</a></li>
+        </ul>
+        <hr>
+        <h3>Práctica</h3>
+        <ul>
+            <li><a href="./rea_de_texto_y_medios_CANAL_D..._.669267/index.html">CANAL DE COMUNICACION (Área de texto y medios)</a></li>
+            <li><a href="./rea_de_texto_y_medios_Grupos_..._.665233/index.html">Grupos de Microsoft Windows (Área de texto y medios)</a></li>
+            <li><a href="./rea_de_texto_y_medios_Cosilla..._.662921/index.html">Cosillas que necesitaremos para cursar.... (Área de texto y medios)</a></li>
+            <li><a href="./rea_de_texto_y_medios_Redes_y..._.662916/index.html">Redes y Zerotier (Área de texto y medios)</a></li>
+            <li><a href="./Wiki_GIT_.362516/index.html">GIT (Wiki)</a></li>
+        </ul>
+        <hr>
+        <h3>01_Ms_WindowsServer</h3>
+        <ul>
+            <li><a href="./Pgina_Videos_de_Inters_Ms_Win..._.662897/index.html">Videos de Interés: Ms Windows Server (Página)</a></li>
+            <li><a href="./Pgina_Documentos_y_Guas_.662908/index.html">Documentos y Guías (Página)</a></li>
+            <li><a href="./rea_de_texto_y_medios_Armado_..._.665232/index.html">Armado de Grupos para Ms. Windows (Área de texto y medios)</a></li>
+            <li><a href="./rea_de_texto_y_medios_Activid..._.668927/index.html">Actividad Grupal: Active Directory (Área de texto y medios)</a></li>
+        </ul>
+        <hr>
+        <h3>02_GNU_Linux</h3>
+        <ul>
+            <li><a href="./Pgina_Videos_de_Inters_GNILinux_.662915/index.html">Videos de Interés: GNI/Linux (Página)</a></li>
+            <li><a href="./Pgina_Documentos__Presentacio..._.662909/index.html">Documentos | Presentaciones | Guías (Página)</a></li>
+            <li><a href="./Cuestionario_Cuestionario_Esp..._.663867/index.html">Cuestionario_Esp_M06_B1 (Cuestionario)</a></li>
+            <li><a href="./Foro_Compartiendo_Scripts_.685190/index.html">Compartiendo Scripts (Foro)</a></li>
+        </ul>
+        <hr>
+        <h3>03_Evaluaciones_Práctica</h3>
+        <hr>
+        <h3>Evaluaciones</h3>
+        <ul>
+            <li><a href="./rea_de_texto_y_medios_RESUMEN..._.372860/index.html">RESUMEN DE NOTAS (Área de texto y medios)</a></li>
+            <li><a href="./Archivo_Regularidades_al_8_de..._.689051/index.html">Regularidades al 8 de noviembre de 2024 (Archivo)</a></li>
+            <li><a href="./Archivo_Notas_2024_11_01_.687489/index.html">Notas 2024 11 01 (Archivo)</a></li>
+            <li><a href="./rea_de_texto_y_medios_CUESTIO..._.372862/index.html">CUESTIONARIOS (Área de texto y medios)</a></li>
+            <li><a href="./Cuestionario_Cuestionario_1_2024_.671609/index.html">Cuestionario 1 2024 (Cuestionario)</a></li>
+            <li><a href="./Cuestionario_Cuestionario_2_2024_.673515/index.html">Cuestionario 2 2024 (Cuestionario)</a></li>
+            <li><a href="./Cuestionario_Cuestionario_3_2024_.675368/index.html">Cuestionario 3 2024 (Cuestionario)</a></li>
+            <li><a href="./Cuestionario_Cuestionario_3_2..._.685137/index.html">Cuestionario 3 2024 (copia) (Cuestionario)</a></li>
+            <li><a href="./Cuestionario_cuestionario_4_2024_.678348/index.html">cuestionario 4 2024 (Cuestionario)</a></li>
+            <li><a href="./Cuestionario_Ejercicio_algori..._.678781/index.html">Ejercicio algoritmo del banquero (Cuestionario)</a></li>
+            <li><a href="./Cuestionario_cuestionario_5_2024_.681287/index.html">cuestionario 5 2024 (Cuestionario)</a></li>
+            <li><a href="./Cuestionario_Parcial_2_2024_.685036/index.html">Parcial 2 2024 (Cuestionario)</a></li>
+            <li><a href="./Cuestionario_cuestionario_7_2024_.686233/index.html">cuestionario 7 2024 (Cuestionario)</a></li>
+            <li><a href="./Cuestionario_cuestionario_8_2024_.687436/index.html">cuestionario 8 2024 (Cuestionario)</a></li>
+            <li><a href="./Cuestionario_Parcial_3_2024_.688401/index.html">Parcial 3 2024 (Cuestionario)</a></li>
+            <li><a href="./Cuestionario_Global_2024_.689949/index.html">Global 2024 (Cuestionario)</a></li>
+        </ul>
+        <hr>
+        <h3>grabaciones</h3>
+        <hr>
+    </div>
+
+            </div>
+        </main>
+        <footer id="page-footer" class="py-3">
+            <div class="container">
+                <div>Este archivo es parte del contenido descargado de <a href="https://virtual.um.edu.ar/course/view.php?id=348">SISTEMAS OPERATIVOS</a> por Lucas Garcia el sábado, 26 de abril de 2025, 17:42.</div>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

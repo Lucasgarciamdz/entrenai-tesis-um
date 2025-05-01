@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Cátedras Virtuales - UMVirtual - Cálculo II (0004)</title>
+    <link rel="stylesheet" type="text/css" href="..//shared/moodle.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+    <div class="d-flex flex-column h-100">
+        <nav class="navbar navbar-light bg-white border-bottom">
+            <div class="container-fluid p-0">
+                <a class="navbar-brand" href="https://virtual.um.edu.ar" title="Cátedras Virtuales - UMVirtual">
+                    Cátedras Virtuales - UMVirtual
+                </a>
+            </div>
+        </nav>
+        <main class="container-fluid mt-2 flex-grow-1 flex-shrink-1">
+            <div>
+                <h1><a href="../index.html">Cálculo II (0004)</a></h1>
+                <p>Cálculo II (0004)</p>
+                    <h2>
+        PARCIAL DE INTEGRALESSe les informa a los alumnos ...
+    </h2>
+
+    <div class="alert alert-info alert-block">
+        Este archivo descargado forma parte del contenido de <a href="">PARCIAL DE INTEGRALESSe les informa a los alumnos ...</a> el jueves, 24 de abril de 2025, 16:49. Tenga en cuenta que contenido o archivos con tamaño superior a  50 MB no serán descargados.    </div>
+
+    <h3>Descripción</h3>
+    <div>
+        <p><b><span style="background-color:rgb(152,202,62);">PARCIAL DE INTEGRALES</span></b></p><p><span style="background-color:rgb(255,255,255);">Se les informa a los alumnos de Cálculo I , que el día</span><b><span style="background-color:rgb(255,255,255);"> lunes 8 de junio</span></b><span style="background-color:rgb(255,255,255);">, se tomará el parcial de integral indefinida y definida</span></p><p><span style="background-color:rgb(255,255,255);"><b>Turno mañana: lunes de 9.00hs a 10.30hs</b></span></p><p><span style="background-color:rgb(255,255,255);"><b>Turno Tarde: lunes de 15.00hs a 16.30hs</b></span></p>
+    </div>
+    <hr>
+
+
+            </div>
+        </main>
+        <footer id="page-footer" class="py-3">
+            <div class="container">
+                <div>Este archivo es parte del contenido descargado de <a href="https://virtual.um.edu.ar/course/view.php?id=262">Cálculo II (0004)</a> por Lucas Garcia el jueves, 24 de abril de 2025, 16:49.</div>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

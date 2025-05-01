@@ -1,0 +1,297 @@
+# Guía Teórica: Aseguramiento de Calidad de Software
+
+**Carrera:** Ingeniería en Software  
+**Año:** 2025  
+**Profesores:**
+- Julieta Barrionuevo
+- Juan Manuel Ojeda
+
+## Contenido de la Guía
+
+### Sección 1: Introducción
+- Objetivos del curso
+- Terminología necesaria
+- Áreas de conocimiento relacionadas
+
+### Sección 2: Calidad de Software - Generalidades
+- Definición de calidad
+- Herramientas para el testing manual
+- Estructura de los test cases
+- Issue trackers y ambientes de pruebas
+
+### Sección 3: Factores, Objetivos y Tipos de Testing
+- Factores de calidad del software
+- Objetivos del proceso de calidad
+- Tipos de testing
+- Gestión de defectos
+
+### Sección 4: Metodologías Ágiles
+- Procesos para el desarrollo de software
+- Modelos de desarrollo
+- Metodologías ágiles vs tradicionales
+- SCRUM (roles, artefactos, reuniones)
+
+## Sección 1: Introducción
+
+### Objetivos del curso
+
+Actualmente se habla mucho de la necesidad de un área de calidad de software en cualquier equipo de desarrollo, ya sea parte de una software factory, un emprendimiento personal, o cualquier equipo formal o informal donde se pretenda generar software confiable, portable, robusto y con otras características esenciales para un buen producto.
+
+Debido a lo previamente mencionado, existe mucha confusión acerca de qué es lo que debe ser parte del trabajo (competencias) de las personas que integran equipos de calidad de software.
+
+**Una vez finalizado el curso se pretende que los estudiantes:**
+
+- Conozcan las competencias de un profesional dedicado a la Calidad de Software
+- Utilicen terminología adecuada para referirse y discutir acerca de temas relacionados con los procesos de Ingeniería y desarrollo de software
+- Puedan formar parte de un equipo de QA sin necesidad de requerir un entrenamiento de niveles extremadamente básicos
+- Sean capaces de proponer/comprender soluciones y puedan proponer herramientas, técnicas o mejoras al proceso actual de un equipo
+- Comprendan que existen diferentes tipos de metodologías ágiles de desarrollo de software
+- Sientan confianza en el manejo y uso de terminología, requerimientos y buenas prácticas de la metodología SCRUM
+- Sean capaces de justificar por qué es cada vez más necesario un área especializada de Calidad de software en todo equipo de desarrollo
+- Sean capaces de justificar la naturaleza de la automatización de pruebas, comprendiendo que la misma depende mucho del cliente, sistema y las características de los mismos
+- Tengan nociones prácticas básicas de herramientas de automatización de pruebas así como de las capacidades de las mismas
+
+### Áreas de conocimiento relacionadas
+
+- Software Engineering
+- Software Quality
+- Quality Assurance & Control
+- Software Process
+- Reviews & Inspections
+- Test Strategy
+- Test Planning
+- Test Estimation
+- Test Requirements
+- Test Design
+- Test Techniques
+- Static Test Techniques
+- Test Metrics
+- Test Execution
+- Test Environment
+- Test Reporting
+- Test Process
+- Testing Standards
+- Test Tools
+- Configuration Management
+- Test Team Management
+- Defect Prevention
+
+## Sección 2: Calidad de Software - Generalidades
+
+### Definición de Calidad
+
+Calidad es mucho más que la ausencia de defectos que nos permite cumplir con las expectativas de los clientes. La Calidad requiere la evolución del proceso de control y solamente puede ser obtenida a través de la mejora continua de todos los procesos y sistemas de la organización, no solo de los productos y servicios ofrecidos por la empresa sino también todos los aspectos que involucran la transacción con el cliente (diseño, desarrollo, servicio de compra, administración, etc).
+
+**Definición de Calidad según Norma ISO 8402:**
+
+> "Totalidad de características de una entidad que determinan su capacidad para satisfacer necesidades explícitas e implícitas."
+
+Esto implica no solo entregar un producto que cumple con los requerimientos sino también que se ajusta al uso del cliente.
+
+### Tipos de Calidad
+
+#### Calidad Funcional (Functional Quality):
+- Responde al "QUÉ HACE"
+- Refleja qué tan bien el producto cumple o complementa un diseño que ha sido provisto por el cliente relacionado con los requerimientos funcionales o especificaciones.
+
+#### Calidad Estructural:
+- Responde al "CÓMO LO HACE"
+- Se refiere al "cómo" el producto cumple con los requisitos no funcionales que dan soporte a los requisitos funcionales (robusto, mantenibilidad, portabilidad).
+
+### Software Quality Management (SQM)
+
+El objetivo del Software Quality Management es administrar la calidad de software, definir los procesos y los requisitos para esos procesos. Debe a su vez implementar métricas para cada proceso, sus salidas y un canal de feedback.
+
+### Terminología básica en testing
+
+#### 1. Caso de Prueba (Test Case) / Caso de Uso (Use Case)
+- **Caso de Prueba**:
+  - Un conjunto específico de condiciones de entrada, acciones ejecutadas y resultados esperados para verificar una característica del software.
+  - Se enfoca en "cómo" probar.
+- **Caso de Uso**:
+  - Describe cómo un usuario interactúa con el sistema para lograr un objetivo específico.
+  - Se enfoca en "qué" hace el usuario.
+
+#### 2. Rastreador de Problemas (Issue Tracker) / Herramienta de Seguimiento de Tiempo (Time Tracking Tool)
+- **Issue Tracker**:
+  - Sistema para registrar, seguir y gestionar problemas o bugs encontrados durante el desarrollo y testing.
+  - Ejemplos: Jira, Bugzilla, GitHub Issues.
+- **Time Tracking Tool**:
+  - Herramienta para registrar el tiempo dedicado a diferentes tareas del proyecto.
+  - Ayuda a medir la productividad y estimar mejor futuros proyectos.
+
+#### 3. Testing Funcional / Testing No Funcional
+
+- **Testing Funcional**:
+  - Verifica que cada función del software opere según los requisitos.
+  - Se enfoca en lo que el sistema debe hacer.
+  - Ejemplos: testing de caja negra, pruebas de regresión, pruebas de integración.
+  
+- **Testing No Funcional**:
+  - Evalúa aspectos como rendimiento, usabilidad, seguridad, confiabilidad, etc.
+  - Se enfoca en cómo funciona el sistema, no en qué hace.
+  - Ejemplos: pruebas de carga, pruebas de seguridad, pruebas de compatibilidad.
+
+## Sección 3: Factores, Objetivos y Tipos de Testing
+
+### Factores de calidad del software
+
+Los factores de calidad del software son atributos que influyen en la calidad general del producto. Estos factores se pueden agrupar en tres categorías principales según el modelo de McCall:
+
+1. **Operación del producto**
+   - Corrección: ¿El software hace lo que se supone que debe hacer?
+   - Fiabilidad: ¿Lo hace de manera confiable todo el tiempo?
+   - Eficiencia: ¿Hace un buen uso de los recursos del sistema?
+   - Integridad: ¿Es seguro?
+   - Usabilidad: ¿Es fácil de usar?
+
+2. **Revisión del producto**
+   - Mantenibilidad: ¿Es fácil de modificar?
+   - Flexibilidad: ¿Es fácil de cambiar?
+   - Capacidad de prueba: ¿Es fácil de probar?
+
+3. **Transición del producto**
+   - Portabilidad: ¿Se puede usar en otro entorno?
+   - Reusabilidad: ¿Se pueden reutilizar partes del software?
+   - Interoperabilidad: ¿Puede interactuar con otros sistemas?
+
+### Objetivos del proceso de Calidad
+
+Los principales objetivos del proceso de calidad de software son:
+
+1. **Prevención de defectos**: Identificar y corregir problemas lo antes posible en el ciclo de desarrollo.
+2. **Detección temprana**: Encontrar defectos cuando son menos costosos de corregir.
+3. **Aseguramiento de requisitos**: Garantizar que el software cumple con los requisitos especificados.
+4. **Verificación y validación**: Asegurar que el software funciona como se espera y satisface las necesidades del usuario.
+5. **Mejora continua**: Identificar áreas de mejora en el proceso de desarrollo.
+
+### Tipos de Testing
+
+#### Testing Funcional
+- **Pruebas unitarias**: Verifican el funcionamiento de componentes individuales del código.
+- **Pruebas de integración**: Evalúan la interacción entre componentes o sistemas.
+- **Pruebas de sistema**: Verifican el sistema completo contra los requisitos.
+- **Pruebas de aceptación**: Determinan si el sistema satisface los criterios de aceptación.
+- **Pruebas de regresión**: Aseguran que las nuevas funcionalidades no afecten a las existentes.
+- **Pruebas de humo (Smoke Testing)**: Verificaciones rápidas para confirmar que las funcionalidades básicas funcionan.
+
+#### Testing No Funcional
+- **Pruebas de rendimiento**: Evalúan velocidad, escalabilidad y estabilidad.
+- **Pruebas de carga**: Determinan el comportamiento del sistema bajo cargas esperadas.
+- **Pruebas de estrés**: Evalúan el comportamiento bajo condiciones extremas.
+- **Pruebas de seguridad**: Identifican vulnerabilidades y riesgos.
+- **Pruebas de usabilidad**: Evalúan la facilidad de uso del software.
+- **Pruebas de accesibilidad**: Verifican que el software sea accesible para todos los usuarios.
+
+### Gestión de Defectos
+
+#### Concepto de Defecto
+Un defecto (o bug) es cualquier desviación del comportamiento esperado del software. Puede ser un error de programación, un problema de diseño, o una discrepancia con los requisitos.
+
+#### Severidad de Defectos (Defect Severity)
+La severidad indica el impacto que un defecto tiene en el sistema:
+
+- **Crítico**: Bloquea el uso del sistema o causa pérdida de datos.
+- **Mayor**: Afecta funcionalidades importantes pero existen alternativas.
+- **Menor**: Afecta funcionalidades menores, puede ser molesto pero no impide el uso.
+- **Trivial**: Problemas cosméticos o mejoras sugeridas.
+
+#### Tipos de Defectos (Defect Type)
+- **Funcional**: No cumple con los requisitos funcionales.
+- **Interfaz de usuario**: Problemas con la UI/UX.
+- **Rendimiento**: No cumple con los requisitos de rendimiento.
+- **Seguridad**: Vulnerabilidades o problemas de seguridad.
+- **Compatibilidad**: Problemas en diferentes plataformas/navegadores.
+- **Usabilidad**: Dificultad de uso o comprensión.
+
+## Sección 4: Metodologías Ágiles
+
+### Procesos para el desarrollo de software
+
+#### Modelos de Desarrollo de Software
+- **Modelo en Cascada**: Enfoque secuencial donde cada fase debe completarse antes de la siguiente.
+- **Modelo Iterativo**: Desarrollo en ciclos pequeños, cada uno construyendo sobre el anterior.
+- **Modelo Incremental**: Entrega de funcionalidades en pequeños incrementos.
+- **Modelo en Espiral**: Combina elementos del modelo en cascada con desarrollo iterativo.
+- **Desarrollo Ágil**: Enfoque iterativo e incremental con equipos auto-organizados.
+
+### Metodologías Ágiles vs Tradicionales
+
+#### Metodologías Tradicionales
+- Enfoque predictivo y planificado
+- Documentación extensa
+- Entrega al final del proyecto
+- Cambios difíciles de implementar
+- Roles estrictamente definidos
+
+#### Metodologías Ágiles
+- Enfoque adaptativo e iterativo
+- Documentación mínima pero suficiente
+- Entregas continuas e incrementales
+- Abierto a cambios durante el desarrollo
+- Roles flexibles y equipos auto-organizados
+
+### Tipos de metodologías Ágiles
+- Scrum
+- Kanban
+- XP (Extreme Programming)
+- Lean Software Development
+- Crystal
+- Feature-Driven Development (FDD)
+- Dynamic Systems Development Method (DSDM)
+
+### SCRUM
+
+Scrum es un marco de trabajo ágil para el desarrollo, entrega y mantenimiento de productos complejos. Se caracteriza por:
+
+#### Roles en Scrum
+
+1. **Product Owner**
+   - Representa los intereses del cliente/negocio
+   - Define y prioriza el Product Backlog
+   - Decide qué funcionalidades se desarrollarán y en qué orden
+
+2. **Scrum Master**
+   - Facilita el proceso Scrum
+   - Elimina impedimentos
+   - Asegura que el equipo siga las prácticas y reglas de Scrum
+
+3. **Equipo de Desarrollo**
+   - Auto-organizado y multifuncional
+   - Responsable de entregar incrementos de producto potencialmente entregables
+   - Típicamente 3-9 personas
+
+#### Artefactos en Scrum
+
+1. **Product Backlog**
+   - Lista ordenada de todo lo que podría necesitarse en el producto
+   - Única fuente de requisitos para cualquier cambio
+   - Constantemente actualizado y priorizado
+
+2. **Sprint Backlog**
+   - Conjunto de elementos del Product Backlog seleccionados para el Sprint
+   - Plan para entregar el incremento de producto y lograr el objetivo del Sprint
+
+3. **Incremento**
+   - Suma de todos los elementos del Product Backlog completados durante un Sprint
+   - Debe estar en condición "Terminado" (Done)
+
+#### Reuniones en Scrum
+
+1. **Sprint Planning**
+   - Define qué se puede entregar en el Sprint y cómo se logrará el trabajo
+   - Duración: 8 horas máximo para un Sprint de un mes
+
+2. **Daily Scrum (Stand-up)**
+   - Reunión diaria de 15 minutos para sincronizar actividades
+   - Responde: ¿Qué hice ayer? ¿Qué haré hoy? ¿Hay impedimentos?
+
+3. **Sprint Review**
+   - Revisión del incremento producido en el Sprint
+   - Recopilación de feedback para ajustar el Product Backlog
+   - Duración: 4 horas máximo para un Sprint de un mes
+
+4. **Sprint Retrospective**
+   - Oportunidad para el equipo de inspeccionarse a sí mismo
+   - Creación de un plan de mejoras
+   - Duración: 3 horas máximo para un Sprint de un mes
