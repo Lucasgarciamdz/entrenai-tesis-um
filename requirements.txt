@@ -1,0 +1,19 @@
+# Dependencias básicas
+requests
+pymongo
+pika
+
+# Procesamiento de archivos
+pypdf
+# python-docx
+# beautifulsoup4
+
+# Vector search
+# qdrant-client
+
+# Utilidades
+pydantic
+loguru
+uv
+python-dotenv
+black
