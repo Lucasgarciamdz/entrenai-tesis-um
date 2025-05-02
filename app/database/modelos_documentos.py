@@ -9,7 +9,6 @@ import uuid
 from typing import Dict, List, Any, Optional
 from datetime import datetime
 
-import pymongo
 from pydantic import BaseModel, Field
 
 

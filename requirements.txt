@@ -21,12 +21,24 @@ numpy
 easyocr  # OCR avanzado (opcional, requiere PyTorch)
 torch
 torchvision
-# Vector search
-# qdrant-client
+
+# Procesamiento de texto y RAG
+markdown
+langchain
+langchain-text-splitters
+nltk
+sentence-transformers
+transformers
+
+# Base de datos vectorial
+qdrant-client
+
+# Procesamiento en tiempo real
+bytewax
 
 # Utilidades
 pydantic
 loguru
 uv
 python-dotenv
-black
+ruff

@@ -256,7 +256,7 @@ def ejemplo_procesador_pdf_easyocr():
 
     # Mostrar resultados
     texto_ocr = resultado["texto"]
-    print(f"\nTexto extraído con EasyOCR (primeros 200 caracteres):")
+    print("\nTexto extraído con EasyOCR (primeros 200 caracteres):")
     print(texto_ocr[:200] + "..." if len(texto_ocr) > 200 else texto_ocr)
 
     # Mostrar información sobre fórmulas matemáticas

@@ -10,7 +10,7 @@ import os
 import sys
 import concurrent.futures
 import multiprocessing
-from typing import Dict, List, Any, Optional, Tuple
+from typing import Optional, Tuple
 import time
 
 from app.clientes import RecolectorMoodle
@@ -210,9 +210,9 @@ def procesar_recursos_curso(
     # Calcular velocidad promedio
     if total_archivos > 0:
         print(
-            f"Velocidad promedio: {tiempo_total/total_archivos:.2f} segundos por archivo"
+            f"Velocidad promedio: {tiempo_total / total_archivos:.2f} segundos por archivo"
         )
-        print(f"Rendimiento: {total_archivos/tiempo_total:.2f} archivos por segundo")
+        print(f"Rendimiento: {total_archivos / tiempo_total:.2f} archivos por segundo")
 
 
 def procesar_archivo_paralelo(args: Tuple) -> bool:
@@ -227,7 +227,7 @@ def procesar_archivo_paralelo(args: Tuple) -> bool:
     """
     indice, ruta_archivo, id_curso, nombre_curso, conector = args
     nombre_archivo = os.path.basename(ruta_archivo)
-    print(f"[Hilo] Procesando archivo {indice+1}: {nombre_archivo}")
+    print(f"[Hilo] Procesando archivo {indice + 1}: {nombre_archivo}")
 
     try:
         documento = procesar_archivo(ruta_archivo, id_curso, nombre_curso, conector)

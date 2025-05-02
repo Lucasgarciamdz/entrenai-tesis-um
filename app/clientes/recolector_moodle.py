@@ -5,8 +5,7 @@ Este módulo contiene la clase RecolectorMoodle que integra la extracción
 y el procesamiento de los recursos de Moodle.
 """
 
-import os
-from typing import Dict, List, Any, Optional, Tuple
+from typing import Dict, List, Any, Optional
 
 from .cliente_moodle import ClienteMoodle
 from .extractor_recursos_moodle import ExtractorRecursosMoodle

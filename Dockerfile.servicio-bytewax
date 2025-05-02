@@ -1,0 +1,18 @@
+FROM python:3.12-slim
+
+WORKDIR /app
+
+# Instalar dependencias
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copiar código fuente
+COPY . .
+
+# Puerto para RabbitMQ
+EXPOSE 5672
+# Puerto para Qdrant
+EXPOSE 6333
+
+# Establecer punto de entrada
+CMD ["python", "-m", "app.servicio_bytewax"] 

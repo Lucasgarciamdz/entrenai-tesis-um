@@ -78,8 +78,96 @@ services:
       - MONGO_INITDB_ROOT_USERNAME=${MONGODB_USERNAME}
       - MONGO_INITDB_ROOT_PASSWORD=${MONGODB_PASSWORD}
       - MONGO_INITDB_DATABASE=${MONGODB_DATABASE}
+    restart: always
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
     networks:
       - tesis_network
+
+  rabbitmq:
+    image: rabbitmq:4.1-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_USERNAME:-guest}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_PASSWORD:-guest}
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    restart: always
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "check_port_connectivity"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    networks:
+      - tesis_network
+
+  qdrant:
+    image: qdrant/qdrant:v1.14.0
+    container_name: qdrant
+    ports:
+      - "6333:6333"
+      - "6334:6334"
+    volumes:
+      - qdrant_data:/qdrant/storage
+    restart: always
+    # healthcheck:
+    #   test: ["CMD", "curl", "-f", "http://qdrant:6333/healthz"]
+    #   interval: 30s
+    #   timeout: 10s
+    #   retries: 5
+    #   start_period: 30s
+    networks:
+      - tesis_network
+
+  # servicio-cdc:
+  #   build:
+  #     context: .
+  #     dockerfile: ./Dockerfile.servicio-cdc
+  #   container_name: servicio-cdc
+  #   depends_on:
+  #     mongodb:
+  #       condition: service_healthy
+  #     rabbitmq:
+  #       condition: service_healthy
+  #   env_file:
+  #     - .env
+  #   environment:
+  #     - MONGODB_HOST=mongodb
+  #     - MONGODB_PORT=27017
+  #     - RABBITMQ_HOST=rabbitmq
+  #     - RABBITMQ_PORT=5672
+  #     - NIVEL_LOG=INFO
+  #   restart: always
+  #   networks:
+  #     - tesis_network
+
+  # servicio-bytewax:
+  #   build:
+  #     context: .
+  #     dockerfile: ./Dockerfile.servicio-bytewax
+  #   container_name: servicio-bytewax
+  #   depends_on:
+  #     rabbitmq:
+  #       condition: service_healthy
+  #   env_file:
+  #     - .env
+  #   environment:
+  #     - RABBITMQ_HOST=rabbitmq
+  #     - RABBITMQ_PORT=5672
+  #     - QDRANT_HOST=qdrant
+  #     - QDRANT_PORT=6334
+  #     - NIVEL_LOG=INFO
+  #   restart: always
+  #   networks:
+  #     - tesis_network
 
   mongo-express:
     image: mongo-express:latest
@@ -88,8 +176,8 @@ services:
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGODB_USERNAME}
       ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGODB_PASSWORD}
-      ME_CONFIG_MONGODB_PORT: 27017
-      ME_CONFIG_MONGODB_SERVER: 'mongodb'
+      ME_CONFIG_MONGODB_PORT: ${MONGODB_PORT}
+      ME_CONFIG_MONGODB_SERVER: ${MONGODB_HOST}
       ME_CONFIG_BASICAUTH_USERNAME: ${MONGO_EXPRESS_USERNAME}
       ME_CONFIG_BASICAUTH_PASSWORD: ${MONGO_EXPRESS_PASSWORD}
     ports:
@@ -98,14 +186,33 @@ services:
       - tesis_network
     depends_on:
       mongodb:
-        condition: service_started
+        condition: service_healthy
+  
+  ollama:
+    image: docker.io/ollama/ollama:0.6.7
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    container_name: ollama
+    pull_policy: always
+    tty: true
+    restart: always
+    environment:
+      - OLLAMA_KEEP_ALIVE=5m
+      - OLLAMA_HOST=0.0.0.0
+    networks:
+      - tesis_network
 
 volumes:
   mariadb_volume:
   moodle_volume:
   moodledata_volume:
   mongodb_volume:
-  
+  rabbitmq_data:
+  qdrant_data:
+  ollama_data:
+
 networks:
   tesis_network:
     driver: bridge

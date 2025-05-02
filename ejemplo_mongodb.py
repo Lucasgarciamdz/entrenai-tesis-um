@@ -7,7 +7,6 @@ y guarda los resultados en una base de datos MongoDB.
 """
 
 import os
-import json
 import datetime
 from typing import Dict, List, Any, Optional
 
