@@ -3,6 +3,8 @@ services:
     image: bitnami/mariadb:11.4.5
     ports:
       - "3307:3306"
+    env_file:
+      - .env
     environment:
       - MARIADB_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD}
       - MARIADB_DATABASE=${MARIADB_DATABASE}
@@ -23,6 +25,8 @@ services:
 
   moodle:
     image: bitnami/moodle:4.5.4
+    env_file:
+      - .env
     environment:
       - MOODLE_DATABASE_HOST=${MOODLE_DATABASE_HOST}
       - MOODLE_DATABASE_PORT_NUMBER=${MOODLE_DATABASE_PORT_NUMBER}
@@ -61,10 +65,46 @@ services:
     depends_on:
       - moodle
 
+  mongodb:
+    image: mongo:8
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_volume:/data/db
+      - ./mongodb-init:/docker-entrypoint-initdb.d
+    env_file:
+      - .env
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGODB_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGODB_PASSWORD}
+      - MONGO_INITDB_DATABASE=${MONGODB_DATABASE}
+    networks:
+      - tesis_network
+
+  mongo-express:
+    image: mongo-express:latest
+    container_name: mongo-express
+    restart: always
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGODB_USERNAME}
+      ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGODB_PASSWORD}
+      ME_CONFIG_MONGODB_PORT: 27017
+      ME_CONFIG_MONGODB_SERVER: 'mongodb'
+      ME_CONFIG_BASICAUTH_USERNAME: ${MONGO_EXPRESS_USERNAME}
+      ME_CONFIG_BASICAUTH_PASSWORD: ${MONGO_EXPRESS_PASSWORD}
+    ports:
+      - 8082:8081
+    networks:
+      - tesis_network
+    depends_on:
+      mongodb:
+        condition: service_started
+
 volumes:
   mariadb_volume:
   moodle_volume:
   moodledata_volume:
+  mongodb_volume:
   
 networks:
   tesis_network:

@@ -9,6 +9,7 @@ implementadas para extraer y procesar recursos de Moodle.
 import os
 from app.clientes import ClienteMoodle, ExtractorRecursosMoodle, RecolectorMoodle
 from app.procesadores_archivos import ProcesadorArchivos
+from app.procesadores_archivos.procesador_pdf import ProcesadorPDF
 from app.config import configuracion
 
 
@@ -133,8 +134,154 @@ def ejemplo_procesador_archivos():
 
         # Mostrar las primeras 100 caracteres del texto extraído
         texto = resultado["texto"]
-        print(f"\nTexto extraído (primeros 100 caracteres):")
+        print("\nTexto extraído (primeros 100 caracteres):")
         print(texto[:100] + "..." if len(texto) > 100 else texto)
+
+
+def ejemplo_procesador_pdf_avanzado():
+    """Ejemplo de uso del procesador de PDF con OCR y extracción de imágenes."""
+    print("\n=== EJEMPLO PROCESADOR DE PDF AVANZADO ===")
+
+    # Buscar archivos PDF
+    directorio_descargas = configuracion.obtener_directorio_descargas()
+
+    if not os.path.exists(directorio_descargas):
+        print(f"El directorio {directorio_descargas} no existe")
+        return
+
+    # Buscar archivos PDF
+    archivos_pdf = []
+    for raiz, _, archivos in os.walk(directorio_descargas):
+        for archivo in archivos:
+            if archivo.lower().endswith(".pdf"):
+                archivos_pdf.append(os.path.join(raiz, archivo))
+
+    if not archivos_pdf:
+        print("No se encontraron archivos PDF para procesar")
+        return
+
+    # Crear procesador normal (sin OCR)
+    procesador_normal = ProcesadorPDF()
+
+    # Crear procesador con OCR habilitado
+    procesador_ocr = ProcesadorPDF(usar_ocr=True, idioma="es")
+
+    # Procesar el primer archivo PDF encontrado
+    ruta_pdf = archivos_pdf[0]
+    print(f"Procesando archivo: {ruta_pdf}")
+
+    # 1. Procesamiento normal (sin OCR)
+    print("\n1. Procesamiento sin OCR:")
+    resultado_normal = procesador_normal.procesar_archivo(ruta_pdf)
+
+    # Mostrar metadatos
+    print("\nMetadatos:")
+    for clave, valor in resultado_normal["metadatos"].items():
+        print(f"- {clave}: {valor}")
+
+    # Mostrar las primeras 100 caracteres del texto extraído
+    texto = resultado_normal["texto"]
+    print("\nTexto extraído (primeros 100 caracteres):")
+    print(texto[:100] + "..." if len(texto) > 100 else texto)
+
+    # 2. Procesamiento con OCR
+    print("\n2. Procesamiento con OCR:")
+    resultado_ocr = procesador_ocr.procesar_archivo(ruta_pdf, extraer_imagenes=True)
+
+    # Mostrar metadatos adicionales
+    print("\nInformación de procesamiento OCR:")
+    if "contiene_formulas" in resultado_ocr:
+        print(f"- Contiene fórmulas matemáticas: {resultado_ocr['contiene_formulas']}")
+
+    # 3. Extraer y guardar imágenes
+    print("\n3. Extrayendo imágenes del PDF:")
+    imagenes = resultado_ocr.get("imagenes", [])
+    print(f"- Imágenes encontradas: {len(imagenes)}")
+
+    if imagenes:
+        # Crear directorio para imágenes extraídas
+        directorio_imagenes = os.path.join(directorio_descargas, "imagenes_extraidas")
+
+        # Guardar imágenes
+        rutas_guardadas = procesador_ocr.guardar_imagenes(ruta_pdf, directorio_imagenes)
+        print(f"- Imágenes guardadas: {len(rutas_guardadas)}")
+        print(f"- Directorio de imágenes: {directorio_imagenes}")
+
+
+def ejemplo_procesador_pdf_easyocr():
+    """Ejemplo de uso del procesador de PDF con EasyOCR avanzado."""
+    print("\n=== EJEMPLO PROCESADOR DE PDF CON EASYOCR AVANZADO ===")
+
+    # Buscar archivos PDF
+    directorio_descargas = configuracion.obtener_directorio_descargas()
+
+    if not os.path.exists(directorio_descargas):
+        print(f"El directorio {directorio_descargas} no existe")
+        return
+
+    # Buscar archivos PDF
+    archivos_pdf = []
+    for raiz, _, archivos in os.walk(directorio_descargas):
+        for archivo in archivos:
+            if archivo.lower().endswith(".pdf"):
+                archivos_pdf.append(os.path.join(raiz, archivo))
+
+    if not archivos_pdf:
+        print("No se encontraron archivos PDF para procesar")
+        return
+
+    try:
+        # Importar EasyOCR para verificar que está instalado
+        import easyocr
+
+        print("EasyOCR está instalado correctamente.")
+    except ImportError:
+        print("EasyOCR no está instalado. Ejecute: pip install easyocr")
+        print(
+            "Nota: EasyOCR requiere PyTorch que puede necesitar instalación específica para su sistema."
+        )
+        return
+
+    # Seleccionar un PDF para procesar
+    ruta_pdf = archivos_pdf[0]
+    print(f"Procesando archivo con EasyOCR: {ruta_pdf}")
+
+    # Crear un procesador con OCR avanzado (EasyOCR)
+    # Usamos idioma español y también inglés para mayor cobertura
+    procesador_avanzado = ProcesadorPDF(usar_ocr=True, idioma="es")
+
+    # Procesar el PDF con todas las capacidades habilitadas
+    print("\nAplicando OCR avanzado con EasyOCR...")
+    resultado = procesador_avanzado.procesar_archivo(ruta_pdf, extraer_imagenes=True)
+
+    # Mostrar resultados
+    texto_ocr = resultado["texto"]
+    print(f"\nTexto extraído con EasyOCR (primeros 200 caracteres):")
+    print(texto_ocr[:200] + "..." if len(texto_ocr) > 200 else texto_ocr)
+
+    # Mostrar información sobre fórmulas matemáticas
+    if "contiene_formulas" in resultado and resultado["contiene_formulas"]:
+        print("\nSe han detectado fórmulas matemáticas en el documento.")
+        print(
+            "EasyOCR tiene mejor capacidad para reconocer caracteres matemáticos y símbolos especiales."
+        )
+
+    # Extraer y guardar imágenes con un directorio específico para EasyOCR
+    directorio_imagenes = os.path.join(directorio_descargas, "easyocr_imagenes")
+    imagenes = resultado.get("imagenes", [])
+
+    if imagenes:
+        print(f"\nExtrayendo {len(imagenes)} imágenes del PDF...")
+        rutas_guardadas = procesador_avanzado.guardar_imagenes(
+            ruta_pdf, directorio_imagenes
+        )
+        print(f"Imágenes guardadas en: {directorio_imagenes}")
+
+    print("\nVentajas de EasyOCR:")
+    print("- Mayor precisión en documentos complejos")
+    print("- Mejor reconocimiento de fórmulas matemáticas y símbolos")
+    print("- Soporte para más de 80 idiomas")
+    print("- Manejo mejorado de fuentes y estilos diversos")
 
 
 def ejemplo_recolector_completo():
@@ -171,7 +318,7 @@ def ejemplo_recolector_completo():
     archivos_descargados = resultado["archivos_descargados"]
     total_archivos = sum(len(archivos) for archivos in archivos_descargados.values())
 
-    print(f"\nEstadísticas de recolección:")
+    print("\nEstadísticas de recolección:")
     print(f"- Curso: {resultado['nombre_curso']}")
     print(f"- Total de archivos descargados: {total_archivos}")
 
@@ -207,6 +354,8 @@ if __name__ == "__main__":
         ejemplo_cliente_basico()
         ejemplo_extractor_recursos()
         ejemplo_procesador_archivos()
+        ejemplo_procesador_pdf_avanzado()
+        ejemplo_procesador_pdf_easyocr()  # Nuevo ejemplo con EasyOCR
         ejemplo_recolector_completo()
     except Exception as e:
         print(f"Error durante la ejecución de los ejemplos: {e}")

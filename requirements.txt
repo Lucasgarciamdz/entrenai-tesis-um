@@ -8,6 +8,19 @@ pypdf
 # python-docx
 # beautifulsoup4
 
+# Dependencias para OCR de PDF
+# dependencias necesarias en el sistema
+# tesseract
+# tesseract-lang
+# poppler
+
+pillow
+pdf2image
+pytesseract
+numpy
+easyocr  # OCR avanzado (opcional, requiere PyTorch)
+torch
+torchvision
 # Vector search
 # qdrant-client
 
