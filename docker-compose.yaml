@@ -201,6 +201,9 @@ services:
     environment:
       - OLLAMA_KEEP_ALIVE=5m
       - OLLAMA_HOST=0.0.0.0
+      - OLLAMA_EXPERIMENT=client2
+      - OLLAMA_CONTEXT_LENGTH=131072
+      - OLLAMA_NEW_ENGINE=true
     networks:
       - tesis_network
 

@@ -8,6 +8,9 @@ desde las variables de entorno definidas en el archivo .env.
 import os
 from typing import List, Any
 from dotenv import load_dotenv
+from pathlib import Path
+
+from loguru import logger
 
 
 class Configuracion:
@@ -16,7 +19,23 @@ class Configuracion:
     def __init__(self):
         """Inicializa la configuración cargando variables de entorno."""
         # Cargar variables de entorno desde .env
-        load_dotenv()
+        self._cargar_dotenv()
+        logger.debug("Configuración inicializada")
+
+    def _cargar_dotenv(self):
+        """
+        Carga las variables de entorno desde el archivo .env.
+        """
+        # Obtener directorio raíz del proyecto
+        ruta_base = Path(__file__).parent.parent.parent
+
+        # Intentar cargar desde .env
+        ruta_env = ruta_base / ".env"
+        if ruta_env.exists():
+            load_dotenv(dotenv_path=ruta_env)
+            logger.debug(f"Variables cargadas desde {ruta_env}")
+        else:
+            logger.warning(f"No se encontró archivo .env en {ruta_env}")
 
     def obtener(self, clave: str, por_defecto: Any = None) -> Any:
         """
@@ -166,6 +185,38 @@ class Configuracion:
             Nivel de logging.
         """
         return self.obtener("NIVEL_LOG", "INFO")
+
+    def obtener_qdrant_host(self) -> str:
+        """Obtiene el host de Qdrant."""
+        return self.obtener("QDRANT_HOST", "localhost")
+
+    def obtener_qdrant_puerto(self) -> int:
+        """Obtiene el puerto de Qdrant."""
+        return int(self.obtener("QDRANT_PORT", "6333"))
+
+    def obtener_qdrant_usar_https(self) -> bool:
+        """Determina si se debe usar HTTPS para conectar a Qdrant."""
+        return self.obtener("QDRANT_USAR_HTTPS", "false").lower() == "true"
+
+    def obtener_qdrant_api_key(self) -> str:
+        """Obtiene la API key de Qdrant."""
+        return self.obtener("QDRANT_API_KEY", "")
+
+    def obtener_qdrant_coleccion_default(self) -> str:
+        """Obtiene el nombre de la colección predeterminada de Qdrant."""
+        return self.obtener("QDRANT_COLECCION_DEFAULT", "documentos")
+
+    def obtener_ollama_url(self) -> str:
+        """Obtiene la URL de Ollama."""
+        return self.obtener("OLLAMA_URL", "http://localhost:11434/api/embeddings")
+
+    def obtener_ollama_modelo(self) -> str:
+        """Obtiene el modelo de Ollama para embeddings."""
+        return self.obtener("MODELO_EMBEDDING", "all-MiniLM-L6-v2")
+
+    def usar_ollama(self) -> bool:
+        """Determina si se debe usar Ollama para generar embeddings."""
+        return self.obtener("USAR_OLLAMA", "false").lower() == "true"
 
 
 # Crear una instancia global para usar en toda la aplicación

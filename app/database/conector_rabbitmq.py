@@ -117,11 +117,32 @@ class ConectorRabbitMQ:
 
     def desconectar(self):
         """Cierra la conexión con RabbitMQ."""
-        if self.conexion is not None and self.conexion.is_open:
-            self.conexion.close()
-            self.conexion = None
+        try:
+            if self.conexion is not None and self.conexion.is_open:
+                # Primero cerrar cualquier canal abierto para evitar errores de consumidores activos
+                if self.canal is not None and self.canal.is_open:
+                    try:
+                        # Intentar cancelar cualquier consumidor activo
+                        self.canal.close()
+                    except Exception as e:
+                        logger.warning(f"Error al cerrar canal RabbitMQ: {e}")
+                    finally:
+                        self.canal = None
+
+                # Luego cerrar la conexión
+                try:
+                    self.conexion.close()
+                except Exception as e:
+                    logger.warning(f"Error al cerrar conexión RabbitMQ: {e}")
+                finally:
+                    self.conexion = None
+
+                logger.info("Conexión a RabbitMQ cerrada")
+        except Exception as e:
+            logger.error(f"Error durante desconexión de RabbitMQ: {e}")
+            # Forzar limpieza de referencias
             self.canal = None
-            logger.info("Conexión a RabbitMQ cerrada")
+            self.conexion = None
 
     def esta_conectado(self) -> bool:
         """

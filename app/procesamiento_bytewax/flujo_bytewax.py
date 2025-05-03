@@ -1,277 +1,456 @@
 """
-Flujo de procesamiento con ByteWax.
-
-Este módulo define el flujo de procesamiento en tiempo real con ByteWax
-que lee mensajes de RabbitMQ, procesa los documentos y los guarda en Qdrant.
+Definición del flujo de procesamiento con Bytewax
 """
 
-import json
-from typing import Dict, List, Any
+from typing import Dict, List, Any, Optional
+import threading
+import time
+from datetime import datetime
 
-import bytewax.operators as op
+from loguru import logger
 from bytewax.dataflow import Dataflow
 from bytewax.execution import run_main
-from bytewax.connectors.rabbitmq import RabbitMQInput
-import pika
-from loguru import logger
+from bytewax.operators import map, filter_map
 
-from ..config.configuracion import configuracion
-from ..database.conector_qdrant import conector_qdrant
-from .dispatchers import (
-    RawDispatcher,
-    LimpiezaDispatcher,
-    ChunkingDispatcher,
-    EmbeddingDispatcher,
+from app.config.configuracion import configuracion
+from app.database.conector_rabbitmq import ConectorRabbitMQ
+from app.database.conector_qdrant import ConectorQdrant
+from app.procesamiento_bytewax.utils import (
+    limpiar_texto,
+    dividir_en_trunks,
+    convertir_a_markdown,
+    generar_contexto,
+    generar_embedding,
 )
-from .modelos import ModeloRaw, ModeloLimpio, ModeloTrunk, ModeloEmbedding
+from app.procesamiento_bytewax.dispatchers import (
+    ProcesoRabbitMQEntradaDispatcher,
+    ProcesoQdrantSalidaDispatcher,
+)
 
 
-class EntradaRabbitMQ(RabbitMQInput):
+class FlujoProcesamientoArchivos:
     """
-    Entrada personalizada para RabbitMQ.
+    Define y ejecuta un flujo de procesamiento de datos utilizando Bytewax.
 
-    Esta clase extiende la funcionalidad de RabbitMQInput de ByteWax
-    para adaptarla a nuestras necesidades específicas.
+    Este flujo:
+    1. Recibe mensajes de RabbitMQ con datos de cambios de MongoDB
+    2. Procesa los mensajes filtrando y extrayendo información relevante
+    3. Limpia y formatea el texto
+    4. Divide el texto en chunks
+    5. Genera embeddings para cada chunk
+    6. Almacena los embeddings en Qdrant
     """
 
-    def __init__(
-        self,
-        host: str = None,
-        puerto: int = None,
-        usuario: str = None,
-        contraseña: str = None,
-        cola: str = None,
-        virtual_host: str = "/",
-    ):
+    def __init__(self, nombre_flujo: str = "flujo_procesamiento"):
         """
-        Inicializa la entrada de RabbitMQ.
+        Inicializa el flujo de procesamiento.
 
         Args:
-            host: Host de RabbitMQ
-            puerto: Puerto de RabbitMQ
-            usuario: Usuario para autenticarse con RabbitMQ
-            contraseña: Contraseña para autenticarse con RabbitMQ
-            cola: Nombre de la cola de RabbitMQ
-            virtual_host: Virtual host de RabbitMQ
+            nombre_flujo: Nombre identificativo del flujo
         """
-        # Cargar parámetros desde configuración o valores por defecto
-        self.host = host or configuracion.obtener("RABBITMQ_HOST", "localhost")
-        self.puerto = puerto or int(configuracion.obtener("RABBITMQ_PORT", "5672"))
-        self.usuario = usuario or configuracion.obtener("RABBITMQ_USERNAME", "guest")
-        self.contraseña = contraseña or configuracion.obtener(
-            "RABBITMQ_PASSWORD", "guest"
-        )
-        self.cola = cola or configuracion.obtener(
-            "RABBITMQ_COLA_CAMBIOS", "cambios_mongodb"
-        )
-        self.virtual_host = virtual_host
+        self.nombre_flujo = nombre_flujo
+        self.dataflow = Dataflow(nombre_flujo)
+        self.configurado = False
+        self.ejecutando = False
+        self.hilo_ejecucion = None
 
-        # Configurar parámetros de conexión
-        credenciales = pika.PlainCredentials(self.usuario, self.contraseña)
-        parametros = pika.ConnectionParameters(
-            host=self.host,
-            port=self.puerto,
-            virtual_host=self.virtual_host,
-            credentials=credenciales,
-        )
+        # Conexiones
+        self.qdrant = None
+        self.rabbitmq = None
 
-        # Inicializar clase padre
-        super().__init__(
-            pika_params=parametros,
-            queue_name=self.cola,
-            deserializer=self._deserializar_mensaje,
+        # Configuración
+        self.cola_entrada = configuracion.obtener_rabbitmq_cola_cambios()
+        self.usar_ollama = (
+            configuracion.obtener("USAR_OLLAMA", "false").lower() == "true"
+        )
+        self.modelo_embedding = configuracion.obtener(
+            "MODELO_EMBEDDING", "all-MiniLM-L6-v2"
+        )
+        self.limite_tam_texto = int(
+            configuracion.obtener("LIMITE_TAMAÑO_TEXTO", "8192")
         )
 
-    def _deserializar_mensaje(self, body: bytes) -> Dict[str, Any]:
+        # Estadísticas
+        self.mensajes_procesados = 0
+        self.embeddings_generados = 0
+        self.errores = 0
+
+        logger.info(f"Inicializado flujo '{nombre_flujo}'")
+        logger.info(
+            f"Configurado para usar {'OLLAMA' if self.usar_ollama else 'sentence-transformers'}"
+        )
+        logger.info(f"Modelo de embedding: {self.modelo_embedding}")
+
+    def configurar(self) -> bool:
         """
-        Deserializa un mensaje de RabbitMQ.
-
-        Args:
-            body: Cuerpo del mensaje en bytes
+        Configura el flujo de procesamiento con los operadores necesarios.
 
         Returns:
-            Mensaje deserializado como diccionario
+            True si la configuración es exitosa, False en caso contrario
         """
         try:
-            # Decodificar y deserializar
-            mensaje = json.loads(body.decode("utf-8"))
-            return mensaje
+            logger.info(f"Configurando flujo '{self.nombre_flujo}'...")
+
+            # Inicializar conexiones si es necesario
+            if not self._inicializar_conexiones():
+                logger.error("No se pudieron inicializar las conexiones, abortando")
+                return False
+
+            # 1. Iniciar con entrada desde RabbitMQ
+            entrada = ProcesoRabbitMQEntradaDispatcher(self.rabbitmq, self.cola_entrada)
+            self.dataflow.input("entrada", entrada)
+
+            # 2. Filtrar mensajes para obtener solo los que nos interesan
+            def filtrar_documento(mensaje: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+                try:
+                    tipo_operacion = mensaje.get("operationType")
+                    # Solo procesar inserts, updates o replaces con documento completo
+                    if (
+                        tipo_operacion in ["insert", "update", "replace"]
+                        and "fullDocument" in mensaje
+                    ):
+                        documento = mensaje.get("fullDocument", {})
+                        # Verificar que tiene texto
+                        if documento and "texto" in documento and documento["texto"]:
+                            return documento
+                    return None
+                except Exception as e:
+                    logger.error(f"Error al filtrar documento: {e}")
+                    return None
+
+            self.dataflow.map(filter_map(filtrar_documento))
+
+            # 3. Extraer información relevante
+            def extraer_info(documento: Dict[str, Any]) -> Dict[str, Any]:
+                try:
+                    # Extraer campos necesarios
+                    id_doc = str(documento.get("_id", ""))
+                    texto_original = documento.get("texto", "")
+
+                    # Limitar tamaño del texto si es muy grande
+                    if len(texto_original) > self.limite_tam_texto:
+                        texto = texto_original[: self.limite_tam_texto]
+                        logger.warning(
+                            f"Texto truncado para documento {id_doc} (de {len(texto_original)} a {len(texto)} caracteres)"
+                        )
+                    else:
+                        texto = texto_original
+
+                    # Preparar metadatos
+                    metadatos = {
+                        "id_original": id_doc,
+                        "tipo_archivo": documento.get("tipo_archivo", "txt"),
+                        "nombre_archivo": documento.get(
+                            "nombre_archivo", "documento.txt"
+                        ),
+                        "id_curso": documento.get("id_curso", ""),
+                        "nombre_curso": documento.get("nombre_curso", ""),
+                        "ruta_archivo": documento.get("ruta_archivo", ""),
+                        "fecha_procesamiento": datetime.now().isoformat(),
+                    }
+
+                    # Si hay metadatos extras en el documento, incluirlos
+                    metadatos_doc = documento.get("metadatos", {})
+                    if isinstance(metadatos_doc, dict):
+                        for k, v in metadatos_doc.items():
+                            # Solo añadir si es string, número o booleano
+                            if isinstance(v, (str, int, float, bool)):
+                                metadatos[k] = v
+
+                    return {"id": id_doc, "texto": texto, "metadatos": metadatos}
+                except Exception as e:
+                    logger.error(f"Error al extraer información: {e}")
+                    # Devolver datos mínimos para mantener el flujo, pero señalando error
+                    id_doc = str(documento.get("_id", "desconocido"))
+                    return {
+                        "id": id_doc,
+                        "texto": "",
+                        "metadatos": {"error": str(e), "id_original": id_doc},
+                    }
+
+            self.dataflow.map(map(extraer_info))
+
+            # 4. Limpiar y dar formato al texto
+            def limpiar_y_formatear(datos: Dict[str, Any]) -> Dict[str, Any]:
+                try:
+                    id_doc = datos.get("id", "")
+                    texto = datos.get("texto", "")
+
+                    if not texto:
+                        logger.warning(
+                            f"Texto vacío para documento {id_doc}, omitiendo limpieza"
+                        )
+                        return datos
+
+                    # Limpiar texto
+                    texto_limpio = limpiar_texto(texto)
+
+                    # Convertir a markdown para mejor estructura
+                    texto_markdown = convertir_a_markdown(texto_limpio)
+
+                    # Actualizar datos con texto limpio
+                    datos["texto_original"] = texto
+                    datos["texto"] = texto_markdown
+
+                    # Guardar texto limpio en Qdrant
+                    if self.qdrant:
+                        logger.debug(
+                            f"Guardando texto limpio en Qdrant para documento {id_doc}"
+                        )
+                        self.qdrant.guardar_texto_limpio(
+                            id_doc, texto_markdown, datos.get("metadatos", {})
+                        )
+
+                    return datos
+                except Exception as e:
+                    logger.error(f"Error al limpiar texto: {e}")
+                    # Mantener datos originales
+                    return datos
+
+            self.dataflow.map(map(limpiar_y_formatear))
+
+            # 5. Generar chunks
+            def generar_chunks(datos: Dict[str, Any]) -> List[Dict[str, Any]]:
+                try:
+                    id_doc = datos.get("id", "")
+                    texto = datos.get("texto", "")
+
+                    if not texto:
+                        logger.warning(
+                            f"Texto vacío para documento {id_doc}, omitiendo chunking"
+                        )
+                        return []
+
+                    # Dividir texto en chunks
+                    chunks = dividir_en_trunks(texto)
+                    logger.info(f"Documento {id_doc} dividido en {len(chunks)} chunks")
+
+                    # Crear lista de documentos (uno por chunk)
+                    resultado = []
+                    for i, chunk in enumerate(chunks):
+                        # Crear copia de los metadatos
+                        metadatos_chunk = datos.get("metadatos", {}).copy()
+                        # Añadir información del chunk
+                        metadatos_chunk["indice_chunk"] = i
+                        metadatos_chunk["total_chunks"] = len(chunks)
+                        metadatos_chunk["contexto"] = generar_contexto(chunk)
+
+                        # Crear documento para el chunk
+                        doc_chunk = {
+                            "id": f"{id_doc}_chunk_{i}",
+                            "id_original": id_doc,
+                            "texto": chunk,
+                            "metadatos": metadatos_chunk,
+                        }
+                        resultado.append(doc_chunk)
+
+                    self.mensajes_procesados += 1
+                    return resultado
+                except Exception as e:
+                    logger.error(f"Error al generar chunks: {e}")
+                    self.errores += 1
+                    return []
+
+            # Convertir cada documento en una lista de chunks y aplanar
+            self.dataflow.flat_map(map(generar_chunks))
+
+            # 6. Generar embeddings
+            def generar_embedding_para_chunk(
+                chunk: Dict[str, Any],
+            ) -> Optional[Dict[str, Any]]:
+                try:
+                    id_chunk = chunk.get("id", "")
+                    texto = chunk.get("texto", "")
+
+                    if not texto:
+                        logger.warning(
+                            f"Texto vacío para chunk {id_chunk}, omitiendo embedding"
+                        )
+                        return None
+
+                    # Generar embedding
+                    logger.debug(f"Generando embedding para chunk {id_chunk}")
+                    embedding = generar_embedding(
+                        texto=texto,
+                        modelo_nombre=self.modelo_embedding,
+                        usar_ollama=self.usar_ollama,
+                    )
+
+                    if not embedding:
+                        logger.error(
+                            f"No se pudo generar embedding para chunk {id_chunk}"
+                        )
+                        self.errores += 1
+                        return None
+
+                    # Añadir embedding al documento
+                    chunk["embedding"] = embedding
+                    self.embeddings_generados += 1
+                    return chunk
+
+                except Exception as e:
+                    logger.error(f"Error al generar embedding: {e}")
+                    self.errores += 1
+                    return None
+
+            self.dataflow.map(filter_map(generar_embedding_para_chunk))
+
+            # 7. Preparar salida para Qdrant (determinar colección según metadatos)
+            def preparar_salida_qdrant(chunk: Dict[str, Any]) -> Dict[str, Any]:
+                try:
+                    metadatos = chunk.get("metadatos", {})
+                    id_curso = metadatos.get("id_curso")
+
+                    # Determinar nombre de colección
+                    if id_curso:
+                        coleccion = f"curso_{id_curso}"
+                    else:
+                        coleccion = "general"
+
+                    # Añadir colección al documento
+                    chunk["coleccion"] = coleccion
+                    return chunk
+                except Exception as e:
+                    logger.error(f"Error al preparar salida para Qdrant: {e}")
+                    # Usar colección por defecto
+                    chunk["coleccion"] = "general"
+                    return chunk
+
+            self.dataflow.map(map(preparar_salida_qdrant))
+
+            # 8. Configurar salida a Qdrant
+            salida = ProcesoQdrantSalidaDispatcher(self.qdrant)
+            self.dataflow.output("salida", salida)
+
+            self.configurado = True
+            logger.info(f"Flujo '{self.nombre_flujo}' configurado correctamente")
+            return True
+
         except Exception as e:
-            logger.error(f"Error al deserializar mensaje: {e}")
-            return {}
+            logger.error(f"Error al configurar flujo: {e}")
+            self.configurado = False
+            return False
 
-
-class SalidaQdrant:
-    """
-    Salida personalizada para Qdrant.
-
-    Esta clase implementa una salida personalizada para ByteWax
-    que guarda los datos procesados en Qdrant.
-    """
-
-    def __init__(self):
-        """Inicializa la salida de Qdrant."""
-        # Asegurar conexión con Qdrant
-        if not conector_qdrant.esta_conectado():
-            conector_qdrant.conectar()
-
-    def escribir_texto_limpio(self, item: ModeloLimpio):
+    def ejecutar(self) -> bool:
         """
-        Escribe un texto limpio en Qdrant.
+        Ejecuta el flujo de procesamiento en un hilo separado.
 
-        Args:
-            item: ModeloLimpio a guardar
+        Returns:
+            True si el flujo inicia correctamente, False en caso contrario
         """
-        conector_qdrant.guardar_texto_limpio(
-            id_texto=item.id,
-            texto=item.texto_limpio,
-            metadatos={
-                "tipo": item.tipo,
-                "formato_original": item.formato_original,
-                "formato_limpio": item.formato_limpio,
-                **item.metadatos,
-            },
-        )
+        if not self.configurado:
+            logger.error(
+                "El flujo no está configurado. Llame a 'configurar()' primero."
+            )
+            return False
 
-    def escribir_embedding(self, item: ModeloEmbedding):
+        if self.ejecutando:
+            logger.warning("El flujo ya está en ejecución")
+            return True
+
+        try:
+            logger.info(f"Iniciando flujo '{self.nombre_flujo}'...")
+
+            # Ejecutar en un hilo separado
+            self.hilo_ejecucion = threading.Thread(
+                target=self._ejecutar_flujo, daemon=True
+            )
+            self.hilo_ejecucion.start()
+
+            # Esperar a que el flujo esté listo
+            tiempo_espera = 2  # segundos
+            time.sleep(tiempo_espera)
+
+            if self.hilo_ejecucion.is_alive():
+                self.ejecutando = True
+                logger.info(f"Flujo '{self.nombre_flujo}' iniciado correctamente")
+                return True
+            else:
+                logger.error("El flujo no pudo iniciarse correctamente")
+                return False
+
+        except Exception as e:
+            logger.error(f"Error al iniciar flujo: {e}")
+            self.ejecutando = False
+            return False
+
+    def detener(self) -> bool:
         """
-        Escribe un embedding en Qdrant.
+        Detiene la ejecución del flujo de procesamiento.
 
-        Args:
-            item: ModeloEmbedding a guardar
+        Returns:
+            True si el flujo se detiene correctamente, False en caso contrario
         """
-        conector_qdrant.guardar_embedding(
-            id_embedding=item.id,
-            texto=item.texto,
-            embedding=item.embedding,
-            texto_original_id=item.texto_original_id,
-            metadatos={
-                "tipo": item.tipo,
-                "indice": item.indice,
-                "contexto": item.contexto,
-                "modelo_embedding": item.modelo_embedding,
-                **item.metadatos,
-            },
-        )
+        if not self.ejecutando:
+            logger.warning("El flujo no está en ejecución")
+            return True
 
+        try:
+            logger.info(f"Deteniendo flujo '{self.nombre_flujo}'...")
 
-def procesar_mensaje_raw(mensaje: Dict[str, Any]) -> ModeloRaw:
-    """
-    Procesa un mensaje crudo de RabbitMQ y lo convierte a ModeloRaw.
+            # Cambiar estado para que el hilo sepa que debe detenerse
+            self.ejecutando = False
 
-    Args:
-        mensaje: Mensaje recibido de RabbitMQ
+            # Esperar a que el hilo termine
+            if self.hilo_ejecucion:
+                self.hilo_ejecucion.join(timeout=5)
 
-    Returns:
-        ModeloRaw construido a partir del mensaje
-    """
-    return RawDispatcher.procesar(mensaje)
+            logger.info(f"Flujo '{self.nombre_flujo}' detenido correctamente")
+            logger.info("Estadísticas finales:")
+            logger.info(f"  - Mensajes procesados: {self.mensajes_procesados}")
+            logger.info(f"  - Embeddings generados: {self.embeddings_generados}")
+            logger.info(f"  - Errores: {self.errores}")
 
+            return True
 
-def limpiar_texto(modelo_raw: ModeloRaw) -> ModeloLimpio:
-    """
-    Limpia el texto de un ModeloRaw.
+        except Exception as e:
+            logger.error(f"Error al detener flujo: {e}")
+            return False
 
-    Args:
-        modelo_raw: ModeloRaw a procesar
+    def _inicializar_conexiones(self) -> bool:
+        """
+        Inicializa las conexiones necesarias para el flujo.
 
-    Returns:
-        ModeloLimpio con el texto limpio
-    """
-    return LimpiezaDispatcher.procesar(modelo_raw)
+        Returns:
+            True si las conexiones se establecen correctamente, False en caso contrario
+        """
+        try:
+            logger.info("Inicializando conexiones para el flujo...")
 
+            # Conexión a RabbitMQ
+            self.rabbitmq = ConectorRabbitMQ()
+            if not self.rabbitmq.conectar():
+                logger.error("No se pudo conectar a RabbitMQ")
+                return False
 
-def guardar_texto_limpio(modelo_limpio: ModeloLimpio) -> ModeloLimpio:
-    """
-    Guarda un texto limpio en Qdrant y lo devuelve para continuar el procesamiento.
+            # Declarar cola para mensajes
+            self.rabbitmq.declarar_cola(self.cola_entrada)
+            logger.info(f"Conectado a RabbitMQ y cola '{self.cola_entrada}' declarada")
 
-    Args:
-        modelo_limpio: ModeloLimpio a guardar
+            # Conexión a Qdrant
+            self.qdrant = ConectorQdrant()
+            if not self.qdrant.conectar():
+                logger.error("No se pudo conectar a Qdrant")
+                return False
 
-    Returns:
-        El mismo ModeloLimpio para continuar el procesamiento
-    """
-    salida = SalidaQdrant()
-    salida.escribir_texto_limpio(modelo_limpio)
-    return modelo_limpio
+            logger.info("Conexión a Qdrant establecida")
 
+            return True
 
-def dividir_en_chunks(modelo_limpio: ModeloLimpio) -> List[ModeloTrunk]:
-    """
-    Divide el texto de un ModeloLimpio en chunks.
+        except Exception as e:
+            logger.error(f"Error al inicializar conexiones: {e}")
+            return False
 
-    Args:
-        modelo_limpio: ModeloLimpio a procesar
+    def _ejecutar_flujo(self):
+        """Método interno para ejecutar el flujo en un hilo separado."""
+        try:
+            logger.info(f"Ejecutando flujo '{self.nombre_flujo}' en hilo separado")
 
-    Returns:
-        Lista de ModeloTrunk con los fragmentos del texto
-    """
-    return ChunkingDispatcher.procesar(modelo_limpio)
+            # Ejecutar el flujo principal de Bytewax
+            run_main(self.dataflow)
 
-
-def generar_embeddings(modelo_trunk: ModeloTrunk) -> ModeloEmbedding:
-    """
-    Genera el embedding para un ModeloTrunk.
-
-    Args:
-        modelo_trunk: ModeloTrunk a procesar
-
-    Returns:
-        ModeloEmbedding con el vector de embedding
-    """
-    return EmbeddingDispatcher.procesar(modelo_trunk)
-
-
-def guardar_embedding(modelo_embedding: ModeloEmbedding) -> None:
-    """
-    Guarda un embedding en Qdrant.
-
-    Args:
-        modelo_embedding: ModeloEmbedding a guardar
-    """
-    salida = SalidaQdrant()
-    salida.escribir_embedding(modelo_embedding)
-
-
-def crear_flujo_bytewax() -> Dataflow:
-    """
-    Crea el flujo de procesamiento con ByteWax.
-
-    Returns:
-        Flujo de ByteWax configurado
-    """
-    # Crear flujo
-    flow = Dataflow()
-
-    # 1. Entrada: leer de RabbitMQ
-    entrada = op.input("entrada", flow, EntradaRabbitMQ())
-
-    # 2. Procesar mensaje crudo
-    raw = op.map("procesar_raw", entrada, procesar_mensaje_raw)
-
-    # 3. Limpiar texto
-    limpio = op.map("limpiar_texto", raw, limpiar_texto)
-
-    # 4. Guardar texto limpio y continuar con el original
-    limpio_guardado = op.map("guardar_texto_limpio", limpio, guardar_texto_limpio)
-
-    # 5. Dividir en chunks (un texto genera múltiples chunks)
-    chunks = op.flat_map("dividir_chunks", limpio_guardado, dividir_en_chunks)
-
-    # 6. Generar embeddings
-    embeddings = op.map("generar_embeddings", chunks, generar_embeddings)
-
-    # 7. Guardar embeddings
-    op.sink("guardar_embeddings", embeddings, guardar_embedding)
-
-    return flow
-
-
-def ejecutar_flujo():
-    """Ejecuta el flujo de procesamiento con ByteWax."""
-    flow = crear_flujo_bytewax()
-    run_main(flow)
-
-
-if __name__ == "__main__":
-    ejecutar_flujo()
+        except Exception as e:
+            logger.error(f"Error durante la ejecución del flujo: {e}")
+        finally:
+            logger.info(f"Finalizando ejecución del flujo '{self.nombre_flujo}'")
+            self.ejecutando = False
