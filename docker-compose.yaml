@@ -65,22 +65,85 @@ services:
     depends_on:
       - moodle
 
+  init-keyfile:
+    image: mongo:8
+    container_name: init_keyfile
+    command: >
+      sh -c "
+      if [ ! -f /etc/mongodb/pki/keyfile ]; then
+        echo 'Generando keyfile...';
+        openssl rand -base64 756 > /etc/mongodb/pki/keyfile && chmod 400 /etc/mongodb/pki/keyfile;
+      else
+        echo 'Keyfile ya existe.';
+      fi
+      "
+    volumes:
+      - mongo-keyfile-vol:/etc/mongodb/pki
+    networks:
+      - tesis_network
+    restart: "no"
+
   mongodb:
     image: mongo:8
+    container_name: mongodb
+    hostname: mongodb
     ports:
       - "27017:27017"
     volumes:
       - mongodb_volume:/data/db
       - ./mongodb-init:/docker-entrypoint-initdb.d
+      - mongo-keyfile-vol:/etc/mongodb/pki
     env_file:
       - .env
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=${MONGODB_USERNAME}
-      - MONGO_INITDB_ROOT_PASSWORD=${MONGODB_PASSWORD}
-      - MONGO_INITDB_DATABASE=${MONGODB_DATABASE}
+    depends_on:
+      - init-keyfile
+    command: |
+      bash -c '
+      echo "Esperando keyfile..."
+      while [ ! -f /etc/mongodb/pki/keyfile ]; do sleep 1; done
+      
+      echo "Keyfile encontrado, iniciando mongod sin autenticación primero..."
+      mongod --replSet rs0 --bind_ip_all --port 27017 &
+      MONGO_PID=$!
+      
+      echo "Esperando a que MongoDB inicie..."
+      until mongosh --port 27017 --eval "db.runCommand({ ping: 1 })" >/dev/null 2>&1; do
+        sleep 2
+      done
+      
+      echo "Inicializando replica set..."
+      mongosh --port 27017 --eval "rs.initiate({_id: \"rs0\", members: [{_id: 0, host: \"mongodb:27017\"}]})"
+      
+      echo "Esperando a que el replica set se inicialice..."
+      sleep 5
+      
+      echo "Creando usuario administrador..."
+      mongosh --port 27017 --eval "
+        db = db.getSiblingDB(\"admin\");
+        db.createUser({
+          user: \"${MONGODB_USERNAME}\",
+          pwd: \"${MONGODB_PASSWORD}\",
+          roles: [{ role: \"root\", db: \"admin\" }]
+        });
+        
+        db = db.getSiblingDB(\"${MONGODB_DATABASE}\");
+        db.createUser({
+          user: \"${MONGODB_USERNAME}\",
+          pwd: \"${MONGODB_PASSWORD}\",
+          roles: [{ role: \"readWrite\", db: \"${MONGODB_DATABASE}\" }]
+        });
+      "
+    
+      echo "Deteniendo MongoDB para reiniciar con autenticación..."
+      kill $MONGO_PID
+      wait $MONGO_PID
+      
+      echo "Iniciando MongoDB con autenticación..."
+      exec mongod --replSet rs0 --bind_ip_all --port 27017 --keyFile /etc/mongodb/pki/keyfile
+      '
     restart: always
     healthcheck:
-      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      test: ["CMD", "mongosh", "--port", "27017", "--eval", "db.adminCommand('ping')"]
       interval: 30s
       timeout: 10s
       retries: 5
@@ -180,6 +243,9 @@ services:
       ME_CONFIG_MONGODB_SERVER: ${MONGODB_HOST}
       ME_CONFIG_BASICAUTH_USERNAME: ${MONGO_EXPRESS_USERNAME}
       ME_CONFIG_BASICAUTH_PASSWORD: ${MONGO_EXPRESS_PASSWORD}
+      ME_CONFIG_MONGODB_ENABLE_ADMIN: "true"
+      ME_CONFIG_MONGODB_AUTH_DATABASE: "admin"
+      ME_CONFIG_MONGODB_URL: "mongodb://${MONGODB_USERNAME}:${MONGODB_PASSWORD}@${MONGODB_HOST}:${MONGODB_PORT}/?replicaSet=rs0&authSource=admin"
     ports:
       - 8082:8081
     networks:
@@ -215,6 +281,7 @@ volumes:
   rabbitmq_data:
   qdrant_data:
   ollama_data:
+  mongo-keyfile-vol:
 
 networks:
   tesis_network:

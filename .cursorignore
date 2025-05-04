@@ -29,7 +29,7 @@ CMakeUserPresets.json
 instance/*
 !instance/.gitignore
 .webassets-cache
-.env
+
 
 ### Flask.Python Stack ###
 # Byte-compiled / optimized / DLL files
@@ -695,7 +695,7 @@ coverage.xml
 venv/
 ENV/
 # dotenv
-.env
+
 Icon\r
 .idea/
 ~/node_modules
@@ -789,7 +789,7 @@ test_out/
 # Virtual environment
 venv/
 *.venv
-.env
+
 
 # Database
 *.db
@@ -1248,7 +1248,7 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-.env
+
 .venv
 env/
 venv/
