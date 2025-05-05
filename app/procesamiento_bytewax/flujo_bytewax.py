@@ -6,6 +6,7 @@ from datetime import datetime
 from bytewax.dataflow import Dataflow
 from bytewax.inputs import DynamicSource, StatelessSourcePartition
 from bytewax.outputs import DynamicSink, StatelessSinkPartition
+import bytewax.operators as op
 from loguru import logger
 
 from app.database.conector_qdrant import ConectorQdrant
@@ -187,6 +188,13 @@ class QdrantSink(DynamicSink):
                 
         return QdrantPartition()
 
+# Crear el flujo de procesamiento (variables a nivel de módulo)
+logger.info("Inicializando flujo ByteWax...")
+flow = Dataflow("procesamiento_documentos")
+input_stream = op.input("input", flow, RabbitMQSource())
+processed_stream = op.map("procesar", input_stream, procesar_documento)
+op.output("output", processed_stream, QdrantSink())
+
 def crear_flujo_procesamiento() -> FlujoByteWax:
     """
     Crea el flujo de procesamiento ByteWax.
@@ -196,21 +204,7 @@ def crear_flujo_procesamiento() -> FlujoByteWax:
     """
     flujo_bytewax = FlujoByteWax()
     
-    # Crear flujo con identificador
-    flow = Dataflow("procesamiento_documentos")
-    
-    # Usar operators para crear el flujo
-    import bytewax.operators as op
-    
-    # Entrada desde RabbitMQ
-    input_stream = op.input("input", flow, RabbitMQSource())
-    
-    # Procesar documentos
-    processed_stream = op.map("procesar", input_stream, procesar_documento)
-    
-    # Salida a Qdrant
-    op.output("output", processed_stream, QdrantSink())
-    
+    # Usar flujo definido a nivel de módulo para permitir bytewax.run
     flujo_bytewax.flujo = flow
     
     # Ejecutar en thread separado
