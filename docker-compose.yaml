@@ -225,6 +225,8 @@ services:
         condition: service_healthy
       qdrant:
         condition: service_healthy
+      ollama:
+        condition: service_started
     env_file:
       - .env
     environment:
@@ -232,9 +234,15 @@ services:
       - RABBITMQ_PORT=5672
       - QDRANT_HOST=qdrant
       - QDRANT_PORT=6333
+      - OLLAMA_URL=http://ollama:11434
       - NIVEL_LOG=INFO
       - RABBITMQ_QUEUE_NAME=${RABBITMQ_QUEUE_NAME:-moodle_changes}
       - QDRANT_COLLECTION_PREFIX=curso_
+      - USAR_OLLAMA=true
+      - MODELO_EMBEDDING=all-MiniLM-L6-v2
+      - MODELO_TEXTO=llama3
+      - TAMANO_CHUNK=1000
+      - SOLAPAMIENTO_CHUNK=200
     restart: always
     networks:
       - tesis_network
@@ -271,6 +279,12 @@ services:
     pull_policy: always
     tty: true
     restart: always
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:11434/api/tags"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
     environment:
       - OLLAMA_KEEP_ALIVE=5m
       - OLLAMA_HOST=0.0.0.0

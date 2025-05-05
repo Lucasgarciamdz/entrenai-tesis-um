@@ -1,30 +1,64 @@
 FROM python:3.12-slim
 
-WORKDIR /app
+ENV WORKSPACE_ROOT=/app \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PYTHONPATH=/app
+
+WORKDIR ${WORKSPACE_ROOT}
 
 # Instalar paquetes del sistema necesarios para bytewax y otras dependencias
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     gcc \
     g++ \
+    python3-dev \
     pkg-config \
     libssl-dev \
     curl \
+    git \
+    && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Instalar dependencias
+# Copiar requirements.txt para instalar dependencias
 COPY requirements.txt .
-RUN pip install uv
-RUN uv pip install --system -r requirements.txt
+
+# Instalar dependencias de Python con uv para mayor velocidad
+RUN pip install uv && \
+    uv pip install --system -r requirements.txt && \
+    pip cache purge
+
+# Instalar NLTK y descargar recursos necesarios
+RUN python -m nltk.downloader punkt
 
 # Copiar código fuente
-COPY . .
+COPY ./app ${WORKSPACE_ROOT}/app
 
-# Puertos necesarios
-# Puerto para RabbitMQ
-EXPOSE 5672
-# Puerto para Qdrant
-EXPOSE 6333
+# Script de entrada para ByteWax
+RUN echo '#!/bin/bash\n\
+echo "Iniciando servicio ByteWax..."\n\
+if [ -z "${BYTEWAX_PYTHON_FILE_PATH}" ]; then\n\
+    echo "Error: BYTEWAX_PYTHON_FILE_PATH no está definido"\n\
+    exit 1\n\
+fi\n\
+\n\
+if [ "${BYTEWAX_KEEP_CONTAINER_ALIVE}" = "true" ]; then\n\
+    python -m app.servicio_bytewax\n\
+else\n\
+    python -m bytewax.run ${BYTEWAX_PYTHON_FILE_PATH}\n\
+fi\n\
+' > ${WORKSPACE_ROOT}/entrypoint.sh && \
+    chmod +x ${WORKSPACE_ROOT}/entrypoint.sh
+
+# Variables de entorno para configurar el servicio
+ENV NIVEL_LOG=INFO \
+    USAR_OLLAMA=true \
+    MODELO_EMBEDDING=all-MiniLM-L6-v2 \
+    MODELO_TEXTO=llama3 \
+    TAMANO_CHUNK=1000 \
+    SOLAPAMIENTO_CHUNK=200 \
+    BYTEWAX_PYTHON_FILE_PATH=app.procesamiento_bytewax.flujo_bytewax:flow \
+    BYTEWAX_KEEP_CONTAINER_ALIVE=true
 
 # Establecer punto de entrada
-CMD ["python", "-m", "app.servicio_bytewax"]
+ENTRYPOINT ["/app/entrypoint.sh"]

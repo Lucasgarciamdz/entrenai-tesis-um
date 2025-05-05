@@ -1368,3 +1368,4 @@ zsdoc/data
 *secret.yaml
 *.orig
 archivos_moodle/
+llm-twin-course/
