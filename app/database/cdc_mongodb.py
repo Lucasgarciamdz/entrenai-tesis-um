@@ -75,6 +75,7 @@ class MonitorCambiosMongoDB:
         # Estado de ejecución
         self.ejecutando = False
         self.hilo_monitor = None
+        self.ultimo_heartbeat = 0
 
         # Conexiones
         self.conector_mongodb = None
@@ -119,6 +120,7 @@ class MonitorCambiosMongoDB:
 
         # Iniciar monitoreo en un hilo
         self.ejecutando = True
+        self.ultimo_heartbeat = time.time()
         self.hilo_monitor = threading.Thread(target=self._ejecutar_monitor)
         self.hilo_monitor.daemon = True
         self.hilo_monitor.start()
@@ -138,6 +140,24 @@ class MonitorCambiosMongoDB:
             self.conector_mongodb.desconectar()
 
         logger.info("Monitor de cambios detenido")
+        
+    def esta_ejecutando(self) -> bool:
+        """
+        Verifica si el monitor está activo.
+        
+        Returns:
+            True si el monitor está en ejecución y actualizado, False en caso contrario.
+        """
+        # Verificar si el hilo existe y está vivo
+        if not self.hilo_monitor or not self.hilo_monitor.is_alive():
+            return False
+            
+        # Verificar si el heartbeat está actualizado (no más de 30 segundos de antigüedad)
+        if time.time() - self.ultimo_heartbeat > 30:
+            logger.warning(f"El monitor CDC no ha reportado actividad en más de 30 segundos")
+            return False
+            
+        return self.ejecutando
 
     def _ejecutar_monitor(self):
         """Ejecuta el monitoreo de cambios."""
@@ -191,6 +211,7 @@ class MonitorCambiosMongoDB:
         ) as stream:
             # Procesar cada cambio
             for cambio in stream:
+                self.ultimo_heartbeat = time.time()
                 if not self.ejecutando:
                     break
 
@@ -210,6 +231,7 @@ class MonitorCambiosMongoDB:
         ) as stream:
             # Procesar cada cambio
             for cambio in stream:
+                self.ultimo_heartbeat = time.time()
                 if not self.ejecutando:
                     break
 
@@ -244,6 +266,9 @@ class MonitorCambiosMongoDB:
         # Ciclo principal de polling
         while self.ejecutando:
             try:
+                # Actualizar heartbeat
+                self.ultimo_heartbeat = time.time()
+                
                 # Verificar cada colección
                 for coleccion_nombre in colecciones_a_monitorear:
                     try:
@@ -380,33 +405,47 @@ class MonitorCambiosMongoDB:
 
 
 def crear_monitor_cdc(
-    host: str,
-    puerto: int,
-    usuario: str,
-    contraseña: str,
-    base_datos: str,
-    cola: str,
+    host: str = None,
+    puerto: int = None,
+    usuario: str = None,
+    contraseña: str = None,
+    base_datos: str = None,
+    cola: str = None,
     colecciones: Optional[List[str]] = None,
     filtro_operaciones: Optional[List[str]] = None,
     intervalo_polling: int = 5,
+    nombre_cola: str = None,  # Para compatibilidad con servicios existentes
 ) -> MonitorCambiosMongoDB:
     """
     Crea e inicia un monitor CDC para MongoDB.
 
     Args:
-        host: Host de MongoDB
-        puerto: Puerto de MongoDB
-        usuario: Usuario de MongoDB
-        contraseña: Contraseña de MongoDB
-        base_datos: Nombre de la base de datos a monitorear
+        host: Host de MongoDB (default: configuracion.obtener_mongodb_host())
+        puerto: Puerto de MongoDB (default: configuracion.obtener_mongodb_puerto())
+        usuario: Usuario de MongoDB (default: configuracion.obtener_mongodb_usuario())
+        contraseña: Contraseña de MongoDB (default: configuracion.obtener_mongodb_contraseña())
+        base_datos: Nombre de la base de datos a monitorear (default: configuracion.obtener_mongodb_base_datos())
         cola: Nombre de la cola de RabbitMQ donde publicar los cambios
         colecciones: Lista de colecciones a monitorear (todas si es None)
         filtro_operaciones: Lista de operaciones a monitorear (todas si es None)
         intervalo_polling: Intervalo en segundos para el polling
+        nombre_cola: Nombre alternativo para la cola (mantiene compatibilidad con servicios)
 
     Returns:
         Monitor CDC iniciado
     """
+    from ..config.configuracion import configuracion
+    
+    # Usar configuración si no se proporcionan valores
+    host = host or configuracion.obtener_mongodb_host()
+    puerto = puerto or configuracion.obtener_mongodb_puerto()
+    usuario = usuario or configuracion.obtener_mongodb_usuario()
+    contraseña = contraseña or configuracion.obtener_mongodb_contraseña()
+    base_datos = base_datos or configuracion.obtener_mongodb_base_datos()
+    
+    # Priorizar nombre_cola sobre cola para compatibilidad
+    cola_a_usar = nombre_cola or cola or configuracion.obtener_rabbitmq_cola_cambios()
+
     # Crear monitor
     monitor = MonitorCambiosMongoDB(
         host=host,
@@ -414,13 +453,10 @@ def crear_monitor_cdc(
         usuario=usuario,
         contraseña=contraseña,
         base_datos=base_datos,
-        cola=cola,
+        cola=cola_a_usar,
         colecciones=colecciones,
         filtro_operaciones=filtro_operaciones,
         intervalo_polling=intervalo_polling,
     )
-
-    # Iniciar monitor
-    monitor.iniciar()
-
+    
     return monitor

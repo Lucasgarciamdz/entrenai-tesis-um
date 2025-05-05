@@ -152,7 +152,7 @@ services:
       - tesis_network
 
   rabbitmq:
-    image: rabbitmq:4.1-management
+    image: rabbitmq:3-management
     container_name: rabbitmq
     ports:
       - "5672:5672"
@@ -164,7 +164,7 @@ services:
       - rabbitmq_data:/var/lib/rabbitmq
     restart: always
     healthcheck:
-      test: ["CMD", "rabbitmq-diagnostics", "check_port_connectivity"]
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
       interval: 30s
       timeout: 10s
       retries: 5
@@ -181,56 +181,63 @@ services:
     volumes:
       - qdrant_data:/qdrant/storage
     restart: always
-    # healthcheck:
-    #   test: ["CMD", "curl", "-f", "http://qdrant:6333/healthz"]
-    #   interval: 30s
-    #   timeout: 10s
-    #   retries: 5
-    #   start_period: 30s
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:6333/healthz"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
     networks:
       - tesis_network
 
-  # servicio-cdc:
-  #   build:
-  #     context: .
-  #     dockerfile: ./Dockerfile.servicio-cdc
-  #   container_name: servicio-cdc
-  #   depends_on:
-  #     mongodb:
-  #       condition: service_healthy
-  #     rabbitmq:
-  #       condition: service_healthy
-  #   env_file:
-  #     - .env
-  #   environment:
-  #     - MONGODB_HOST=mongodb
-  #     - MONGODB_PORT=27017
-  #     - RABBITMQ_HOST=rabbitmq
-  #     - RABBITMQ_PORT=5672
-  #     - NIVEL_LOG=INFO
-  #   restart: always
-  #   networks:
-  #     - tesis_network
+  servicio-cdc:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.servicio-cdc
+    container_name: servicio-cdc
+    depends_on:
+      mongodb:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    env_file:
+      - .env
+    environment:
+      - MONGODB_HOST=mongodb
+      - MONGODB_PORT=27017
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_PORT=5672
+      - NIVEL_LOG=INFO
+      - CDC_COLA_NOMBRE=${RABBITMQ_QUEUE_NAME:-moodle_changes}
+      - CDC_COLECCIONES=documentos,recursos,archivos
+      - CDC_OPERACIONES=insert,update,replace
+    restart: always
+    networks:
+      - tesis_network
 
-  # servicio-bytewax:
-  #   build:
-  #     context: .
-  #     dockerfile: ./Dockerfile.servicio-bytewax
-  #   container_name: servicio-bytewax
-  #   depends_on:
-  #     rabbitmq:
-  #       condition: service_healthy
-  #   env_file:
-  #     - .env
-  #   environment:
-  #     - RABBITMQ_HOST=rabbitmq
-  #     - RABBITMQ_PORT=5672
-  #     - QDRANT_HOST=qdrant
-  #     - QDRANT_PORT=6334
-  #     - NIVEL_LOG=INFO
-  #   restart: always
-  #   networks:
-  #     - tesis_network
+  servicio-bytewax:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.servicio-bytewax
+    container_name: servicio-bytewax
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      qdrant:
+        condition: service_healthy
+    env_file:
+      - .env
+    environment:
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_PORT=5672
+      - QDRANT_HOST=qdrant
+      - QDRANT_PORT=6333
+      - NIVEL_LOG=INFO
+      - RABBITMQ_QUEUE_NAME=${RABBITMQ_QUEUE_NAME:-moodle_changes}
+      - QDRANT_COLLECTION_PREFIX=curso_
+    restart: always
+    networks:
+      - tesis_network
 
   mongo-express:
     image: mongo-express:latest

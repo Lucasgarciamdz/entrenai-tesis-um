@@ -9,11 +9,12 @@ en Qdrant.
 
 import sys
 import signal
+import time
 
 from loguru import logger
 
 from app.config.configuracion import configuracion
-from app.procesamiento_bytewax.flujo_bytewax import ejecutar_flujo
+from app.procesamiento_bytewax.flujo_bytewax import crear_flujo_procesamiento
 
 
 class ServicioBytewax:
@@ -28,6 +29,7 @@ class ServicioBytewax:
         """Inicializa el servicio ByteWax."""
         # Control de señales
         self.terminando = False
+        self.flujo = None
         signal.signal(signal.SIGINT, self._handler_terminar)
         signal.signal(signal.SIGTERM, self._handler_terminar)
 
@@ -36,8 +38,20 @@ class ServicioBytewax:
         logger.info("Iniciando servicio ByteWax...")
 
         try:
-            # Ejecutar flujo ByteWax
-            ejecutar_flujo()
+            # Crear flujo ByteWax
+            self.flujo = crear_flujo_procesamiento()
+            
+            # Mantener el servicio ejecutándose
+            while not self.terminando:
+                # Verificar estado del flujo periodicamente
+                if self.flujo.hilo_ejecucion and not self.flujo.hilo_ejecucion.is_alive():
+                    logger.warning("Hilo de ByteWax terminó, reiniciando...")
+                    self.flujo = crear_flujo_procesamiento()
+                time.sleep(5)
+                
+        except KeyboardInterrupt:
+            logger.info("Interrupción de teclado detectada")
+            self.terminando = True
         except Exception as e:
             logger.error(f"Error en el servicio ByteWax: {e}")
         finally:
@@ -46,6 +60,14 @@ class ServicioBytewax:
     def detener(self):
         """Detiene el servicio ByteWax."""
         logger.info("Deteniendo servicio ByteWax...")
+        
+        # Detener flujo ByteWax si existe
+        if self.flujo:
+            try:
+                self.flujo.detener()
+            except Exception as e:
+                logger.error(f"Error al detener el flujo ByteWax: {e}")
+                
         logger.info("Servicio ByteWax detenido")
 
     def _handler_terminar(self, signum, frame):

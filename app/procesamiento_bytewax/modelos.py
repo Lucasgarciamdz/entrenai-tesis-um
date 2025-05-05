@@ -1,79 +1,52 @@
 """
-Modelos de datos para el procesamiento con ByteWax.
-
-Este módulo contiene los modelos Pydantic utilizados para representar
-los distintos estados de procesamiento de los documentos de texto.
+Modelos Pydantic para el procesamiento de documentos con ByteWax.
 """
 
+from typing import Dict, List, Optional, Any
 from datetime import datetime
-from typing import Dict, List, Any, Optional
 from pydantic import BaseModel, Field
 
 
 class ModeloBase(BaseModel):
-    """Modelo base para todos los modelos del sistema."""
+    """Modelo base para todos los documentos."""
+    id: str = Field(..., description="ID único del documento")
+    id_original: Optional[str] = Field(None, description="ID original en MongoDB")
+    metadatos: Dict[str, Any] = Field(default_factory=dict, description="Metadatos adicionales")
 
-    id: str
-    tipo: str
+
+class DocumentoRaw(ModeloBase):
+    """Documento en su estado inicial."""
+    texto: str = Field(..., description="Texto original del documento")
+    tipo_archivo: str = Field(..., description="Tipo de archivo (pdf, txt, html, etc)")
+    nombre_archivo: str = Field(..., description="Nombre del archivo")
+    id_curso: Optional[int] = Field(None, description="ID del curso en Moodle")
+    nombre_curso: Optional[str] = Field(None, description="Nombre del curso en Moodle")
+    ruta_archivo: Optional[str] = Field(None, description="Ruta al archivo original")
     fecha_procesamiento: datetime = Field(default_factory=datetime.now)
 
 
-class ModeloRaw(ModeloBase):
-    """
-    Modelo para los datos crudos desde MongoDB.
-
-    Representa los datos tal como vienen de MongoDB, sin
-    ningún tipo de procesamiento.
-    """
-
-    texto: str
-    metadatos: Dict[str, Any]
-    coleccion: str
-    operacion: str
+class DocumentoLimpio(ModeloBase):
+    """Documento después de la limpieza y normalización."""
+    texto: str = Field(..., description="Texto limpio y normalizado")
+    texto_original: Optional[str] = Field(None, description="Texto original antes de limpieza")
+    tipo_contenido: Optional[str] = Field(None, description="Tipo de contenido detectado")
+    contiene_formulas: bool = Field(default=False, description="Si contiene fórmulas matemáticas")
+    contiene_codigo: bool = Field(default=False, description="Si contiene bloques de código")
 
 
-class ModeloLimpio(ModeloBase):
-    """
-    Modelo para los datos después de la limpieza.
-
-    Representa los datos después de aplicar técnicas de limpieza
-    de texto, pero antes de ser troceados.
-    """
-
-    texto_limpio: str
-    metadatos: Dict[str, Any]
-    formato_original: str
-    formato_limpio: str = "markdown"
+class DocumentoChunk(ModeloBase):
+    """Chunk de documento después de la segmentación."""
+    texto: str = Field(..., description="Texto del chunk")
+    indice_chunk: int = Field(..., description="Índice del chunk en el documento")
+    total_chunks: int = Field(..., description="Total de chunks del documento")
+    contexto: str = Field(..., description="Contexto o resumen del chunk")
+    solapamiento: Optional[int] = Field(None, description="Caracteres de solapamiento")
 
 
-class ModeloTrunk(ModeloBase):
-    """
-    Modelo para los trunks (fragmentos) de texto.
-
-    Representa un fragmento individual de texto después de
-    dividir el documento completo, pero antes de generar embeddings.
-    """
-
-    texto: str
-    indice: int
-    metadatos: Dict[str, Any]
-    texto_original_id: str
-    contexto: Optional[str] = None
-
-
-class ModeloEmbedding(ModeloBase):
-    """
-    Modelo para los trunks con embedding.
-
-    Representa un fragmento de texto con su correspondiente
-    embedding vectorial, listo para ser almacenado en una
-    base de datos vectorial.
-    """
-
-    texto: str
-    indice: int
-    metadatos: Dict[str, Any]
-    texto_original_id: str
-    contexto: Optional[str] = None
-    embedding: List[float]
-    modelo_embedding: str
+class DocumentoEmbedding(ModeloBase):
+    """Documento con embedding generado."""
+    texto: str = Field(..., description="Texto del chunk")
+    embedding: List[float] = Field(..., description="Vector de embedding")
+    modelo_embedding: str = Field(..., description="Modelo usado para embedding")
+    dimension: int = Field(..., description="Dimensión del vector de embedding")
+    coleccion: str = Field(..., description="Colección en Qdrant donde se almacenará")

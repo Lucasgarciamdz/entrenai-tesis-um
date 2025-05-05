@@ -5,14 +5,15 @@ Este módulo define la clase ConectorQdrant que proporciona
 funcionalidad para almacenar y consultar embeddings en Qdrant.
 """
 
-from typing import Dict, List, Any
-import time
 import uuid
+import time
+from typing import Dict, List, Any, Optional
 
 from loguru import logger
 from qdrant_client import QdrantClient
 from qdrant_client.http import models
-from qdrant_client.models import Distance, VectorParams, PointStruct
+from qdrant_client.http.exceptions import UnexpectedResponse
+from qdrant_client.models import Distance, VectorParams, PointStruct, CollectionStatus
 
 from ..config.configuracion import configuracion
 
@@ -113,16 +114,22 @@ class ConectorQdrant:
                 headers=headers,
             )
 
-            # Verificar la conexión consultando la información del servidor
-            self.cliente.get_version()
-
-            self.conectado = True
-            self.ultima_conexion = time.time()
-            logger.debug(f"Conexión con Qdrant establecida ({self.url_base})")
-
-            # Cargar colecciones existentes
-            self._cargar_colecciones_existentes()
-            return True
+            # Verificar la conexión intentando listar colecciones
+            try:
+                self.cliente.get_collections()
+                self.conectado = True
+                self.ultima_conexion = time.time()
+                logger.debug(f"Conexión con Qdrant establecida ({self.url_base})")
+                
+                # Cargar colecciones existentes
+                self._cargar_colecciones_existentes()
+                return True
+                
+            except UnexpectedResponse as e:
+                if e.status_code == 401:  # Error de autenticación
+                    logger.error("Error de autenticación en Qdrant. Verifique las credenciales.")
+                    return False
+                raise  # Re-lanzar otros errores inesperados
 
         except Exception as e:
             logger.error(f"Error al conectar con Qdrant: {e}")
@@ -217,10 +224,42 @@ class ConectorQdrant:
                             elif hasattr(vector_configs, "size"):
                                 vector_size = vector_configs.size
 
+                    # Obtener recuento de puntos de forma segura
+                    puntos = None
+                    try:
+                        if hasattr(info_coleccion, "vectors_count"):
+                            puntos = info_coleccion.vectors_count
+                        elif hasattr(info_coleccion, "status") and info_coleccion.status:
+                            # En versiones más recientes puede estar en status
+                            puntos = getattr(info_coleccion.status, "vectors_count", None)
+                            
+                        # Si puntos es None, intentar verificar manualmente
+                        if puntos is None:
+                            # Intentar obtener al menos un punto para verificar si hay datos
+                            try:
+                                scroll_result = self.cliente.scroll(
+                                    collection_name=coleccion.name,
+                                    limit=1,
+                                    with_payload=False,
+                                    with_vectors=False
+                                )
+                                # Si hay resultados, indicar al menos 1 punto
+                                if scroll_result and len(scroll_result[0]) > 0:
+                                    puntos = len(scroll_result[0])
+                                    logger.debug(f"Colección {coleccion.name} tiene al menos {puntos} puntos (verificado manualmente)")
+                                else:
+                                    puntos = 0
+                            except Exception as e:
+                                logger.warning(f"Error al verificar puntos manualmente en {coleccion.name}: {e}")
+                                puntos = 0
+                    except (AttributeError, TypeError) as e:
+                        logger.warning(f"Error al obtener recuento de puntos para {coleccion.name}: {e}")
+                        puntos = 0
+
                     resultado.append(
                         {
                             "nombre": coleccion.name,
-                            "puntos": getattr(info_coleccion, "vectors_count", 0),
+                            "puntos": puntos,
                             "dimension": vector_size,
                         }
                     )
@@ -231,7 +270,7 @@ class ConectorQdrant:
                     resultado.append(
                         {
                             "nombre": coleccion.name,
-                            "puntos": 0,
+                            "puntos": None,
                             "dimension": self.dimension_embeddings,
                         }
                     )
@@ -241,6 +280,61 @@ class ConectorQdrant:
         except Exception as e:
             logger.error(f"Error al listar colecciones: {e}")
             return []
+
+    def coleccion_tiene_puntos(self, nombre_coleccion: str) -> bool:
+        """
+        Verifica si una colección tiene puntos almacenados.
+        
+        Args:
+            nombre_coleccion: Nombre de la colección a verificar
+            
+        Returns:
+            True si la colección existe y tiene puntos, False en caso contrario
+        """
+        try:
+            if not self.esta_conectado():
+                return False
+                
+            # Verificar si la colección existe
+            if not self.cliente.collection_exists(nombre_coleccion):
+                return False
+                
+            # Obtener información de la colección
+            info_coleccion = self.cliente.get_collection(collection_name=nombre_coleccion)
+            
+            # Intentar obtener recuento de puntos
+            puntos = None
+            try:
+                if hasattr(info_coleccion, "vectors_count"):
+                    puntos = info_coleccion.vectors_count
+                elif hasattr(info_coleccion, "status") and info_coleccion.status:
+                    puntos = getattr(info_coleccion.status, "vectors_count", None)
+            except (AttributeError, TypeError):
+                pass
+                
+            # Si pudimos obtener el recuento de puntos, verificar si es mayor a 0
+            if puntos is not None:
+                return puntos > 0
+                
+            # Si no pudimos obtener el recuento, intentar obtener algunos puntos manualmente
+            try:
+                # Intentar hacer una búsqueda simple para ver si hay puntos
+                resultado = self.cliente.scroll(
+                    collection_name=nombre_coleccion,
+                    limit=1,  # Solo necesitamos uno para saber si hay puntos
+                    with_payload=False,  # No necesitamos los metadatos
+                    with_vectors=False,  # No necesitamos los vectores
+                )
+                
+                # Si hay al menos un punto, resultado[0] tendrá al menos un elemento
+                return len(resultado[0]) > 0
+            except Exception as e:
+                logger.warning(f"Error al verificar puntos manualmente en {nombre_coleccion}: {e}")
+                return False
+            
+        except Exception as e:
+            logger.error(f"Error al verificar si la colección {nombre_coleccion} tiene puntos: {e}")
+            return False
 
     def crear_coleccion(
         self, nombre: str, dimension: int = None, descripcion: str = None
@@ -273,12 +367,21 @@ class ConectorQdrant:
             # Crear colección con la biblioteca oficial
             self.cliente.create_collection(
                 collection_name=nombre,
-                vectors_config=VectorParams(size=dimension, distance=Distance.COSINE),
-                hnsw_config=models.HnswConfigDiff(m=16, ef_construct=100)
-                if descripcion
-                else None,
-                metadata={"description": descripcion} if descripcion else None,
+                vectors_config=models.VectorParams(size=dimension, distance=models.Distance.COSINE),
+                hnsw_config=models.HnswConfigDiff(m=16, ef_construct=100),
+                optimizers_config=models.OptimizersConfigDiff(
+                    default_segment_number=2,
+                    memmap_threshold=20000
+                ),
+                metadata={
+                    "description": descripcion
+                } if descripcion else None
             )
+
+            # Esperar a que la colección esté lista
+            status = self.cliente.get_collection(nombre).status
+            if status != CollectionStatus.GREEN:
+                logger.warning(f"La colección '{nombre}' se creó pero su estado es {status}")
 
             logger.info(f"Colección '{nombre}' creada correctamente")
             self.colecciones_existentes.add(nombre)
@@ -329,8 +432,7 @@ class ConectorQdrant:
                 return False
 
             # Eliminar todos los puntos de la colección
-            # En la biblioteca oficial, se puede usar delete_points con un filtro vacío
-            self.cliente.delete_points(
+            self.cliente.delete(
                 collection_name=nombre,
                 points_selector=models.FilterSelector(
                     filter=models.Filter()  # Filtro vacío = todos los puntos
@@ -396,7 +498,7 @@ class ConectorQdrant:
             self.cliente.upsert(
                 collection_name=self.coleccion_textos,
                 points=[
-                    PointStruct(
+                    models.PointStruct(
                         id=punto_id,
                         vector=[0.0],  # Vector ficticio (no lo usaremos para búsqueda)
                         payload=payload,
@@ -487,7 +589,7 @@ class ConectorQdrant:
             # Guardar con la biblioteca oficial
             self.cliente.upsert(
                 collection_name=nombre_coleccion,
-                points=[PointStruct(id=punto_id, vector=embedding, payload=payload)],
+                points=[models.PointStruct(id=punto_id, vector=embedding, payload=payload)],
             )
 
             logger.debug(
@@ -600,6 +702,62 @@ class ConectorQdrant:
 
         except Exception as e:
             logger.error(f"Error al buscar textos similares: {e}")
+            return []
+
+    def buscar_por_id_original(
+        self, coleccion: str, id_original: str
+    ) -> List[Dict[str, Any]]:
+        """
+        Busca puntos por su ID original en una colección.
+
+        Args:
+            coleccion: Nombre de la colección donde buscar
+            id_original: ID original del documento
+
+        Returns:
+            Lista de puntos encontrados
+        """
+        try:
+            if not self.esta_conectado():
+                return []
+
+            # Crear filtro para buscar por id_original
+            filtro = models.Filter(
+                must=[
+                    models.FieldCondition(
+                        key="id_original",
+                        match=models.MatchValue(value=str(id_original))
+                    )
+                ]
+            )
+
+            # Realizar búsqueda
+            resultados = self.cliente.scroll(
+                collection_name=coleccion,
+                scroll_filter=filtro,
+                limit=100  # Ajustar según necesidad
+            )[0]  # scroll retorna (puntos, siguiente_offset)
+
+            # Procesar resultados
+            resultado_final = []
+            for item in resultados:
+                doc = {
+                    "id": item.id,
+                    "texto": item.payload.get("texto", ""),
+                    "metadatos": {}
+                }
+
+                # Añadir metadatos del payload
+                for clave, valor in item.payload.items():
+                    if clave not in ["texto"]:
+                        doc["metadatos"][clave] = valor
+
+                resultado_final.append(doc)
+
+            return resultado_final
+
+        except Exception as e:
+            logger.error(f"Error al buscar por ID original: {e}")
             return []
 
 

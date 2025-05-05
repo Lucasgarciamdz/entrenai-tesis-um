@@ -1,490 +1,342 @@
 """
-Utilidades para el procesamiento de texto.
-
-Este módulo proporciona funciones de utilidad para el procesamiento
-de texto, incluyendo limpieza, troceado (chunking) y generación de
-embeddings.
+Utilidades para el procesamiento de documentos con ByteWax.
 """
 
 import re
-import unicodedata
-import html
-import textwrap
-import requests
-from typing import List, Dict, Any, Tuple
-
-import nltk
-from sentence_transformers import SentenceTransformer
+import json
+from typing import List, Dict, Any, Optional
+from datetime import datetime
 
 from loguru import logger
-
-# Importar ollama (biblioteca oficial)
-try:
-    import ollama
-
-    OLLAMA_DISPONIBLE = True
-except ImportError:
-    OLLAMA_DISPONIBLE = False
-    logger.warning("Biblioteca Ollama no disponible. Instale con 'pip install ollama'")
-
-# Asegurar que NLTK tenga los recursos necesarios
-try:
-    nltk.data.find("tokenizers/punkt")
-except LookupError:
-    nltk.download("punkt", quiet=True)
-
-# Importar sentence_transformers condicionalmente para evitar errores si no está disponible
-try:
-    from sentence_transformers import SentenceTransformer
-
-    SENTENCE_TRANSFORMERS_DISPONIBLE = True
-except ImportError:
-    SENTENCE_TRANSFORMERS_DISPONIBLE = False
-    logger.warning(
-        "sentence_transformers no está disponible. Usar OLLAMA o instalar el paquete."
-    )
+import markdown
+import nltk
+from nltk.tokenize import sent_tokenize
+from langchain.text_splitter import RecursiveCharacterTextSplitter
 
 from app.config.configuracion import configuracion
+from app.procesamiento_bytewax.modelos import (
+    DocumentoRaw,
+    DocumentoLimpio,
+    DocumentoChunk,
+    DocumentoEmbedding,
+)
 
-
-def quitar_saltos_extra(texto: str) -> str:
-    """
-    Elimina saltos de línea consecutivos y los reemplaza por uno solo.
-
-    Args:
-        texto: Texto a procesar
-
-    Returns:
-        Texto con saltos de línea normalizados
-    """
-    return re.sub(r"\n{3,}", "\n\n", texto)
-
-
-def quitar_espacios_extra(texto: str) -> str:
-    """
-    Elimina espacios consecutivos y los reemplaza por uno solo.
-
-    Args:
-        texto: Texto a procesar
-
-    Returns:
-        Texto con espacios normalizados
-    """
-    return re.sub(r" {2,}", " ", texto)
-
-
-def normalizar_unicode(texto: str) -> str:
-    """
-    Normaliza caracteres Unicode a su forma canónica.
-
-    Args:
-        texto: Texto a normalizar
-
-    Returns:
-        Texto con caracteres Unicode normalizados
-    """
-    return unicodedata.normalize("NFKC", texto)
-
-
-def escapar_html(texto: str) -> str:
-    """
-    Convierte entidades HTML a sus equivalentes Unicode.
-
-    Args:
-        texto: Texto a procesar
-
-    Returns:
-        Texto con entidades HTML convertidas
-    """
-    return html.unescape(texto)
-
+# Descargar recursos de NLTK necesarios
+try:
+    nltk.data.find('tokenizers/punkt')
+except LookupError:
+    nltk.download('punkt')
 
 def limpiar_texto(texto: str) -> str:
     """
-    Limpia un texto para su procesamiento.
-
+    Limpia y normaliza el texto.
+    
     Args:
         texto: Texto a limpiar
-
+        
     Returns:
-        Texto limpio
+        Texto limpiado y normalizado
     """
     if not texto:
         return ""
-
-    # Eliminar caracteres especiales y normalizar espacios
-    texto_limpio = re.sub(r"\s+", " ", texto)
-    texto_limpio = re.sub(r'[^\w\s.,;:!?()[\]{}"\'-]', "", texto_limpio)
-
-    return texto_limpio.strip()
-
+        
+    # Normalizar espacios en blanco
+    texto = re.sub(r'\s+', ' ', texto)
+    texto = texto.strip()
+    
+    # Normalizar saltos de línea
+    texto = re.sub(r'\n\s*\n', '\n\n', texto)
+    
+    # Normalizar caracteres especiales
+    texto = texto.replace('\u200b', '')  # Eliminar zero-width space
+    texto = texto.replace('\xa0', ' ')   # Reemplazar non-breaking space
+    
+    return texto
 
 def convertir_a_markdown(texto: str) -> str:
     """
-    Convierte un texto plano a formato Markdown.
-
+    Convierte texto plano a formato Markdown.
+    
     Args:
         texto: Texto a convertir
-
+        
     Returns:
         Texto en formato Markdown
     """
     if not texto:
         return ""
+        
+    # Detectar y preservar bloques de código
+    texto = re.sub(r'```.*?\n(.*?)```', lambda m: '```\n' + m.group(1) + '```', texto, flags=re.DOTALL)
+    
+    # Detectar y preservar fórmulas matemáticas
+    texto = re.sub(r'\$(.*?)\$', r'$\1$', texto)
+    texto = re.sub(r'\$\$(.*?)\$\$', r'$$\1$$', texto, flags=re.DOTALL)
+    
+    # Convertir listas
+    texto = re.sub(r'^\s*[-*]\s', '* ', texto, flags=re.MULTILINE)
+    texto = re.sub(r'^\s*(\d+)[.)]\s', r'\1. ', texto, flags=re.MULTILINE)
+    
+    # Convertir títulos
+    texto = re.sub(r'^([A-Za-z0-9].*)\n={3,}$', r'# \1', texto, flags=re.MULTILINE)
+    texto = re.sub(r'^([A-Za-z0-9].*)\n-{3,}$', r'## \1', texto, flags=re.MULTILINE)
+    
+    # Convertir énfasis
+    texto = re.sub(r'(?<![\w*])\*(\w[^*]*\w)\*(?![\w*])', r'*\1*', texto)
+    texto = re.sub(r'(?<![\w_])_(\w[^_]*\w)_(?![\w_])', r'_\1_', texto)
+    
+    return texto
 
-    # Dividir en líneas y párrafos
-    lineas = texto.split("\n")
-    parrafos = []
-    parrafo_actual = []
-
-    for linea in lineas:
-        if linea.strip():
-            parrafo_actual.append(linea)
-        elif parrafo_actual:
-            parrafos.append(" ".join(parrafo_actual))
-            parrafo_actual = []
-
-    if parrafo_actual:
-        parrafos.append(" ".join(parrafo_actual))
-
-    # Intentar identificar títulos y subtítulos
-    resultado = []
-    for i, parrafo in enumerate(parrafos):
-        parrafo = parrafo.strip()
-
-        # Si es un párrafo corto y termina con :, podría ser un título
-        if len(parrafo) < 50 and parrafo.endswith(":"):
-            resultado.append(f"## {parrafo[:-1]}\n")
-        # Si es un párrafo muy corto y es uno de los primeros, podría ser título
-        elif len(parrafo) < 30 and i < 2:
-            resultado.append(f"# {parrafo}\n")
-        # Párrafo normal
-        else:
-            resultado.append(f"{parrafo}\n\n")
-
-    return "\n".join(resultado)
-
-
-def dividir_en_trunks(
-    texto: str, tam_trunk: int = 512, solapamiento: int = 50
-) -> List[str]:
+def dividir_en_chunks(texto: str, tam_chunk: int = 1000, solapamiento: int = 200) -> List[str]:
     """
-    Divide un texto en trunks (fragmentos) de tamaño similar.
-
+    Divide el texto en chunks más pequeños.
+    
     Args:
         texto: Texto a dividir
-        tam_trunk: Tamaño máximo de cada trunk en caracteres
-        solapamiento: Número de caracteres de solapamiento entre trunks
-
+        tam_chunk: Tamaño aproximado de cada chunk
+        solapamiento: Cantidad de caracteres de solapamiento entre chunks
+        
     Returns:
-        Lista de trunks
+        Lista de chunks de texto
     """
     if not texto:
         return []
+        
+    # Usar LangChain para dividir el texto
+    splitter = RecursiveCharacterTextSplitter(
+        chunk_size=tam_chunk,
+        chunk_overlap=solapamiento,
+        length_function=len,
+        separators=["\n\n", "\n", " ", ""]
+    )
+    
+    chunks = splitter.split_text(texto)
+    return chunks
 
-    # Si el texto es más pequeño que un trunk, devolverlo completo
-    if len(texto) <= tam_trunk:
-        return [texto]
-
-    # Dividir el texto en párrafos
-    parrafos = re.split(r"\n\s*\n", texto)
-
-    trunks = []
-    trunk_actual = ""
-
-    for parrafo in parrafos:
-        # Si el párrafo es muy grande, dividirlo
-        if len(parrafo) > tam_trunk:
-            # Dividir en oraciones
-            oraciones = re.split(r"(?<=[.!?])\s+", parrafo)
-
-            for oracion in oraciones:
-                # Si la oración es muy grande, dividirla en chunks más pequeños
-                if len(oracion) > tam_trunk:
-                    chunks = textwrap.wrap(oracion, width=tam_trunk)
-                    for chunk in chunks:
-                        # Si añadir este chunk excede el tamaño, crear nuevo trunk
-                        if len(trunk_actual) + len(chunk) > tam_trunk:
-                            trunks.append(trunk_actual.strip())
-                            # Comenzar nuevo trunk con solapamiento
-                            trunk_actual = (
-                                (
-                                    trunk_actual[-solapamiento:]
-                                    if len(trunk_actual) > solapamiento
-                                    else ""
-                                )
-                                + chunk
-                                + "\n"
-                            )
-                        else:
-                            trunk_actual += chunk + "\n"
-                else:
-                    # Si añadir esta oración excede el tamaño, crear nuevo trunk
-                    if len(trunk_actual) + len(oracion) > tam_trunk:
-                        trunks.append(trunk_actual.strip())
-                        # Comenzar nuevo trunk con solapamiento
-                        trunk_actual = (
-                            (
-                                trunk_actual[-solapamiento:]
-                                if len(trunk_actual) > solapamiento
-                                else ""
-                            )
-                            + oracion
-                            + "\n"
-                        )
-                    else:
-                        trunk_actual += oracion + "\n"
-        else:
-            # Si añadir este párrafo excede el tamaño, crear nuevo trunk
-            if len(trunk_actual) + len(parrafo) > tam_trunk:
-                trunks.append(trunk_actual.strip())
-                trunk_actual = parrafo + "\n\n"
-            else:
-                trunk_actual += parrafo + "\n\n"
-
-    # Añadir el último trunk si no está vacío
-    if trunk_actual.strip():
-        trunks.append(trunk_actual.strip())
-
-    return trunks
-
-
-def generar_contexto(texto: str, max_longitud: int = 200) -> str:
+def generar_contexto(texto: str, max_len: int = 100) -> str:
     """
-    Genera un contexto resumido para un texto.
-
+    Genera un resumen o contexto para un fragmento de texto.
+    
     Args:
-        texto: Texto para generar contexto
-        max_longitud: Longitud máxima del contexto
-
+        texto: Texto del que generar contexto
+        max_len: Longitud máxima del contexto
+        
     Returns:
-        Contexto resumido
+        Contexto o resumen del texto
     """
     if not texto:
         return ""
+        
+    # Obtener primera oración
+    oraciones = sent_tokenize(texto)
+    if not oraciones:
+        return texto[:max_len] + "..." if len(texto) > max_len else texto
+        
+    primera_oracion = oraciones[0]
+    if len(primera_oracion) <= max_len:
+        return primera_oracion
+        
+    return primera_oracion[:max_len] + "..."
 
-    # Eliminar caracteres de nueva línea
-    texto_plano = re.sub(r"\s+", " ", texto)
-
-    # Truncar a longitud máxima
-    if len(texto_plano) > max_longitud:
-        contexto = texto_plano[:max_longitud] + "..."
-    else:
-        contexto = texto_plano
-
-    return contexto
-
-
-def generar_embedding(
-    texto: str, modelo_nombre: str = "all-MiniLM-L6-v2", usar_ollama: bool = False
-) -> List[float]:
+def generar_embedding(texto: str, modelo_nombre: str = "all-MiniLM-L6-v2", usar_ollama: bool = False) -> Optional[List[float]]:
     """
-    Genera un embedding vectorial para un texto dado.
-
+    Genera un embedding para el texto dado.
+    
     Args:
-        texto: Texto para el que generar el embedding
-        modelo_nombre: Nombre del modelo de embedding a utilizar
-        usar_ollama: Si es True, usa la biblioteca Ollama para generar embeddings.
-                    Si es False, usa sentence-transformers local.
-
+        texto: Texto a vectorizar
+        modelo_nombre: Nombre del modelo a usar
+        usar_ollama: Si usar OLLAMA en lugar de sentence-transformers
+        
     Returns:
-        Vector de embedding o lista vacía en caso de error
+        Vector de embedding o None si hay error
     """
+    if not texto:
+        return None
+        
     try:
-        # Validar texto
-        if not texto or not texto.strip():
-            logger.warning("Texto vacío para generar embedding")
-            return []
-
-        # Si el texto es muy largo, truncar para evitar problemas
-        texto_procesado = texto[:8192] if len(texto) > 8192 else texto
-
-        # Decidir método de embedding
         if usar_ollama:
-            return _generar_embedding_ollama(texto_procesado, modelo_nombre)
+            import ollama
+            # Generar embedding con OLLAMA
+            respuesta = ollama.embeddings(
+                model=modelo_nombre,
+                prompt=texto
+            )
+            return respuesta.get('embedding')
         else:
-            return _generar_embedding_local(texto_procesado, modelo_nombre)
-
+            from sentence_transformers import SentenceTransformer
+            # Generar embedding con sentence-transformers
+            modelo = SentenceTransformer(modelo_nombre)
+            embedding = modelo.encode(texto, convert_to_tensor=False)
+            return embedding.tolist()
+            
     except Exception as e:
         logger.error(f"Error al generar embedding: {e}")
-        return []
+        return None
 
-
-def _generar_embedding_ollama(texto: str, modelo_nombre: str) -> List[float]:
+def procesar_documento_raw(documento: Dict[str, Any]) -> Optional[DocumentoRaw]:
     """
-    Genera un embedding utilizando OLLAMA.
-
+    Procesa un documento raw desde MongoDB/RabbitMQ.
+    
     Args:
-        texto: Texto para generar el embedding
-        modelo_nombre: Nombre del modelo en OLLAMA
-
+        documento: Documento en formato diccionario
+        
     Returns:
-        Vector de embedding o lista vacía en caso de error
+        DocumentoRaw procesado o None si hay error
     """
     try:
-        # Validar que la biblioteca Ollama esté disponible
-        if not OLLAMA_DISPONIBLE:
-            logger.error(
-                "No se puede generar embedding: biblioteca Ollama no disponible"
-            )
-            return []
-
-        logger.debug(
-            f"Generando embedding con biblioteca Ollama para modelo '{modelo_nombre}'"
+        # Extraer campos básicos
+        id_doc = str(documento.get("_id", ""))
+        texto = documento.get("texto", "")
+        
+        if not texto:
+            logger.warning(f"Documento {id_doc} sin texto, ignorando")
+            return None
+            
+        # Crear documento raw
+        doc_raw = DocumentoRaw(
+            id=id_doc,
+            id_original=id_doc,
+            texto=texto,
+            tipo_archivo=documento.get("tipo_archivo", "txt"),
+            nombre_archivo=documento.get("nombre_archivo", "documento.txt"),
+            id_curso=documento.get("id_curso"),
+            nombre_curso=documento.get("nombre_curso", ""),
+            ruta_archivo=documento.get("ruta_archivo", ""),
+            metadatos=documento.get("metadatos", {})
         )
-
-        # Generar embedding usando la biblioteca Ollama
-        try:
-            # Llamar al método embed de la biblioteca Ollama
-            resultado = ollama.embed(model=modelo_nombre, input=texto)
-
-            # Extraer embedding de la respuesta
-            if "embeddings" in resultado:
-                embedding = resultado["embeddings"]
-                logger.debug(
-                    f"Embedding generado correctamente con Ollama (dimensión: {len(embedding)})"
-                )
-                return embedding
-            elif "embedding" in resultado:
-                embedding = resultado["embedding"]
-                logger.debug(
-                    f"Embedding generado correctamente con Ollama (dimensión: {len(embedding)})"
-                )
-                return embedding
-            else:
-                logger.error(f"Respuesta de Ollama no contiene embedding: {resultado}")
-                return []
-
-        except Exception as e:
-            logger.error(f"Error al llamar a la API de Ollama: {e}")
-
-            # Fallback: intentar con requests directo si hay error en la biblioteca
-            if not hasattr(_generar_embedding_ollama, "fallback_warning_shown"):
-                logger.warning(
-                    "Utilizando método alternativo (requests) para comunicarse con Ollama"
-                )
-                _generar_embedding_ollama.fallback_warning_shown = True
-
-            # Obtener URL de OLLAMA (con valor por defecto)
-            url_ollama = configuracion.obtener(
-                "OLLAMA_URL", "http://localhost:11434/api/embeddings"
-            )
-
-            # Preparar datos para la petición
-            datos = {"model": modelo_nombre, "prompt": texto}
-
-            # Realizar la petición a OLLAMA
-            respuesta = requests.post(
-                url_ollama,
-                json=datos,
-                headers={"Content-Type": "application/json"},
-                timeout=30,  # 30 segundos de timeout
-            )
-
-            # Verificar respuesta
-            if respuesta.status_code != 200:
-                logger.error(
-                    f"Error en la petición a OLLAMA: {respuesta.status_code} - {respuesta.text}"
-                )
-                return []
-
-            # Extraer embedding de la respuesta
-            resultado = respuesta.json()
-
-            if "embedding" not in resultado:
-                logger.error(f"Respuesta de OLLAMA no contiene embedding: {resultado}")
-                return []
-
-            embedding = resultado["embedding"]
-            logger.debug(
-                f"Embedding generado con método alternativo (dimensión: {len(embedding)})"
-            )
-            return embedding
-
+        
+        return doc_raw
+        
     except Exception as e:
-        logger.error(f"Error al generar embedding con OLLAMA: {e}")
-        return []
+        logger.error(f"Error procesando documento raw: {e}")
+        return None
 
-
-def _generar_embedding_local(texto: str, modelo_nombre: str) -> List[float]:
+def procesar_documento_limpio(doc_raw: DocumentoRaw) -> Optional[DocumentoLimpio]:
     """
-    Genera un embedding utilizando sentence-transformers local.
-
+    Limpia y normaliza un documento raw.
+    
     Args:
-        texto: Texto para generar el embedding
-        modelo_nombre: Nombre del modelo de sentence-transformers
-
+        doc_raw: Documento raw a procesar
+        
     Returns:
-        Vector de embedding o lista vacía en caso de error
+        DocumentoLimpio procesado o None si hay error
     """
     try:
-        # Verificar si sentence-transformers está disponible
-        if not SENTENCE_TRANSFORMERS_DISPONIBLE:
-            logger.error(
-                "No se puede generar embedding local: sentence-transformers no está disponible"
-            )
-            return []
-
-        logger.debug(f"Generando embedding local con modelo '{modelo_nombre}'")
-
-        # Variables para cache de modelos
-        global _modelos_cache
-        if "_modelos_cache" not in globals():
-            _modelos_cache = {}
-
-        # Cargar modelo (o usar desde cache)
-        if modelo_nombre not in _modelos_cache:
-            logger.info(f"Cargando modelo '{modelo_nombre}' (primera vez)")
-            _modelos_cache[modelo_nombre] = SentenceTransformer(modelo_nombre)
-
-        modelo = _modelos_cache[modelo_nombre]
-
-        # Generar embedding
-        embedding = modelo.encode(texto).tolist()
-        logger.debug(f"Embedding generado correctamente (dimensión: {len(embedding)})")
-        return embedding
-
+        # Limpiar texto
+        texto_limpio = limpiar_texto(doc_raw.texto)
+        if not texto_limpio:
+            logger.warning(f"Documento {doc_raw.id} quedó vacío después de limpieza")
+            return None
+            
+        # Convertir a markdown
+        texto_markdown = convertir_a_markdown(texto_limpio)
+        
+        # Detectar características especiales
+        contiene_formulas = bool(re.search(r'\$.*?\$', texto_markdown))
+        contiene_codigo = bool(re.search(r'```.*?```', texto_markdown, re.DOTALL))
+        
+        # Crear documento limpio
+        doc_limpio = DocumentoLimpio(
+            id=f"{doc_raw.id}_limpio",
+            id_original=doc_raw.id,
+            texto=texto_markdown,
+            texto_original=doc_raw.texto,
+            tipo_contenido="markdown",
+            contiene_formulas=contiene_formulas,
+            contiene_codigo=contiene_codigo,
+            metadatos=doc_raw.metadatos
+        )
+        
+        return doc_limpio
+        
     except Exception as e:
-        logger.error(f"Error al generar embedding local: {e}")
+        logger.error(f"Error procesando documento limpio: {e}")
+        return None
+
+def procesar_documento_chunks(doc_limpio: DocumentoLimpio) -> List[DocumentoChunk]:
+    """
+    Divide un documento limpio en chunks.
+    
+    Args:
+        doc_limpio: Documento limpio a procesar
+        
+    Returns:
+        Lista de DocumentoChunk procesados
+    """
+    try:
+        # Dividir en chunks
+        chunks = dividir_en_chunks(doc_limpio.texto)
+        if not chunks:
+            logger.warning(f"No se generaron chunks para documento {doc_limpio.id}")
+            return []
+            
+        # Crear documentos chunk
+        docs_chunk = []
+        for i, chunk in enumerate(chunks):
+            # Generar contexto
+            contexto = generar_contexto(chunk)
+            
+            # Crear documento chunk
+            doc_chunk = DocumentoChunk(
+                id=f"{doc_limpio.id}_chunk_{i}",
+                id_original=doc_limpio.id_original,
+                texto=chunk,
+                indice_chunk=i,
+                total_chunks=len(chunks),
+                contexto=contexto,
+                solapamiento=200,  # Valor por defecto
+                metadatos=doc_limpio.metadatos
+            )
+            docs_chunk.append(doc_chunk)
+            
+        return docs_chunk
+        
+    except Exception as e:
+        logger.error(f"Error procesando chunks: {e}")
         return []
 
-
-def procesar_texto_completo(texto: str) -> Tuple[str, List[Dict[str, Any]]]:
+def procesar_documento_embedding(doc_chunk: DocumentoChunk, modelo_nombre: str, usar_ollama: bool = False) -> Optional[DocumentoEmbedding]:
     """
-    Procesa un texto completo: limpia, divide en trunks, genera contexto y embeddings.
-
+    Genera embedding para un chunk de documento.
+    
     Args:
-        texto: Texto a procesar
-
+        doc_chunk: Documento chunk a procesar
+        modelo_nombre: Nombre del modelo de embedding
+        usar_ollama: Si usar OLLAMA en lugar de sentence-transformers
+        
     Returns:
-        Tupla con (texto_limpio_markdown, lista_trunks_con_embeddings)
+        DocumentoEmbedding procesado o None si hay error
     """
-    # Limpiar texto
-    texto_limpio = limpiar_texto(texto)
-
-    # Convertir a markdown
-    texto_markdown = convertir_a_markdown(texto_limpio)
-
-    # Dividir en trunks
-    trunks = dividir_en_trunks(texto_markdown)
-
-    # Procesar cada trunk
-    trunks_procesados = []
-    for i, trunk in enumerate(trunks):
-        # Generar contexto
-        contexto = generar_contexto(trunk)
-
+    try:
         # Generar embedding
-        embedding = generar_embedding(trunk)
-
-        # Guardar información del trunk
-        trunks_procesados.append(
-            {
-                "indice": i,
-                "texto": trunk,
-                "contexto": contexto,
-                "embedding": embedding,
-            }
+        embedding = generar_embedding(
+            texto=doc_chunk.texto,
+            modelo_nombre=modelo_nombre,
+            usar_ollama=usar_ollama
         )
-
-    return texto_markdown, trunks_procesados
+        
+        if not embedding:
+            logger.warning(f"No se pudo generar embedding para chunk {doc_chunk.id}")
+            return None
+            
+        # Determinar colección
+        id_curso = doc_chunk.metadatos.get("id_curso")
+        coleccion = f"curso_{id_curso}" if id_curso else "general"
+        
+        # Crear documento con embedding
+        doc_embedding = DocumentoEmbedding(
+            id=f"{doc_chunk.id}_emb",
+            id_original=doc_chunk.id_original,
+            texto=doc_chunk.texto,
+            embedding=embedding,
+            modelo_embedding=modelo_nombre,
+            dimension=len(embedding),
+            coleccion=coleccion,
+            metadatos=doc_chunk.metadatos
+        )
+        
+        return doc_embedding
+        
+    except Exception as e:
+        logger.error(f"Error procesando embedding: {e}")
+        return None

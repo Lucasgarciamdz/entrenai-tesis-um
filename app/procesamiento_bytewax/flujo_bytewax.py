@@ -1,456 +1,349 @@
-"""
-Definición del flujo de procesamiento con Bytewax
-"""
-
-from typing import Dict, List, Any, Optional
+from typing import Optional, Dict, Any, Tuple, List
+from dataclasses import dataclass
 import threading
-import time
+import json
 from datetime import datetime
-
-from loguru import logger
 from bytewax.dataflow import Dataflow
-from bytewax.execution import run_main
-from bytewax.operators import map, filter_map
+from bytewax.inputs import DynamicSource, StatelessSourcePartition
+from bytewax.outputs import DynamicSink, StatelessSinkPartition
+from loguru import logger
 
-from app.config.configuracion import configuracion
-from app.database.conector_rabbitmq import ConectorRabbitMQ
 from app.database.conector_qdrant import ConectorQdrant
-from app.procesamiento_bytewax.utils import (
-    limpiar_texto,
-    dividir_en_trunks,
-    convertir_a_markdown,
-    generar_contexto,
-    generar_embedding,
-)
+from app.database.conector_rabbitmq import ConectorRabbitMQ
+from app.config.configuracion import configuracion
 from app.procesamiento_bytewax.dispatchers import (
-    ProcesoRabbitMQEntradaDispatcher,
-    ProcesoQdrantSalidaDispatcher,
+    ProcesadorDocumentoDispatcher,
+    GeneradorEmbeddingsDispatcher
 )
 
-
-class FlujoProcesamientoArchivos:
-    """
-    Define y ejecuta un flujo de procesamiento de datos utilizando Bytewax.
-
-    Este flujo:
-    1. Recibe mensajes de RabbitMQ con datos de cambios de MongoDB
-    2. Procesa los mensajes filtrando y extrayendo información relevante
-    3. Limpia y formatea el texto
-    4. Divide el texto en chunks
-    5. Genera embeddings para cada chunk
-    6. Almacena los embeddings en Qdrant
-    """
-
-    def __init__(self, nombre_flujo: str = "flujo_procesamiento"):
+class RabbitMQSource(DynamicSource):
+    """Fuente de datos desde RabbitMQ."""
+    
+    def build(self, step_id: str, worker_index: int, worker_count: int) -> StatelessSourcePartition:
         """
-        Inicializa el flujo de procesamiento.
-
+        Construye una partición de la fuente para un worker.
+        
         Args:
-            nombre_flujo: Nombre identificativo del flujo
-        """
-        self.nombre_flujo = nombre_flujo
-        self.dataflow = Dataflow(nombre_flujo)
-        self.configurado = False
-        self.ejecutando = False
-        self.hilo_ejecucion = None
-
-        # Conexiones
-        self.qdrant = None
-        self.rabbitmq = None
-
-        # Configuración
-        self.cola_entrada = configuracion.obtener_rabbitmq_cola_cambios()
-        self.usar_ollama = (
-            configuracion.obtener("USAR_OLLAMA", "false").lower() == "true"
-        )
-        self.modelo_embedding = configuracion.obtener(
-            "MODELO_EMBEDDING", "all-MiniLM-L6-v2"
-        )
-        self.limite_tam_texto = int(
-            configuracion.obtener("LIMITE_TAMAÑO_TEXTO", "8192")
-        )
-
-        # Estadísticas
-        self.mensajes_procesados = 0
-        self.embeddings_generados = 0
-        self.errores = 0
-
-        logger.info(f"Inicializado flujo '{nombre_flujo}'")
-        logger.info(
-            f"Configurado para usar {'OLLAMA' if self.usar_ollama else 'sentence-transformers'}"
-        )
-        logger.info(f"Modelo de embedding: {self.modelo_embedding}")
-
-    def configurar(self) -> bool:
-        """
-        Configura el flujo de procesamiento con los operadores necesarios.
-
+            step_id: ID del paso
+            worker_index: Índice del worker actual
+            worker_count: Número total de workers
+            
         Returns:
-            True si la configuración es exitosa, False en caso contrario
+            Partición de la fuente
         """
-        try:
-            logger.info(f"Configurando flujo '{self.nombre_flujo}'...")
-
-            # Inicializar conexiones si es necesario
-            if not self._inicializar_conexiones():
-                logger.error("No se pudieron inicializar las conexiones, abortando")
-                return False
-
-            # 1. Iniciar con entrada desde RabbitMQ
-            entrada = ProcesoRabbitMQEntradaDispatcher(self.rabbitmq, self.cola_entrada)
-            self.dataflow.input("entrada", entrada)
-
-            # 2. Filtrar mensajes para obtener solo los que nos interesan
-            def filtrar_documento(mensaje: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+        # Obtener conexión RabbitMQ
+        rabbitmq = ConectorRabbitMQ(
+            host=configuracion.obtener_rabbitmq_host(),
+            puerto=configuracion.obtener_rabbitmq_puerto(),
+            usuario=configuracion.obtener_rabbitmq_usuario(),
+            contraseña=configuracion.obtener_rabbitmq_contraseña()
+        )
+        
+        if not rabbitmq.conectar():
+            logger.error("No se pudo conectar a RabbitMQ en RabbitMQSource")
+            raise Exception("Error de conexión a RabbitMQ")
+            
+        canal = rabbitmq.conexion.channel()
+        cola = configuracion.obtener_rabbitmq_cola_cambios()
+        
+        # Declarar cola
+        if not rabbitmq.declarar_cola(cola):
+            logger.error(f"No se pudo declarar la cola {cola} en RabbitMQSource")
+            raise Exception(f"Error declarando cola {cola}")
+            
+        # Configurar consumo básico
+        canal.basic_qos(prefetch_count=1)
+        
+        class RabbitMQPartition(StatelessSourcePartition):
+            """Partición para consumir mensajes de RabbitMQ."""
+            
+            def __init__(self, canal, cola):
+                self.canal = canal
+                self.cola = cola
+                
+            def next_batch(self) -> List[Any]:
+                """Obtiene el siguiente lote de mensajes."""
                 try:
-                    tipo_operacion = mensaje.get("operationType")
-                    # Solo procesar inserts, updates o replaces con documento completo
-                    if (
-                        tipo_operacion in ["insert", "update", "replace"]
-                        and "fullDocument" in mensaje
-                    ):
-                        documento = mensaje.get("fullDocument", {})
-                        # Verificar que tiene texto
-                        if documento and "texto" in documento and documento["texto"]:
-                            return documento
-                    return None
-                except Exception as e:
-                    logger.error(f"Error al filtrar documento: {e}")
-                    return None
-
-            self.dataflow.map(filter_map(filtrar_documento))
-
-            # 3. Extraer información relevante
-            def extraer_info(documento: Dict[str, Any]) -> Dict[str, Any]:
-                try:
-                    # Extraer campos necesarios
-                    id_doc = str(documento.get("_id", ""))
-                    texto_original = documento.get("texto", "")
-
-                    # Limitar tamaño del texto si es muy grande
-                    if len(texto_original) > self.limite_tam_texto:
-                        texto = texto_original[: self.limite_tam_texto]
-                        logger.warning(
-                            f"Texto truncado para documento {id_doc} (de {len(texto_original)} a {len(texto)} caracteres)"
-                        )
-                    else:
-                        texto = texto_original
-
-                    # Preparar metadatos
-                    metadatos = {
-                        "id_original": id_doc,
-                        "tipo_archivo": documento.get("tipo_archivo", "txt"),
-                        "nombre_archivo": documento.get(
-                            "nombre_archivo", "documento.txt"
-                        ),
-                        "id_curso": documento.get("id_curso", ""),
-                        "nombre_curso": documento.get("nombre_curso", ""),
-                        "ruta_archivo": documento.get("ruta_archivo", ""),
-                        "fecha_procesamiento": datetime.now().isoformat(),
-                    }
-
-                    # Si hay metadatos extras en el documento, incluirlos
-                    metadatos_doc = documento.get("metadatos", {})
-                    if isinstance(metadatos_doc, dict):
-                        for k, v in metadatos_doc.items():
-                            # Solo añadir si es string, número o booleano
-                            if isinstance(v, (str, int, float, bool)):
-                                metadatos[k] = v
-
-                    return {"id": id_doc, "texto": texto, "metadatos": metadatos}
-                except Exception as e:
-                    logger.error(f"Error al extraer información: {e}")
-                    # Devolver datos mínimos para mantener el flujo, pero señalando error
-                    id_doc = str(documento.get("_id", "desconocido"))
-                    return {
-                        "id": id_doc,
-                        "texto": "",
-                        "metadatos": {"error": str(e), "id_original": id_doc},
-                    }
-
-            self.dataflow.map(map(extraer_info))
-
-            # 4. Limpiar y dar formato al texto
-            def limpiar_y_formatear(datos: Dict[str, Any]) -> Dict[str, Any]:
-                try:
-                    id_doc = datos.get("id", "")
-                    texto = datos.get("texto", "")
-
-                    if not texto:
-                        logger.warning(
-                            f"Texto vacío para documento {id_doc}, omitiendo limpieza"
-                        )
-                        return datos
-
-                    # Limpiar texto
-                    texto_limpio = limpiar_texto(texto)
-
-                    # Convertir a markdown para mejor estructura
-                    texto_markdown = convertir_a_markdown(texto_limpio)
-
-                    # Actualizar datos con texto limpio
-                    datos["texto_original"] = texto
-                    datos["texto"] = texto_markdown
-
-                    # Guardar texto limpio en Qdrant
-                    if self.qdrant:
-                        logger.debug(
-                            f"Guardando texto limpio en Qdrant para documento {id_doc}"
-                        )
-                        self.qdrant.guardar_texto_limpio(
-                            id_doc, texto_markdown, datos.get("metadatos", {})
-                        )
-
-                    return datos
-                except Exception as e:
-                    logger.error(f"Error al limpiar texto: {e}")
-                    # Mantener datos originales
-                    return datos
-
-            self.dataflow.map(map(limpiar_y_formatear))
-
-            # 5. Generar chunks
-            def generar_chunks(datos: Dict[str, Any]) -> List[Dict[str, Any]]:
-                try:
-                    id_doc = datos.get("id", "")
-                    texto = datos.get("texto", "")
-
-                    if not texto:
-                        logger.warning(
-                            f"Texto vacío para documento {id_doc}, omitiendo chunking"
-                        )
-                        return []
-
-                    # Dividir texto en chunks
-                    chunks = dividir_en_trunks(texto)
-                    logger.info(f"Documento {id_doc} dividido en {len(chunks)} chunks")
-
-                    # Crear lista de documentos (uno por chunk)
-                    resultado = []
-                    for i, chunk in enumerate(chunks):
-                        # Crear copia de los metadatos
-                        metadatos_chunk = datos.get("metadatos", {}).copy()
-                        # Añadir información del chunk
-                        metadatos_chunk["indice_chunk"] = i
-                        metadatos_chunk["total_chunks"] = len(chunks)
-                        metadatos_chunk["contexto"] = generar_contexto(chunk)
-
-                        # Crear documento para el chunk
-                        doc_chunk = {
-                            "id": f"{id_doc}_chunk_{i}",
-                            "id_original": id_doc,
-                            "texto": chunk,
-                            "metadatos": metadatos_chunk,
-                        }
-                        resultado.append(doc_chunk)
-
-                    self.mensajes_procesados += 1
-                    return resultado
-                except Exception as e:
-                    logger.error(f"Error al generar chunks: {e}")
-                    self.errores += 1
+                    method_frame, header_frame, body = self.canal.basic_get(queue=self.cola)
+                    if method_frame:
+                        try:
+                            mensaje = json.loads(body.decode("utf-8"))
+                            # Confirmar procesamiento
+                            self.canal.basic_ack(delivery_tag=method_frame.delivery_tag)
+                            return [mensaje]
+                        except Exception as e:
+                            logger.error(f"Error procesando mensaje: {e}")
+                            self.canal.basic_nack(delivery_tag=method_frame.delivery_tag, requeue=True)
                     return []
-
-            # Convertir cada documento en una lista de chunks y aplanar
-            self.dataflow.flat_map(map(generar_chunks))
-
-            # 6. Generar embeddings
-            def generar_embedding_para_chunk(
-                chunk: Dict[str, Any],
-            ) -> Optional[Dict[str, Any]]:
-                try:
-                    id_chunk = chunk.get("id", "")
-                    texto = chunk.get("texto", "")
-
-                    if not texto:
-                        logger.warning(
-                            f"Texto vacío para chunk {id_chunk}, omitiendo embedding"
-                        )
-                        return None
-
-                    # Generar embedding
-                    logger.debug(f"Generando embedding para chunk {id_chunk}")
-                    embedding = generar_embedding(
-                        texto=texto,
-                        modelo_nombre=self.modelo_embedding,
-                        usar_ollama=self.usar_ollama,
-                    )
-
-                    if not embedding:
-                        logger.error(
-                            f"No se pudo generar embedding para chunk {id_chunk}"
-                        )
-                        self.errores += 1
-                        return None
-
-                    # Añadir embedding al documento
-                    chunk["embedding"] = embedding
-                    self.embeddings_generados += 1
-                    return chunk
-
                 except Exception as e:
-                    logger.error(f"Error al generar embedding: {e}")
-                    self.errores += 1
-                    return None
-
-            self.dataflow.map(filter_map(generar_embedding_para_chunk))
-
-            # 7. Preparar salida para Qdrant (determinar colección según metadatos)
-            def preparar_salida_qdrant(chunk: Dict[str, Any]) -> Dict[str, Any]:
+                    logger.error(f"Error en next_batch: {e}")
+                    return []
+                    
+            def next_awake(self) -> Optional[datetime]:
+                """Indica cuándo despertar para el siguiente lote."""
+                return None  # Procesar inmediatamente
+                
+            def close(self):
+                """Cierra la conexión."""
                 try:
-                    metadatos = chunk.get("metadatos", {})
-                    id_curso = metadatos.get("id_curso")
-
-                    # Determinar nombre de colección
-                    if id_curso:
-                        coleccion = f"curso_{id_curso}"
-                    else:
-                        coleccion = "general"
-
-                    # Añadir colección al documento
-                    chunk["coleccion"] = coleccion
-                    return chunk
+                    if self.canal:
+                        self.canal.close()
                 except Exception as e:
-                    logger.error(f"Error al preparar salida para Qdrant: {e}")
-                    # Usar colección por defecto
-                    chunk["coleccion"] = "general"
-                    return chunk
+                    logger.error(f"Error cerrando canal: {e}")
+        
+        return RabbitMQPartition(canal, cola)
 
-            self.dataflow.map(map(preparar_salida_qdrant))
+@dataclass
+class FlujoByteWax:
+    """Clase que encapsula el flujo de procesamiento ByteWax."""
+    
+    flujo: Optional[Dataflow] = None
+    hilo_ejecucion: Optional[threading.Thread] = None
+    evento_detener: Optional[threading.Event] = None
+    
+    def __init__(self):
+        """Inicializa el flujo ByteWax."""
+        self.evento_detener = threading.Event()
+        self.flujo = None
+        self.hilo_ejecucion = None
+        
+    def detener(self):
+        """Detiene el flujo ByteWax de forma segura."""
+        if self.evento_detener:
+            logger.info("Iniciando detención del flujo ByteWax...")
+            self.evento_detener.set()
+            
+        if self.hilo_ejecucion and self.hilo_ejecucion.is_alive():
+            try:
+                self.hilo_ejecucion.join(timeout=5.0)
+                logger.info("Flujo ByteWax detenido")
+            except Exception as e:
+                logger.error(f"Error al detener hilo de ejecución ByteWax: {e}")
+                # Intentar forzar terminación del hilo
+                if hasattr(threading, "_shutdown"):
+                    threading._shutdown()
+                    logger.info("Shutdown de threads forzado")
 
-            # 8. Configurar salida a Qdrant
-            salida = ProcesoQdrantSalidaDispatcher(self.qdrant)
-            self.dataflow.output("salida", salida)
+def procesar_documento(mensaje: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    Procesa un documento usando el dispatcher.
+    
+    Args:
+        mensaje: Mensaje con el documento a procesar
+        
+    Returns:
+        Documento procesado
+    """
+    try:
+        # Crear dispatcher para procesamiento
+        dispatcher = ProcesadorDocumentoDispatcher()
+        
+        # Procesar documento
+        documento_procesado = dispatcher.procesar(mensaje)
+        
+        # Generar embeddings
+        dispatcher_embeddings = GeneradorEmbeddingsDispatcher()
+        documento_con_embeddings = dispatcher_embeddings.procesar(documento_procesado)
+        
+        return documento_con_embeddings
+        
+    except Exception as e:
+        logger.error(f"Error procesando documento: {e}")
+        return None
 
-            self.configurado = True
-            logger.info(f"Flujo '{self.nombre_flujo}' configurado correctamente")
-            return True
-
-        except Exception as e:
-            logger.error(f"Error al configurar flujo: {e}")
-            self.configurado = False
-            return False
-
-    def ejecutar(self) -> bool:
+class QdrantSink(DynamicSink):
+    """Sink para guardar en Qdrant."""
+    
+    def build(self, step_id: str, worker_index: int, worker_count: int) -> StatelessSinkPartition:
         """
-        Ejecuta el flujo de procesamiento en un hilo separado.
-
+        Construye una partición del sink para un worker.
+        
+        Args:
+            step_id: ID del paso
+            worker_index: Índice del worker actual
+            worker_count: Número total de workers
+            
         Returns:
-            True si el flujo inicia correctamente, False en caso contrario
+            Partición del sink
         """
-        if not self.configurado:
-            logger.error(
-                "El flujo no está configurado. Llame a 'configurar()' primero."
+        class QdrantPartition(StatelessSinkPartition):
+            """Partición para escribir en Qdrant."""
+            
+            def __init__(self):
+                self.qdrant = ConectorQdrant()
+                
+            def write_batch(self, items: List[Any]):
+                """Escribe un lote de items en Qdrant."""
+                for item in items:
+                    if item:
+                        try:
+                            self.qdrant.guardar_documento(item)
+                        except Exception as e:
+                            logger.error(f"Error guardando en Qdrant: {e}")
+                            
+            def close(self):
+                """Cierra la conexión."""
+                pass
+                
+        return QdrantPartition()
+
+def crear_flujo_procesamiento() -> FlujoByteWax:
+    """
+    Crea el flujo de procesamiento ByteWax.
+    
+    Returns:
+        Instancia de FlujoByteWax configurada
+    """
+    flujo_bytewax = FlujoByteWax()
+    
+    # Crear flujo con identificador
+    flow = Dataflow("procesamiento_documentos")
+    
+    # Usar operators para crear el flujo
+    import bytewax.operators as op
+    
+    # Entrada desde RabbitMQ
+    input_stream = op.input("input", flow, RabbitMQSource())
+    
+    # Procesar documentos
+    processed_stream = op.map("procesar", input_stream, procesar_documento)
+    
+    # Salida a Qdrant
+    op.output("output", processed_stream, QdrantSink())
+    
+    flujo_bytewax.flujo = flow
+    
+    # Ejecutar en thread separado
+    def ejecutar_flujo():
+        process = None
+        fd = None
+        temp_path = None
+        
+        try:
+            import os
+            import tempfile
+            import atexit
+            import subprocess
+            import sys
+            import signal
+            
+            # Crear un archivo temporal que contenga nuestro dataflow
+            fd, temp_path = tempfile.mkstemp(suffix='.py')
+            
+            # Asegurarse de que el archivo temporal se elimine al salir
+            def cleanup():
+                try:
+                    if fd is not None:
+                        os.close(fd)
+                except (OSError, IOError) as e:
+                    logger.warning(f"No se pudo cerrar el descriptor de archivo: {e}")
+                    
+                try:
+                    if temp_path and os.path.exists(temp_path):
+                        os.remove(temp_path)
+                except (OSError, IOError) as e:
+                    logger.warning(f"No se pudo eliminar el archivo temporal: {e}")
+            
+            atexit.register(cleanup)
+            
+            # Contenido del script temporal
+            script_contenido = f"""
+import bytewax.operators as op
+from bytewax.dataflow import Dataflow
+import sys
+import os
+
+# Añadir la ruta base del proyecto al path
+sys.path.insert(0, "{os.getcwd()}")
+
+# Importar nuestras clases
+from app.procesamiento_bytewax.flujo_bytewax import RabbitMQSource, QdrantSink, procesar_documento
+
+# Crear el mismo flujo que tenemos en memoria
+flow = Dataflow("procesamiento_documentos")
+input_stream = op.input("input", flow, RabbitMQSource())
+processed_stream = op.map("procesar", input_stream, procesar_documento)
+op.output("output", processed_stream, QdrantSink())
+
+# Variable global para que bytewax.run pueda encontrarla
+dataflow = flow
+"""
+            
+            # Escribir el contenido al archivo temporal
+            with os.fdopen(fd, 'w') as f:
+                f.write(script_contenido)
+                # El descriptor de archivo se cerrará automáticamente al salir del with
+                fd = None
+            
+            # Ejecutar el flujo como un módulo
+            cmd = [
+                sys.executable, "-m", "bytewax.run",
+                temp_path.replace(".py", ""),
+                "-w", "1",  # Un worker por proceso
+            ]
+            
+            logger.info(f"Ejecutando ByteWax con comando: {' '.join(cmd)}")
+            process = subprocess.Popen(
+                cmd,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                start_new_session=True  # Crear un nuevo grupo de procesos
             )
-            return False
-
-        if self.ejecutando:
-            logger.warning("El flujo ya está en ejecución")
-            return True
-
-        try:
-            logger.info(f"Iniciando flujo '{self.nombre_flujo}'...")
-
-            # Ejecutar en un hilo separado
-            self.hilo_ejecucion = threading.Thread(
-                target=self._ejecutar_flujo, daemon=True
-            )
-            self.hilo_ejecucion.start()
-
-            # Esperar a que el flujo esté listo
-            tiempo_espera = 2  # segundos
-            time.sleep(tiempo_espera)
-
-            if self.hilo_ejecucion.is_alive():
-                self.ejecutando = True
-                logger.info(f"Flujo '{self.nombre_flujo}' iniciado correctamente")
-                return True
-            else:
-                logger.error("El flujo no pudo iniciarse correctamente")
-                return False
-
+            
+            # Monitorear si debemos detener el proceso
+            while not flujo_bytewax.evento_detener.is_set():
+                # Verificar si el proceso sigue vivo
+                if process.poll() is not None:
+                    logger.warning("El proceso ByteWax terminó inesperadamente")
+                    # Capturar salida de error
+                    _, stderr = process.communicate()
+                    if stderr:
+                        logger.error(f"Error en el proceso ByteWax: {stderr.decode('utf-8', errors='replace')}")
+                    break
+                # Dormir un poco para no consumir CPU
+                flujo_bytewax.evento_detener.wait(timeout=1.0)
+                
+            # Intentar terminar el proceso si sigue vivo
+            if process and process.poll() is None:
+                logger.info("Terminando proceso ByteWax")
+                try:
+                    # Enviar señal SIGTERM al grupo de procesos
+                    os.killpg(os.getpgid(process.pid), signal.SIGTERM)
+                    # Esperar a que termine
+                    process.wait(timeout=5.0)
+                except (subprocess.TimeoutExpired, ProcessLookupError) as e:
+                    logger.warning(f"No se pudo terminar el proceso normalmente: {e}")
+                    try:
+                        # Intentar matar forzadamente
+                        os.killpg(os.getpgid(process.pid), signal.SIGKILL)
+                    except ProcessLookupError:
+                        # El proceso ya no existe
+                        pass
+                    except Exception as e:
+                        logger.error(f"Error al terminar proceso: {e}")
+                
         except Exception as e:
-            logger.error(f"Error al iniciar flujo: {e}")
-            self.ejecutando = False
-            return False
-
-    def detener(self) -> bool:
-        """
-        Detiene la ejecución del flujo de procesamiento.
-
-        Returns:
-            True si el flujo se detiene correctamente, False en caso contrario
-        """
-        if not self.ejecutando:
-            logger.warning("El flujo no está en ejecución")
-            return True
-
-        try:
-            logger.info(f"Deteniendo flujo '{self.nombre_flujo}'...")
-
-            # Cambiar estado para que el hilo sepa que debe detenerse
-            self.ejecutando = False
-
-            # Esperar a que el hilo termine
-            if self.hilo_ejecucion:
-                self.hilo_ejecucion.join(timeout=5)
-
-            logger.info(f"Flujo '{self.nombre_flujo}' detenido correctamente")
-            logger.info("Estadísticas finales:")
-            logger.info(f"  - Mensajes procesados: {self.mensajes_procesados}")
-            logger.info(f"  - Embeddings generados: {self.embeddings_generados}")
-            logger.info(f"  - Errores: {self.errores}")
-
-            return True
-
-        except Exception as e:
-            logger.error(f"Error al detener flujo: {e}")
-            return False
-
-    def _inicializar_conexiones(self) -> bool:
-        """
-        Inicializa las conexiones necesarias para el flujo.
-
-        Returns:
-            True si las conexiones se establecen correctamente, False en caso contrario
-        """
-        try:
-            logger.info("Inicializando conexiones para el flujo...")
-
-            # Conexión a RabbitMQ
-            self.rabbitmq = ConectorRabbitMQ()
-            if not self.rabbitmq.conectar():
-                logger.error("No se pudo conectar a RabbitMQ")
-                return False
-
-            # Declarar cola para mensajes
-            self.rabbitmq.declarar_cola(self.cola_entrada)
-            logger.info(f"Conectado a RabbitMQ y cola '{self.cola_entrada}' declarada")
-
-            # Conexión a Qdrant
-            self.qdrant = ConectorQdrant()
-            if not self.qdrant.conectar():
-                logger.error("No se pudo conectar a Qdrant")
-                return False
-
-            logger.info("Conexión a Qdrant establecida")
-
-            return True
-
-        except Exception as e:
-            logger.error(f"Error al inicializar conexiones: {e}")
-            return False
-
-    def _ejecutar_flujo(self):
-        """Método interno para ejecutar el flujo en un hilo separado."""
-        try:
-            logger.info(f"Ejecutando flujo '{self.nombre_flujo}' en hilo separado")
-
-            # Ejecutar el flujo principal de Bytewax
-            run_main(self.dataflow)
-
-        except Exception as e:
-            logger.error(f"Error durante la ejecución del flujo: {e}")
+            logger.error(f"Error en flujo ByteWax: {e}")
         finally:
-            logger.info(f"Finalizando ejecución del flujo '{self.nombre_flujo}'")
-            self.ejecutando = False
+            # Limpiar recursos
+            try:
+                # Limpiar el archivo temporal
+                if fd is not None:
+                    os.close(fd)
+                if temp_path and os.path.exists(temp_path):
+                    os.remove(temp_path)
+                
+                # Asegurarse de que el proceso está terminado
+                if process and process.poll() is None:
+                    try:
+                        process.terminate()
+                        process.wait(timeout=1.0)
+                    except Exception:
+                        pass
+            except Exception as e:
+                logger.error(f"Error al limpiar recursos: {e}")
+            
+    flujo_bytewax.hilo_ejecucion = threading.Thread(target=ejecutar_flujo)
+    flujo_bytewax.hilo_ejecucion.start()
+    
+    return flujo_bytewax
