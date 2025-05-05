@@ -654,8 +654,6 @@ xcuserdata/
 
 .cursor/*
 */.junie/*
-*/llm-twin-course/*
-/src/llm-twin-course/*
 .gradle/*
 .kotlin/*
 *.pyc

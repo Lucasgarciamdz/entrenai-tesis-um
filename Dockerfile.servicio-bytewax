@@ -7,29 +7,39 @@ ENV WORKSPACE_ROOT=/app \
 
 WORKDIR ${WORKSPACE_ROOT}
 
-# Instalar paquetes del sistema necesarios para bytewax y otras dependencias
+# Instalar paquetes básicos del sistema que necesitaremos en cualquier caso
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     gcc \
     g++ \
-    python3-dev \
-    pkg-config \
-    libssl-dev \
     curl \
     git \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Copiar requirements.txt para instalar dependencias
+# Copiar requirements.txt para instalación
 COPY requirements.txt .
 
-# Instalar dependencias de Python con uv para mayor velocidad
-RUN pip install uv && \
-    uv pip install --system -r requirements.txt && \
-    pip cache purge
+# Crear directorio para el entorno virtual
+RUN mkdir -p /opt/venv
+
+# Copiar .venv local si existe, o instalar dependencias
+COPY .venv /opt/venv/ 2>/dev/null || true
+RUN if [ -d "/opt/venv/bin" ]; then \
+      echo "Entorno virtual encontrado, ajustando paths..."; \
+      find /opt/venv -type f -exec sed -i "s|/home/facultad/facultad/entrenai-tesis-um|/app|g" {} \; 2>/dev/null || true; \
+    else \
+      echo "Entorno virtual no encontrado, instalando dependencias..."; \
+      pip install uv && \
+      uv pip install --system -r requirements.txt && \
+      pip cache purge; \
+    fi
+
+# Configurar PATH para usar el entorno virtual si existe
+ENV PATH="/opt/venv/bin:$PATH"
 
 # Instalar NLTK y descargar recursos necesarios
-RUN python -m nltk.downloader punkt
+RUN python -c "import nltk; nltk.download('punkt')" || python -m nltk.downloader punkt
 
 # Copiar código fuente
 COPY ./app ${WORKSPACE_ROOT}/app

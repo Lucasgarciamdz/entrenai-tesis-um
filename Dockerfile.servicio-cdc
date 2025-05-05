@@ -2,16 +2,31 @@ FROM python:3.12-slim
 
 WORKDIR /app
 
-# Instalar paquetes del sistema necesarios para dependencias de MongoDB
+# Instalar paquetes del sistema necesarios
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     libssl-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Instalar dependencias
+# Copiar requirements.txt para instalación
 COPY requirements.txt .
-RUN pip install uv
-RUN uv pip install --system -r requirements.txt
+
+# Crear directorio para el entorno virtual
+RUN mkdir -p /opt/venv
+
+# Copiar .venv local si existe, o instalar dependencias
+COPY .venv /opt/venv/ 2>/dev/null || true
+RUN if [ -d "/opt/venv/bin" ]; then \
+      echo "Entorno virtual encontrado, ajustando paths..."; \
+      find /opt/venv -type f -exec sed -i "s|/home/facultad/facultad/entrenai-tesis-um|/app|g" {} \; 2>/dev/null || true; \
+    else \
+      echo "Entorno virtual no encontrado, instalando dependencias..."; \
+      pip install uv && \
+      uv pip install --system -r requirements.txt; \
+    fi
+
+# Configurar PATH para usar el entorno virtual si existe
+ENV PATH="/opt/venv/bin:$PATH"
 
 # Copiar código fuente
 COPY . .
@@ -22,4 +37,4 @@ EXPOSE 27017
 EXPOSE 5672
 
 # Establecer punto de entrada
-CMD ["python", "-m", "app.servicio_cdc"] 
+CMD ["python", "-m", "app.servicio_cdc"]
