@@ -183,12 +183,6 @@ services:
     volumes:
       - qdrant_data:/qdrant/storage
     restart: always
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://qdrant:6333/healthz"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
-      start_period: 30s
     networks:
       - tesis_network
 
@@ -226,7 +220,7 @@ services:
       rabbitmq:
         condition: service_healthy
       qdrant:
-        condition: service_healthy
+        condition: service_started
       ollama:
         condition: service_started
     env_file:
@@ -296,6 +290,60 @@ services:
     networks:
       - tesis_network
 
+  postgres:
+    image: postgres:16
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_NON_ROOT_USER=${POSTGRES_NON_ROOT_USER}
+      - POSTGRES_NON_ROOT_PASSWORD=${POSTGRES_NON_ROOT_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./postgres_init.sh:/docker-entrypoint-initdb.d/postgres_init.sh
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -h localhost -U postgres -d n8n']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - tesis_network
+
+  n8n:
+    image: n8nio/n8n
+    restart: always
+    environment:
+      # Base de datos
+      - DB_TYPE=${DB_TYPE}
+      - DB_POSTGRESDB_HOST=${DB_POSTGRESDB_HOST}
+      - DB_POSTGRESDB_PORT=${DB_POSTGRESDB_PORT}
+      - DB_POSTGRESDB_DATABASE=${DB_POSTGRESDB_DATABASE}
+      - DB_POSTGRESDB_USER=${DB_POSTGRESDB_USER}
+      - DB_POSTGRESDB_PASSWORD=${DB_POSTGRESDB_PASSWORD}
+      # Autenticación
+      - N8N_BASIC_AUTH_USER=${N8N_BASIC_AUTH_USER}
+      - N8N_BASIC_AUTH_PASSWORD=${N8N_BASIC_AUTH_PASSWORD}
+      - N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
+      - WEBHOOK_URL=${WEBHOOK_URL}
+      # Variables personalizadas
+      - MOODLE_TOKEN=${MOODLE_TOKEN:-}
+      - MOODLE_URL=${MOODLE_URL}
+      - MOODLE_HOST_URL=${MOODLE_HOST_URL}
+    ports:
+      - "5678:5678"
+    links:
+      - postgres
+    volumes:
+      - n8n_data:/home/node/.n8n
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - tesis_network
+
 volumes:
   mariadb_volume:
   moodle_volume:
@@ -305,6 +353,8 @@ volumes:
   qdrant_data:
   ollama_data:
   mongo-keyfile-vol:
+  postgres_data:
+  n8n_data:
 
 networks:
   tesis_network:

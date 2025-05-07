@@ -1,0 +1,199 @@
+{
+    "name": "Entrenai",
+    "nodes": [
+      {
+        "parameters": {
+          "public": true,
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+        "typeVersion": 1.1,
+        "position": [
+          0,
+          0
+        ],
+        "id": "23bd80d6-11c5-4258-96d7-4625d8fb8e05",
+        "name": "When chat message received",
+        "webhookId": "2fbaf000-b2a8-41bc-bfd1-4252f65bd65c"
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "typeVersion": 1.9,
+        "position": [
+          220,
+          0
+        ],
+        "id": "1216fd1e-7e99-4fe4-93f8-c1937104ab1e",
+        "name": "AI Agent"
+      },
+      {
+        "parameters": {
+          "model": {
+            "__rl": true,
+            "value": "qwen3:0.6b",
+            "mode": "list",
+            "cachedResultName": "qwen3:0.6b"
+          },
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+        "typeVersion": 1.2,
+        "position": [
+          80,
+          240
+        ],
+        "id": "1bd94df4-b8f9-46d7-9145-c02410a4b148",
+        "name": "OpenAI Chat Model",
+        "credentials": {
+          "openAiApi": {
+            "id": "YHKj3J8TEjXjTT70",
+            "name": "OpenAi account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "contextWindowLength": 50
+        },
+        "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+        "typeVersion": 1.3,
+        "position": [
+          240,
+          280
+        ],
+        "id": "06991906-df93-4f6d-a737-5b63608c3670",
+        "name": "Postgres Chat Memory",
+        "credentials": {
+          "postgres": {
+            "id": "nNR0xPlERY5SVCEG",
+            "name": "Postgres account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "mode": "retrieve-as-tool",
+          "toolName": "curso_ejemplo",
+          "toolDescription": "recolecta documentos de los cursos",
+          "qdrantCollection": {
+            "__rl": true,
+            "value": "curso_ejemplo",
+            "mode": "list",
+            "cachedResultName": "curso_ejemplo"
+          },
+          "topK": 15,
+          "options": {
+            "searchFilterJson": "{\n  \"should\": [\n    {\n      \"key\": \"metadata.batch\",\n      \"match\": {\n        \"value\": 12345\n      }\n    }\n  ]\n}"
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
+        "typeVersion": 1.1,
+        "position": [
+          520,
+          220
+        ],
+        "id": "6ff6dbc9-181d-49be-8bbd-0c7e56148456",
+        "name": "Qdrant Vector Store1",
+        "credentials": {
+          "qdrantApi": {
+            "id": "dqS0Vf6ydSgD6EN7",
+            "name": "QdrantApi account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "model": "snowflake-arctic-embed2:latest",
+          "options": {
+            "dimensions": 512
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+        "typeVersion": 1.2,
+        "position": [
+          620,
+          380
+        ],
+        "id": "b7fce14d-c07a-4869-932b-c6d72e86a177",
+        "name": "Embeddings OpenAI",
+        "credentials": {
+          "openAiApi": {
+            "id": "YHKj3J8TEjXjTT70",
+            "name": "OpenAi account"
+          }
+        }
+      }
+    ],
+    "pinData": {},
+    "connections": {
+      "When chat message received": {
+        "main": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "OpenAI Chat Model": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Postgres Chat Memory": {
+        "ai_memory": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "ai_memory",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Qdrant Vector Store1": {
+        "ai_tool": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Embeddings OpenAI": {
+        "ai_embedding": [
+          [
+            {
+              "node": "Qdrant Vector Store1",
+              "type": "ai_embedding",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "active": false,
+    "settings": {
+      "executionOrder": "v1"
+    },
+    "versionId": "e8f59d0d-59d9-4eab-8a82-23131113e541",
+    "meta": {
+      "templateCredsSetupCompleted": true,
+      "instanceId": "9dc0c98c80b4c8396614cbc634ce4b355ccf5587fd5b1099e8a52e04a131b6e0"
+    },
+    "id": "kTGiA3QAR7HHvrx4",
+    "tags": []
+  }

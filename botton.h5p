@@ -1,0 +1,82 @@
+<div class="block_html">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">EntrenaAI</h5>
+        <p class="card-text">Crea una IA personalizada con los documentos de este curso</p>
+        <button id="entrenaAIButton" class="btn btn-primary w-100">
+          <i class="fa fa-robot"></i> Crear IA Personalizada
+        </button>
+        <div id="entrenaAIResult" class="mt-3"></div>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+  require(['jquery', 'core/notification', 'core/ajax', 'core/str'], function($, notification, ajax, str) {
+      $('#entrenaAIButton').on('click', function() {
+          // Obtener datos del curso y usuario desde Moodle
+          var courseId = M.cfg.courseId;
+          var userId = M.cfg.userId;
+          
+          str.get_string('confirm', 'core').done(function(confirmText) {
+              if (confirm('¿Deseas crear una IA personalizada para este curso?')) {
+                  // Mostrar indicador de carga
+                  $('#entrenaAIButton').html('<i class="fa fa-spinner fa-spin"></i> Procesando...');
+                  $('#entrenaAIButton').prop('disabled', true);
+                  
+                  // Hacer la solicitud a través de AJAX
+                  $.ajax({
+                      url: 'http://localhost:8000/moodle/create-virtual-ai',
+                      method: 'POST',
+                      contentType: 'application/json',
+                      data: JSON.stringify({
+                          course_id: courseId,
+                          user_id: userId,
+                          folder_name: 'entrenaí'
+                      }),
+                      success: function(data) {
+                          $('#entrenaAIButton').prop('disabled', false);
+                          
+                          if (data.status === 'success') {
+                              $('#entrenaAIButton').html('<i class="fa fa-check"></i> IA Creada Exitosamente');
+                              $('#entrenaAIButton').removeClass('btn-primary').addClass('btn-success');
+                              
+                              // Crear enlace al chat
+                              var chatHtml = '<a href="' + data.data.chat_url + '" target="_blank" ' +
+                                             'class="btn btn-info w-100 mt-2">' +
+                                             '<i class="fa fa-comments"></i> Abrir Chat IA</a>';
+                              $('#entrenaAIResult').html(chatHtml);
+                              
+                              // Mostrar mensaje de éxito
+                              notification.addNotification({
+                                  message: 'IA personalizada creada exitosamente',
+                                  type: 'success'
+                              });
+                          } else {
+                              $('#entrenaAIButton').html('<i class="fa fa-robot"></i> Crear IA Personalizada');
+                              $('#entrenaAIButton').removeClass('btn-primary').addClass('btn-danger');
+                              
+                              // Mostrar error
+                              notification.addNotification({
+                                  message: 'Error: ' + data.message,
+                                  type: 'error'
+                              });
+                          }
+                      },
+                      error: function(xhr, status, error) {
+                          $('#entrenaAIButton').html('<i class="fa fa-robot"></i> Crear IA Personalizada');
+                          $('#entrenaAIButton').prop('disabled', false);
+                          $('#entrenaAIButton').removeClass('btn-primary').addClass('btn-danger');
+                          
+                          // Mostrar error
+                          notification.addNotification({
+                              message: 'Error de conexión: ' + error,
+                              type: 'error'
+                          });
+                      }
+                  });
+              }
+          });
+      });
+  });
+  </script>

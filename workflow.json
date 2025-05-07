@@ -1,0 +1,48 @@
+{
+    "name": "Entrenai - Detección de Archivos",
+    "description": {
+      "text": "<p>Este workflow detecta cuando se sube un archivo y envía la información a la API de EntrenaAI.</p>",
+      "format": "1"
+    },
+    "event": "\\core\\event\\file_uploaded",
+    "steps": {
+      "1": {
+        "id": "1",
+        "name": "Filtrar Carpeta Entrenai",
+        "description": "Verifica si el archivo está relacionado con la carpeta Entrenai",
+        "type": "filters",
+        "stepclass": "\\tool_trigger\\steps\\filters\\string_filter_step",
+        "data": "{\"field\":\"other_content\",\"operator\":\"contains\",\"value\":\"entrenaí\",\"stepdesc\":\"Filtro de Carpeta\",\"typedesc\":\"Filtro\"}",
+        "steporder": "0"
+      },
+      "2": {
+        "id": "2",
+        "name": "Verificar Curso",
+        "description": "Asegura que el evento pertenece a un curso",
+        "type": "filters",
+        "stepclass": "\\tool_trigger\\steps\\filters\\string_filter_step",
+        "data": "{\"field\":\"courseid\",\"operator\":\"notempty\",\"value\":\"\",\"stepdesc\":\"Verificar Curso\",\"typedesc\":\"Filtro\"}",
+        "steporder": "1"
+      },
+      "3": {
+        "id": "3",
+        "name": "Obtener Información del Curso",
+        "description": "Obtener información del curso al que pertenece el archivo",
+        "type": "lookups",
+        "stepclass": "\\tool_trigger\\steps\\lookups\\course_lookup_step",
+        "data": "{\"courseidfield\":\"courseid\",\"outputprefix\":\"course_\",\"stepdesc\":\"Búsqueda de Curso\",\"typedesc\":\"Lookup\"}",
+        "steporder": "2"
+      },
+      "4": {
+        "id": "4",
+        "name": "Notificar a EntrenaAI",
+        "description": "Envía la información del archivo a la API de EntrenaAI",
+        "type": "actions",
+        "stepclass": "\\tool_trigger\\steps\\actions\\http_post_action_step",
+        "data": "{\"url\":\"http://localhost:8000/moodle/file-uploaded\",\"httpheaders\":\"Content-Type: application/json\\r\\nAccept: application/json\",\"httpparams\":\"{\\\"course_id\\\":\\\"{courseid}\\\",\\\"files\\\":[{\\\"filename\\\":\\\"archivo\\\",\\\"url\\\":\\\"{wwwroot}/pluginfile.php?file={objectid}\\\",\\\"file_id\\\":{objectid}}]}\",\"jsonencode\":\"1\",\"stepdesc\":\"HTTP Post\",\"typedesc\":\"Action\"}",
+        "steporder": "3"
+      }
+    },
+    "moodleversion": "2023100900",
+    "pluginversion": "2023100900"
+  }
