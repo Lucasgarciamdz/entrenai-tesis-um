@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entrenai - Configurar IA</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            margin: 0;
+            background-color: #f4f7f9; /* Un gris azulado muy claro */
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 35px 40px; /* Más padding */
+            border-radius: 10px; /* Bordes más redondeados */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Sombra más suave */
+            width: 100%;
+            max-width: 650px; /* Un poco más ancho */
+            text-align: left;
+        }
+        h1 {
+            color: #005a9c; /* Azul oscuro */
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+         p.intro {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 1.05em; /* Tamaño ligeramente ajustado */
+        }
+        label {
+            display: block;
+            margin-bottom: 8px; /* Más espacio */
+            font-weight: 600; /* Un poco más grueso */
+            color: #005a9c;
+            font-size: 0.95em;
+        }
+        select, input[type="text"] {
+            width: 100%;
+            padding: 12px 15px; /* Padding ajustado */
+            margin-bottom: 10px; /* Espacio reducido entre input y select */
+            border: 1px solid #ccc; /* Borde gris estándar */
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 1em;
+            background-color: #fdfdfd;
+        }
+        select {
+             margin-bottom: 20px; /* Más espacio después del select */
+        }
+         input[type="text"]::placeholder {
+            color: #aaa;
+        }
+         input[type="text"]:focus, select:focus {
+             border-color: #007bff;
+             box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+             outline: none;
+         }
+        button {
+            width: 100%;
+            padding: 14px; /* Botón más grande */
+            margin-top: 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: bold;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+         button:active {
+             transform: scale(0.98); /* Efecto al presionar */
+         }
+         button:disabled {
+             background-color: #a0cfff; /* Azul claro cuando está deshabilitado */
+             cursor: not-allowed;
+         }
+        #loading {
+            text-align: center;
+            display: none;
+            margin: 25px 0;
+            font-style: italic;
+            color: #005a9c;
+        }
+        #message {
+            text-align: center;
+            padding: 15px; /* Más padding */
+            border-radius: 6px;
+            margin-top: 30px;
+            display: none;
+            font-weight: 500; /* Ligeramente menos grueso */
+            line-height: 1.5;
+        }
+        .success {
+            background-color: #d1f7e0; /* Verde muy claro */
+            color: #105e36;
+            border: 1px solid #a3e9c1;
+        }
+        .error {
+            background-color: #fde8e8; /* Rojo muy claro */
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .info {
+            background-color: #e2f3fb;
+            color: #0c5464;
+            border: 1px solid #bee5eb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Configurar IA para tu Curso</h1>
+        <p class="intro">
+            ¡Bienvenido! Con esta herramienta, puedes crear fácilmente una Inteligencia Artificial
+            personalizada para tu curso de Moodle. Simplemente busca y selecciona tu curso de la lista
+            y nosotros nos encargaremos de preparar todo para que puedas empezar a usarla.
+        </p>
+        <div id="loading">Cargando cursos...</div>
+        <form id="courseForm">
+            <div>
+                <label for="courseSelect">Busca y Selecciona un Curso:</label> <!-- Etiqueta unificada -->
+                <input type="text" id="courseSearch" placeholder="Escribe para buscar..."> <!-- Input de búsqueda -->
+                <select id="courseSelect" name="course_id" required>
+                    <option value="">Cargando cursos...</option>
+                    <!-- Las opciones se llenarán con JS -->
+                </select>
+            </div>
+            <button type="submit">Crear IA</button>
+        </form>
+        <div id="message"></div>
+    </div>
+
+    <script>
+        const courseSelect = document.getElementById('courseSelect');
+        const courseSearch = document.getElementById('courseSearch');
+        const courseForm = document.getElementById('courseForm');
+        const loadingDiv = document.getElementById('loading');
+        const messageDiv = document.getElementById('message');
+        const submitButton = courseForm.querySelector('button[type="submit"]'); // Obtener referencia al botón
+        let allCourses = [];
+
+        async function fetchCourses() {
+            loadingDiv.style.display = 'block';
+            courseSelect.disabled = true;
+            courseSearch.disabled = true; // Deshabilitar búsqueda mientras carga
+            try {
+                const response = await fetch('/api/v1/entrenai/courses');
+                if (!response.ok) {
+                    throw new Error(`Error HTTP ${response.status}: ${response.statusText}`);
+                }
+                const courses = await response.json();
+                allCourses = courses;
+                populateCourseSelect(courses);
+            } catch (error) {
+                console.error('Error fetching courses:', error);
+                courseSelect.innerHTML = '<option value="">Error al cargar cursos</option>';
+                showMessage(`Error al cargar cursos: ${error.message}`, 'error');
+            } finally {
+                loadingDiv.style.display = 'none';
+                courseSelect.disabled = false;
+                courseSearch.disabled = false; // Habilitar búsqueda
+            }
+        }
+
+        function populateCourseSelect(courses) {
+            const currentSelection = courseSelect.value;
+            courseSelect.innerHTML = ''; // Limpiar opciones existentes
+
+            if (courses.length === 0) {
+                 // Añadir opción informativa si no hay cursos o no hay coincidencias
+                const noCourseOption = document.createElement('option');
+                noCourseOption.value = "";
+                noCourseOption.textContent = courseSearch.value ? "Ningún curso coincide con la búsqueda" : "No hay cursos disponibles";
+                noCourseOption.disabled = true;
+                courseSelect.appendChild(noCourseOption);
+                return;
+            }
+
+            // Añadir opción por defecto seleccionable
+            const defaultOption = document.createElement('option');
+            defaultOption.value = "";
+            defaultOption.textContent = "Selecciona un curso...";
+            defaultOption.disabled = true; // Hacerla no seleccionable directamente
+            defaultOption.selected = true; // Asegurar que sea la opción por defecto visible
+            courseSelect.appendChild(defaultOption);
+
+
+            courses.forEach(course => {
+                const option = document.createElement('option');
+                option.value = course.id;
+                let displayName = course.fullname;
+                if (course.categoryname) {
+                    displayName += ` (${course.categoryname})`;
+                }
+                option.textContent = displayName;
+                courseSelect.appendChild(option);
+            });
+
+            if (courses.some(c => c.id == currentSelection)) {
+                courseSelect.value = currentSelection;
+            } else {
+                 courseSelect.value = ""; // Volver a la opción por defecto si la selección anterior ya no está
+            }
+        }
+
+        courseSearch.addEventListener('input', () => {
+            const searchTerm = courseSearch.value.toLowerCase().trim();
+            const filteredCourses = allCourses.filter(course =>
+                course.fullname.toLowerCase().includes(searchTerm) ||
+                (course.shortname && course.shortname.toLowerCase().includes(searchTerm)) ||
+                (course.categoryname && course.categoryname.toLowerCase().includes(searchTerm))
+            );
+            populateCourseSelect(filteredCourses);
+        });
+
+        courseForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const courseId = courseSelect.value;
+            if (!courseId) {
+                showMessage('Por favor, selecciona un curso válido de la lista.', 'error');
+                return;
+            }
+
+            showMessage('Creando IA, por favor espera...', 'info');
+            loadingDiv.style.display = 'block';
+            submitButton.disabled = true;
+            courseSearch.disabled = true;
+            courseSelect.disabled = true;
+
+            try {
+                const response = await fetch('/api/v1/entrenai/create-ai', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ course_id: parseInt(courseId) }),
+                });
+
+                // Intentar parsear JSON incluso si la respuesta no es ok, puede contener 'detail'
+                let result = {};
+                try {
+                     result = await response.json();
+                } catch(jsonError) {
+                    // Si no hay JSON, usar el texto de estado
+                    result.detail = response.statusText || "Error desconocido sin detalle.";
+                    console.error("Error parsing JSON response:", jsonError);
+                }
+
+
+                if (response.ok) {
+                    const chatUrl = result.n8n_chat_url || "No disponible";
+                    showMessage(`¡Éxito! La IA para el curso ID ${courseId} ha sido configurada. Puedes acceder al chat en: ${chatUrl}`, 'success');
+                    courseForm.reset(); // Limpiar formulario
+                    populateCourseSelect(allCourses); // Restaurar lista completa
+                } else {
+                     // Usar result.detail si existe, sino el statusText
+                    const errorDetail = result.detail || `Error HTTP ${response.status}`;
+                    showMessage(`Error al crear IA: ${errorDetail}`, 'error');
+                }
+            } catch (error) {
+                console.error('Error submitting form:', error);
+                showMessage(`Error de red o al enviar la solicitud: ${error.message}`, 'error');
+            } finally {
+                loadingDiv.style.display = 'none';
+                submitButton.disabled = false;
+                courseSearch.disabled = false;
+                courseSelect.disabled = false;
+            }
+        });
+
+        function showMessage(message, type) {
+            messageDiv.textContent = message;
+            // Asegurarse de quitar clases anteriores antes de añadir la nueva
+            messageDiv.className = '';
+            messageDiv.classList.add(type); // 'success', 'error', o 'info'
+            messageDiv.style.display = 'block';
+        }
+
+        // Cargar cursos al iniciar la página
+        fetchCourses();
+    </script>
+</body>
+</html>

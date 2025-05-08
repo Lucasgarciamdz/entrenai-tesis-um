@@ -1,13 +1,13 @@
-import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 
-# Cargar variables de entorno
-load_dotenv()
-
 # Importar routers
-from app.routers.moodle import router as moodle_router
+from app.web.routers.moodle import router as moodle_router
+from app.web.routers.entrena_ai import router as entrena_ai_router
+
+# Cargar variables de entorno DESPUÉS de las importaciones
+load_dotenv()
 
 # Crear aplicación FastAPI
 app = FastAPI(
@@ -27,6 +27,10 @@ app.add_middleware(
 
 # Incluir routers
 app.include_router(moodle_router)
+app.include_router(
+    entrena_ai_router, prefix="/api/v1"
+)  # Incluir el nuevo router con prefijo
+
 
 # Ruta raíz
 @app.get("/")
@@ -38,17 +42,19 @@ async def root():
             {
                 "path": "/moodle/create-virtual-ai",
                 "method": "POST",
-                "description": "Crear IA virtual personalizada"
+                "description": "Crear IA virtual personalizada",
             },
             {
                 "path": "/moodle/incoming-files",
                 "method": "POST",
-                "description": "Procesar archivos nuevos"
-            }
-        ]
+                "description": "Procesar archivos nuevos",
+            },
+        ],
     }
+
 
 # Para ejecutar con: uvicorn main:app --reload
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True) 
+
+    uvicorn.run("app.web.main:app", host="0.0.0.0", port=8000, reload=True)

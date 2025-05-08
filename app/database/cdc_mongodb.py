@@ -140,23 +140,25 @@ class MonitorCambiosMongoDB:
             self.conector_mongodb.desconectar()
 
         logger.info("Monitor de cambios detenido")
-        
+
     def esta_ejecutando(self) -> bool:
         """
         Verifica si el monitor está activo.
-        
+
         Returns:
             True si el monitor está en ejecución y actualizado, False en caso contrario.
         """
         # Verificar si el hilo existe y está vivo
         if not self.hilo_monitor or not self.hilo_monitor.is_alive():
             return False
-            
+
         # Verificar si el heartbeat está actualizado (no más de 30 segundos de antigüedad)
         if time.time() - self.ultimo_heartbeat > 30:
-            logger.warning(f"El monitor CDC no ha reportado actividad en más de 30 segundos")
+            logger.warning(
+                "El monitor CDC no ha reportado actividad en más de 30 segundos"
+            )
             return False
-            
+
         return self.ejecutando
 
     def _ejecutar_monitor(self):
@@ -268,7 +270,7 @@ class MonitorCambiosMongoDB:
             try:
                 # Actualizar heartbeat
                 self.ultimo_heartbeat = time.time()
-                
+
                 # Verificar cada colección
                 for coleccion_nombre in colecciones_a_monitorear:
                     try:
@@ -435,14 +437,14 @@ def crear_monitor_cdc(
         Monitor CDC iniciado
     """
     from ..config.configuracion import configuracion
-    
+
     # Usar configuración si no se proporcionan valores
     host = host or configuracion.obtener_mongodb_host()
     puerto = puerto or configuracion.obtener_mongodb_puerto()
     usuario = usuario or configuracion.obtener_mongodb_usuario()
     contraseña = contraseña or configuracion.obtener_mongodb_contraseña()
     base_datos = base_datos or configuracion.obtener_mongodb_base_datos()
-    
+
     # Priorizar nombre_cola sobre cola para compatibilidad
     cola_a_usar = nombre_cola or cola or configuracion.obtener_rabbitmq_cola_cambios()
 
@@ -458,5 +460,5 @@ def crear_monitor_cdc(
         filtro_operaciones=filtro_operaciones,
         intervalo_polling=intervalo_polling,
     )
-    
+
     return monitor

@@ -13,7 +13,7 @@ from loguru import logger
 from qdrant_client import QdrantClient
 from qdrant_client.http import models
 from qdrant_client.http.exceptions import UnexpectedResponse
-from qdrant_client.models import Distance, VectorParams, PointStruct, CollectionStatus
+from qdrant_client.models import CollectionStatus
 
 from ..config.configuracion import configuracion
 
@@ -82,6 +82,10 @@ class ConectorQdrant:
         self.dimension_embeddings = int(
             configuracion.obtener("QDRANT_DIMENSION_EMBEDDINGS", "384")
         )
+        # Obtener prefijo de colección una vez
+        self.collection_prefix = configuracion.obtener(
+            "QDRANT_COLLECTION_PREFIX", "curso_"
+        )
 
         # Cache de colecciones verificadas
         self.colecciones_existentes = set()
@@ -110,7 +114,7 @@ class ConectorQdrant:
 
             self.cliente = QdrantClient(
                 url=url,
-                timeout=5.0,  # 5 segundos de timeout por defecto
+                timeout=5,  # Timeout debe ser int o None
                 headers=headers,
             )
 
@@ -120,14 +124,16 @@ class ConectorQdrant:
                 self.conectado = True
                 self.ultima_conexion = time.time()
                 logger.debug(f"Conexión con Qdrant establecida ({self.url_base})")
-                
+
                 # Cargar colecciones existentes
                 self._cargar_colecciones_existentes()
                 return True
-                
+
             except UnexpectedResponse as e:
                 if e.status_code == 401:  # Error de autenticación
-                    logger.error("Error de autenticación en Qdrant. Verifique las credenciales.")
+                    logger.error(
+                        "Error de autenticación en Qdrant. Verifique las credenciales."
+                    )
                     return False
                 raise  # Re-lanzar otros errores inesperados
 
@@ -191,7 +197,10 @@ class ConectorQdrant:
             Lista de colecciones con sus propiedades
         """
         try:
-            if not self.esta_conectado():
+            if (
+                not self.esta_conectado() or not self.cliente
+            ):  # Asegurar que el cliente existe
+                logger.warning("No conectado a Qdrant para listar colecciones.")
                 return []
 
             # Obtener lista de colecciones con la biblioteca oficial
@@ -229,10 +238,14 @@ class ConectorQdrant:
                     try:
                         if hasattr(info_coleccion, "vectors_count"):
                             puntos = info_coleccion.vectors_count
-                        elif hasattr(info_coleccion, "status") and info_coleccion.status:
+                        elif (
+                            hasattr(info_coleccion, "status") and info_coleccion.status
+                        ):
                             # En versiones más recientes puede estar en status
-                            puntos = getattr(info_coleccion.status, "vectors_count", None)
-                            
+                            puntos = getattr(
+                                info_coleccion.status, "vectors_count", None
+                            )
+
                         # Si puntos es None, intentar verificar manualmente
                         if puntos is None:
                             # Intentar obtener al menos un punto para verificar si hay datos
@@ -241,19 +254,25 @@ class ConectorQdrant:
                                     collection_name=coleccion.name,
                                     limit=1,
                                     with_payload=False,
-                                    with_vectors=False
+                                    with_vectors=False,
                                 )
                                 # Si hay resultados, indicar al menos 1 punto
                                 if scroll_result and len(scroll_result[0]) > 0:
                                     puntos = len(scroll_result[0])
-                                    logger.debug(f"Colección {coleccion.name} tiene al menos {puntos} puntos (verificado manualmente)")
+                                    logger.debug(
+                                        f"Colección {coleccion.name} tiene al menos {puntos} puntos (verificado manualmente)"
+                                    )
                                 else:
                                     puntos = 0
                             except Exception as e:
-                                logger.warning(f"Error al verificar puntos manualmente en {coleccion.name}: {e}")
+                                logger.warning(
+                                    f"Error al verificar puntos manualmente en {coleccion.name}: {e}"
+                                )
                                 puntos = 0
                     except (AttributeError, TypeError) as e:
-                        logger.warning(f"Error al obtener recuento de puntos para {coleccion.name}: {e}")
+                        logger.warning(
+                            f"Error al obtener recuento de puntos para {coleccion.name}: {e}"
+                        )
                         puntos = 0
 
                     resultado.append(
@@ -284,24 +303,31 @@ class ConectorQdrant:
     def coleccion_tiene_puntos(self, nombre_coleccion: str) -> bool:
         """
         Verifica si una colección tiene puntos almacenados.
-        
+
         Args:
             nombre_coleccion: Nombre de la colección a verificar
-            
+
         Returns:
             True si la colección existe y tiene puntos, False en caso contrario
         """
         try:
-            if not self.esta_conectado():
+            if (
+                not self.esta_conectado() or not self.cliente
+            ):  # Asegurar que el cliente existe
+                logger.warning(
+                    f"No conectado a Qdrant para verificar puntos en {nombre_coleccion}."
+                )
                 return False
-                
+
             # Verificar si la colección existe
             if not self.cliente.collection_exists(nombre_coleccion):
                 return False
-                
+
             # Obtener información de la colección
-            info_coleccion = self.cliente.get_collection(collection_name=nombre_coleccion)
-            
+            info_coleccion = self.cliente.get_collection(
+                collection_name=nombre_coleccion
+            )
+
             # Intentar obtener recuento de puntos
             puntos = None
             try:
@@ -311,11 +337,11 @@ class ConectorQdrant:
                     puntos = getattr(info_coleccion.status, "vectors_count", None)
             except (AttributeError, TypeError):
                 pass
-                
+
             # Si pudimos obtener el recuento de puntos, verificar si es mayor a 0
             if puntos is not None:
                 return puntos > 0
-                
+
             # Si no pudimos obtener el recuento, intentar obtener algunos puntos manualmente
             try:
                 # Intentar hacer una búsqueda simple para ver si hay puntos
@@ -325,15 +351,19 @@ class ConectorQdrant:
                     with_payload=False,  # No necesitamos los metadatos
                     with_vectors=False,  # No necesitamos los vectores
                 )
-                
+
                 # Si hay al menos un punto, resultado[0] tendrá al menos un elemento
                 return len(resultado[0]) > 0
             except Exception as e:
-                logger.warning(f"Error al verificar puntos manualmente en {nombre_coleccion}: {e}")
+                logger.warning(
+                    f"Error al verificar puntos manualmente en {nombre_coleccion}: {e}"
+                )
                 return False
-            
+
         except Exception as e:
-            logger.error(f"Error al verificar si la colección {nombre_coleccion} tiene puntos: {e}")
+            logger.error(
+                f"Error al verificar si la colección {nombre_coleccion} tiene puntos: {e}"
+            )
             return False
 
     def crear_coleccion(
@@ -351,7 +381,10 @@ class ConectorQdrant:
             True si la creación es exitosa, False en caso contrario
         """
         try:
-            if not self.esta_conectado():
+            if (
+                not self.esta_conectado() or not self.cliente
+            ):  # Asegurar que el cliente existe
+                logger.error("No conectado a Qdrant para crear colección.")
                 return False
 
             # Verificar si la colección ya existe
@@ -367,21 +400,24 @@ class ConectorQdrant:
             # Crear colección con la biblioteca oficial
             self.cliente.create_collection(
                 collection_name=nombre,
-                vectors_config=models.VectorParams(size=dimension, distance=models.Distance.COSINE),
+                vectors_config=models.VectorParams(
+                    size=dimension, distance=models.Distance.COSINE
+                ),
                 hnsw_config=models.HnswConfigDiff(m=16, ef_construct=100),
                 optimizers_config=models.OptimizersConfigDiff(
-                    default_segment_number=2,
-                    memmap_threshold=20000
+                    default_segment_number=2, memmap_threshold=20000
                 ),
-                metadata={
-                    "description": descripcion
-                } if descripcion else None
+                # El parámetro 'metadata' no es válido en create_collection.
+                # La descripción u otros metadatos de la colección no se pueden
+                # establecer directamente a través de este método en versiones recientes.
             )
 
             # Esperar a que la colección esté lista
             status = self.cliente.get_collection(nombre).status
             if status != CollectionStatus.GREEN:
-                logger.warning(f"La colección '{nombre}' se creó pero su estado es {status}")
+                logger.warning(
+                    f"La colección '{nombre}' se creó pero su estado es {status}"
+                )
 
             logger.info(f"Colección '{nombre}' creada correctamente")
             self.colecciones_existentes.add(nombre)
@@ -402,7 +438,10 @@ class ConectorQdrant:
             True si la eliminación es exitosa, False en caso contrario
         """
         try:
-            if not self.esta_conectado():
+            if (
+                not self.esta_conectado() or not self.cliente
+            ):  # Asegurar que el cliente existe
+                logger.error("No conectado a Qdrant para eliminar colección.")
                 return False
 
             # Eliminar colección con la biblioteca oficial
@@ -428,7 +467,10 @@ class ConectorQdrant:
             True si la limpieza es exitosa, False en caso contrario
         """
         try:
-            if not self.esta_conectado():
+            if (
+                not self.esta_conectado() or not self.cliente
+            ):  # Asegurar que el cliente existe
+                logger.error("No conectado a Qdrant para limpiar colección.")
                 return False
 
             # Eliminar todos los puntos de la colección
@@ -461,7 +503,10 @@ class ConectorQdrant:
             True si la operación es exitosa, False en caso contrario
         """
         try:
-            if not self.esta_conectado():
+            if (
+                not self.esta_conectado() or not self.cliente
+            ):  # Asegurar que el cliente existe
+                logger.error("No conectado a Qdrant para guardar texto limpio.")
                 return False
 
             # Asegurar que existe la colección de textos
@@ -539,7 +584,10 @@ class ConectorQdrant:
             True si la operación es exitosa, False en caso contrario
         """
         try:
-            if not self.esta_conectado():
+            if (
+                not self.esta_conectado() or not self.cliente
+            ):  # Asegurar que el cliente existe
+                logger.error("No conectado a Qdrant para guardar embedding.")
                 return False
 
             # Validar embedding
@@ -589,7 +637,9 @@ class ConectorQdrant:
             # Guardar con la biblioteca oficial
             self.cliente.upsert(
                 collection_name=nombre_coleccion,
-                points=[models.PointStruct(id=punto_id, vector=embedding, payload=payload)],
+                points=[
+                    models.PointStruct(id=punto_id, vector=embedding, payload=payload)
+                ],
             )
 
             logger.debug(
@@ -623,7 +673,10 @@ class ConectorQdrant:
             Lista de documentos similares
         """
         try:
-            if not self.esta_conectado():
+            if (
+                not self.esta_conectado() or not self.cliente
+            ):  # Asegurar que el cliente existe
+                logger.warning("No conectado a Qdrant para buscar similares.")
                 return []
 
             # Importar generador de embeddings
@@ -718,7 +771,10 @@ class ConectorQdrant:
             Lista de puntos encontrados
         """
         try:
-            if not self.esta_conectado():
+            if (
+                not self.esta_conectado() or not self.cliente
+            ):  # Asegurar que el cliente existe
+                logger.warning("No conectado a Qdrant para buscar por ID original.")
                 return []
 
             # Crear filtro para buscar por id_original
@@ -726,7 +782,7 @@ class ConectorQdrant:
                 must=[
                     models.FieldCondition(
                         key="id_original",
-                        match=models.MatchValue(value=str(id_original))
+                        match=models.MatchValue(value=str(id_original)),
                     )
                 ]
             )
@@ -735,7 +791,7 @@ class ConectorQdrant:
             resultados = self.cliente.scroll(
                 collection_name=coleccion,
                 scroll_filter=filtro,
-                limit=100  # Ajustar según necesidad
+                limit=100,  # Ajustar según necesidad
             )[0]  # scroll retorna (puntos, siguiente_offset)
 
             # Procesar resultados
@@ -744,7 +800,7 @@ class ConectorQdrant:
                 doc = {
                     "id": item.id,
                     "texto": item.payload.get("texto", ""),
-                    "metadatos": {}
+                    "metadatos": {},
                 }
 
                 # Añadir metadatos del payload
@@ -759,6 +815,51 @@ class ConectorQdrant:
         except Exception as e:
             logger.error(f"Error al buscar por ID original: {e}")
             return []
+
+    def asegurar_coleccion_curso(
+        self, course_id: int, course_name_slug: Optional[str] = None
+    ) -> Optional[str]:
+        """
+        Asegura que la colección para un curso específico exista.
+        La crea si no existe.
+
+        Args:
+            course_id: ID del curso.
+            course_name_slug: Slug del nombre del curso (opcional).
+
+        Returns:
+            El nombre de la colección si se pudo crear o ya existía, None en caso de error.
+        """
+        try:
+            # Usar configuración para el prefijo
+            prefijo = self.collection_prefix  # Usar el atributo de clase
+
+            # Construir nombre de la colección
+            if course_name_slug:
+                # Limitar longitud del slug si es necesario
+                max_slug_len = 50  # Ajustar si es necesario
+                safe_slug = course_name_slug[:max_slug_len]
+                nombre_coleccion = f"{prefijo}{course_id}_{safe_slug}"
+            else:
+                nombre_coleccion = f"{prefijo}{course_id}"
+
+            dimension = int(configuracion.obtener("QDRANT_DIMENSION_EMBEDDINGS", "384"))
+
+            if self.crear_coleccion(nombre=nombre_coleccion, dimension=dimension):
+                # crear_coleccion devuelve True si se creó o ya existía
+                return nombre_coleccion
+            else:
+                # Si crear_coleccion devuelve False, hubo un error en la creación
+                # (y no fue porque ya existía, ya que ese caso devuelve True)
+                logger.error(
+                    f"No se pudo asegurar la existencia de la colección '{nombre_coleccion}'"
+                )
+                return None
+        except Exception as e:
+            logger.error(
+                f"Error inesperado al asegurar colección para curso {course_id}: {e}"
+            )
+            return None
 
 
 # Crear una instancia global

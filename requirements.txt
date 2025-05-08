@@ -43,3 +43,8 @@ uv
 python-dotenv
 ruff
 ollama
+
+
+# Dependencias para el servidor web
+fastapi[standard]
+uvicorn

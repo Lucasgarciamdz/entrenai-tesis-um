@@ -13,7 +13,6 @@ import signal
 from typing import Optional, List
 
 from loguru import logger
-from pymongo.errors import PyMongoError
 
 from app.config.configuracion import configuracion
 from app.database.cdc_mongodb import crear_monitor_cdc, MonitorCambiosMongoDB
@@ -69,7 +68,7 @@ class ServicioCDC:
         # Intentar iniciar el monitor CDC
         intentos = 0
         max_intentos = 5
-        
+
         while not self.terminando and intentos < max_intentos:
             try:
                 # Crear y configurar monitor CDC
@@ -84,7 +83,7 @@ class ServicioCDC:
                     logger.success(
                         f"Servicio CDC iniciado. Monitoreando cambios para cola '{self.nombre_cola}'"
                     )
-                    
+
                     # Mantener el servicio en ejecución
                     try:
                         while not self.terminando:
@@ -108,24 +107,30 @@ class ServicioCDC:
                         logger.info("Interrupción de teclado detectada")
                         self.terminando = True
                     except Exception as e:
-                        logger.error(f"Error en el bucle principal del servicio CDC: {e}")
+                        logger.error(
+                            f"Error en el bucle principal del servicio CDC: {e}"
+                        )
                     finally:
                         self.detener()
-                    
+
                     return True
                 else:
                     logger.error("No se pudo iniciar el monitor CDC")
             except Exception as e:
-                logger.error(f"Error al iniciar el servicio CDC (intento {intentos+1}/{max_intentos}): {e}")
-            
+                logger.error(
+                    f"Error al iniciar el servicio CDC (intento {intentos + 1}/{max_intentos}): {e}"
+                )
+
             intentos += 1
             if intentos < max_intentos and not self.terminando:
-                logger.info(f"Reintentando en 10 segundos...")
+                logger.info("Reintentando en 10 segundos...")
                 time.sleep(10)
-                
+
         if intentos >= max_intentos:
-            logger.critical(f"No se pudo iniciar el servicio CDC después de {max_intentos} intentos")
-        
+            logger.critical(
+                f"No se pudo iniciar el servicio CDC después de {max_intentos} intentos"
+            )
+
         self.detener()
         return False
 
@@ -133,41 +138,49 @@ class ServicioCDC:
         """Espera a que MongoDB esté disponible antes de iniciar el monitor."""
         from pymongo import MongoClient
         from pymongo.errors import ConnectionFailure, OperationFailure
-        
+
         max_intentos = 30
         tiempo_espera = 5
-        
+
         host = configuracion.obtener_mongodb_host()
         puerto = configuracion.obtener_mongodb_puerto()
         usuario = configuracion.obtener_mongodb_usuario()
         contraseña = configuracion.obtener_mongodb_contraseña()
-        
+
         logger.info(f"Esperando a que MongoDB ({host}:{puerto}) esté disponible...")
-        
+
         for intento in range(1, max_intentos + 1):
             if self.terminando:
                 logger.info("Terminando durante la espera de MongoDB")
                 return False
-                
+
             try:
                 uri = f"mongodb://{usuario}:{contraseña}@{host}:{puerto}/?replicaSet=rs0&authSource=admin"
                 cliente = MongoClient(uri, serverSelectionTimeoutMS=5000)
                 # Verificar que el replica set esté configurado correctamente
-                estado_rs = cliente.admin.command('replSetGetStatus')
-                miembros_ok = [m for m in estado_rs.get('members', []) if m.get('state') == 1]
+                estado_rs = cliente.admin.command("replSetGetStatus")
+                miembros_ok = [
+                    m for m in estado_rs.get("members", []) if m.get("state") == 1
+                ]
                 if miembros_ok:
-                    logger.success(f"MongoDB está disponible con replica set configurado correctamente")
+                    logger.success(
+                        "MongoDB está disponible con replica set configurado correctamente"
+                    )
                     cliente.close()
                     return True
                 else:
-                    logger.warning(f"MongoDB replica set no tiene miembros primarios activos. Esperando... ({intento}/{max_intentos})")
+                    logger.warning(
+                        f"MongoDB replica set no tiene miembros primarios activos. Esperando... ({intento}/{max_intentos})"
+                    )
             except (ConnectionFailure, OperationFailure) as e:
-                logger.warning(f"MongoDB no está listo: {e} - Intento {intento}/{max_intentos}")
+                logger.warning(
+                    f"MongoDB no está listo: {e} - Intento {intento}/{max_intentos}"
+                )
             except Exception as e:
                 logger.error(f"Error inesperado al verificar MongoDB: {e}")
-                
+
             time.sleep(tiempo_espera)
-            
+
         logger.error(f"MongoDB no disponible después de {max_intentos} intentos")
         return False
 
