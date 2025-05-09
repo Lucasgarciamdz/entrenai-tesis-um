@@ -186,62 +186,62 @@ services:
     networks:
       - tesis_network
 
-  servicio-cdc:
-    build:
-      context: .
-      dockerfile: ./Dockerfile.servicio-cdc
-    container_name: servicio-cdc
-    depends_on:
-      mongodb:
-        condition: service_healthy
-      rabbitmq:
-        condition: service_healthy
-    env_file:
-      - .env
-    environment:
-      - MONGODB_HOST=mongodb
-      - MONGODB_PORT=27017
-      - RABBITMQ_HOST=rabbitmq
-      - RABBITMQ_PORT=5672
-      - NIVEL_LOG=INFO
-      - CDC_COLA_NOMBRE=${RABBITMQ_QUEUE_NAME:-moodle_changes}
-      - CDC_COLECCIONES=documentos,recursos,archivos
-      - CDC_OPERACIONES=insert,update,replace
-    restart: always
-    networks:
-      - tesis_network
+  # servicio-cdc:
+  #   build:
+  #     context: .
+  #     dockerfile: ./Dockerfile.servicio-cdc
+  #   container_name: servicio-cdc
+  #   depends_on:
+  #     mongodb:
+  #       condition: service_healthy
+  #     rabbitmq:
+  #       condition: service_healthy
+  #   env_file:
+  #     - .env
+  #   environment:
+  #     - MONGODB_HOST=mongodb
+  #     - MONGODB_PORT=27017
+  #     - RABBITMQ_HOST=rabbitmq
+  #     - RABBITMQ_PORT=5672
+  #     - NIVEL_LOG=INFO
+  #     - CDC_COLA_NOMBRE=${RABBITMQ_QUEUE_NAME:-moodle_changes}
+  #     - CDC_COLECCIONES=documentos,recursos,archivos
+  #     - CDC_OPERACIONES=insert,update,replace
+  #   restart: always
+  #   networks:
+  #     - tesis_network
 
-  servicio-bytewax:
-    build:
-      context: .
-      dockerfile: ./Dockerfile.servicio-bytewax
-    container_name: servicio-bytewax
-    depends_on:
-      rabbitmq:
-        condition: service_healthy
-      qdrant:
-        condition: service_started
-      ollama:
-        condition: service_started
-    env_file:
-      - .env
-    environment:
-      - RABBITMQ_HOST=rabbitmq
-      - RABBITMQ_PORT=5672
-      - QDRANT_HOST=qdrant
-      - QDRANT_PORT=6333
-      - OLLAMA_URL=http://ollama:11434
-      - NIVEL_LOG=INFO
-      - RABBITMQ_QUEUE_NAME=${RABBITMQ_QUEUE_NAME:-moodle_changes}
-      - QDRANT_COLLECTION_PREFIX=curso_
-      - USAR_OLLAMA=true
-      - MODELO_EMBEDDING=all-MiniLM-L6-v2
-      - MODELO_TEXTO=llama3
-      - TAMANO_CHUNK=1000
-      - SOLAPAMIENTO_CHUNK=200
-    restart: always
-    networks:
-      - tesis_network
+  # servicio-bytewax:
+  #   build:
+  #     context: .
+  #     dockerfile: ./Dockerfile.servicio-bytewax
+  #   container_name: servicio-bytewax
+  #   depends_on:
+  #     rabbitmq:
+  #       condition: service_healthy
+  #     qdrant:
+  #       condition: service_started
+  #     ollama:
+  #       condition: service_started
+  #   env_file:
+  #     - .env
+  #   environment:
+  #     - RABBITMQ_HOST=rabbitmq
+  #     - RABBITMQ_PORT=5672
+  #     - QDRANT_HOST=qdrant
+  #     - QDRANT_PORT=6333
+  #     - OLLAMA_URL=http://ollama:11434
+  #     - NIVEL_LOG=INFO
+  #     - RABBITMQ_QUEUE_NAME=${RABBITMQ_QUEUE_NAME:-moodle_changes}
+  #     - QDRANT_COLLECTION_PREFIX=curso_
+  #     - USAR_OLLAMA=true
+  #     - MODELO_EMBEDDING=all-MiniLM-L6-v2
+  #     - MODELO_TEXTO=llama3
+  #     - TAMANO_CHUNK=1000
+  #     - SOLAPAMIENTO_CHUNK=200
+  #   restart: always
+  #   networks:
+  #     - tesis_network
 
   mongo-express:
     image: mongo-express:latest
@@ -293,6 +293,7 @@ services:
   postgres:
     image: postgres:16
     restart: always
+    container_name: postgres
     ports:
       - "5432:5432"
     environment:
@@ -302,7 +303,7 @@ services:
       - POSTGRES_NON_ROOT_USER=${POSTGRES_NON_ROOT_USER}
       - POSTGRES_NON_ROOT_PASSWORD=${POSTGRES_NON_ROOT_PASSWORD}
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_volume:/var/lib/postgresql/data
       - ./postgres_init.sh:/docker-entrypoint-initdb.d/postgres_init.sh
     healthcheck:
       test: ['CMD-SHELL', 'pg_isready -h localhost -U postgres -d n8n']
@@ -315,6 +316,7 @@ services:
   n8n:
     image: n8nio/n8n
     restart: always
+    container_name: n8n
     environment:
       # Base de datos
       - DB_TYPE=${DB_TYPE}
@@ -329,7 +331,7 @@ services:
       - N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
       - WEBHOOK_URL=${WEBHOOK_URL}
       # Variables personalizadas
-      - MOODLE_TOKEN=${MOODLE_TOKEN:-}
+      - MOODLE_TOKEN=${MOODLE_TOKEN}
       - MOODLE_URL=${MOODLE_URL}
       - MOODLE_HOST_URL=${MOODLE_HOST_URL}
     ports:
@@ -337,7 +339,7 @@ services:
     links:
       - postgres
     volumes:
-      - n8n_data:/home/node/.n8n
+      - n8n_volume:/home/node/.n8n
     depends_on:
       postgres:
         condition: service_healthy
@@ -353,8 +355,8 @@ volumes:
   qdrant_data:
   ollama_data:
   mongo-keyfile-vol:
-  postgres_data:
-  n8n_data:
+  postgres_volume:
+  n8n_volume:
 
 networks:
   tesis_network:
